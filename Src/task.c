@@ -87,7 +87,7 @@ void taskDelay(uint32_t delayTime)
     __ASM("cpsie i"); //reenable irq
     
     switchTask();
-    SCB->ICSR |= (1<<28);
+    
 }
 
 void switchTask(void)
@@ -145,7 +145,9 @@ void switchTask(void)
         tasks[nextTaskIndex].taskState = TaskRunning;
         nextTask = &tasks[nextTaskIndex];
     }
-    
+    if(nextTask != currentTask){
+        SCB->ICSR |= (1<<28);
+    }
     __ASM("cpsie i"); //reenable irq
     
 }
@@ -175,6 +177,8 @@ __attribute__((naked))
 void PendSV_Handler(void)
 {
     __asm("cpsid i"); //disable irq
+
+    //TODO check if it is the same task and dont switch
 
     //store
     __asm ("mrs r0, psp");
@@ -233,6 +237,6 @@ void SysTick_Handler(void)
 
     //runScheduler();
     switchTask();
-    SCB->ICSR |= (1<<28);
+    
 }
 
