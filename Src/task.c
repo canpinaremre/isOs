@@ -178,8 +178,6 @@ void PendSV_Handler(void)
 {
     __asm("cpsid i"); //disable irq
 
-    //TODO check if it is the same task and dont switch
-
     //store
     __asm ("mrs r0, psp");
     __asm("ldr r1, =currentTask");
