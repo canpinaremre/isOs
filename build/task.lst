@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccLbN7qM.s 			page 1
+ARM GAS  /tmp/ccWMShQt.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -17,858 +17,1478 @@ ARM GAS  /tmp/ccLbN7qM.s 			page 1
   14              		.text
   15              	.Ltext0:
   16              		.cfi_sections	.debug_frame
-  17              		.section	.text.TaskReturn,"ax",%progbits
-  18              		.align	1
-  19              		.syntax unified
-  20              		.thumb
-  21              		.thumb_func
-  22              		.fpu fpv4-sp-d16
-  24              	TaskReturn:
-  25              	.LFB130:
-  26              		.file 1 "Src/task.c"
+  17              		.section	.bss.lastTick,"aw",%nobits
+  18              		.align	2
+  21              	lastTick:
+  22 0000 00000000 		.space	4
+  23              		.section	.bss.tasks,"aw",%nobits
+  24              		.align	2
+  27              	tasks:
+  28 0000 00000000 		.space	600
+  28      00000000 
+  28      00000000 
+  28      00000000 
+  28      00000000 
+  29              		.section	.bss.taskCount,"aw",%nobits
+  30              		.align	2
+  33              	taskCount:
+  34 0000 00000000 		.space	4
+  35              		.section	.bss.nextTaskIndex,"aw",%nobits
+  36              		.align	2
+  39              	nextTaskIndex:
+  40 0000 00000000 		.space	4
+  41              		.section	.bss.idleTaskIndex,"aw",%nobits
+  42              		.align	2
+  45              	idleTaskIndex:
+  46 0000 00000000 		.space	4
+  47              		.comm	currentTask,4,4
+  48              		.comm	nextTask,4,4
+  49              		.comm	mainStack,16384,4
+  50              		.global	stack_ptr
+  51              		.section	.data.stack_ptr,"aw",%progbits
+  52              		.align	2
+  55              	stack_ptr:
+  56 0000 00000000 		.word	mainStack
+  57              		.section	.text.TaskReturn,"ax",%progbits
+  58              		.align	1
+  59              		.syntax unified
+  60              		.thumb
+  61              		.thumb_func
+  62              		.fpu fpv4-sp-d16
+  64              	TaskReturn:
+  65              	.LFB130:
+  66              		.file 1 "Src/task.c"
+ARM GAS  /tmp/ccWMShQt.s 			page 2
+
+
    1:Src/task.c    **** #include "task.h"
    2:Src/task.c    **** 
    3:Src/task.c    **** 
-   4:Src/task.c    **** struct HardwareStackFrame
-   5:Src/task.c    **** {
-   6:Src/task.c    ****     uint32_t R0;
-   7:Src/task.c    ****     uint32_t R1;
-   8:Src/task.c    ****     uint32_t R2;
-   9:Src/task.c    ****     uint32_t R3;
-  10:Src/task.c    ****     uint32_t R12;
-  11:Src/task.c    ****     uint32_t LR;
-  12:Src/task.c    ****     uint32_t PC;
-  13:Src/task.c    ****     uint32_t xPSR;
-  14:Src/task.c    **** };
-  15:Src/task.c    **** 
-  16:Src/task.c    **** struct SoftwareStackFrame
-  17:Src/task.c    **** {
-  18:Src/task.c    ****     uint32_t R4;
-  19:Src/task.c    ****     uint32_t R5;
-  20:Src/task.c    ****     uint32_t R6;
-  21:Src/task.c    ****     uint32_t R7;
-  22:Src/task.c    ****     uint32_t R8;
-  23:Src/task.c    ****     uint32_t R9;
-  24:Src/task.c    ****     uint32_t R10;
-  25:Src/task.c    ****     uint32_t R11;
-  26:Src/task.c    **** 	
-  27:Src/task.c    **** };
+   4:Src/task.c    **** 
+   5:Src/task.c    **** static uint32_t lastTick = 0;
+   6:Src/task.c    **** static struct task tasks[MAX_TASKS];
+   7:Src/task.c    **** 
+   8:Src/task.c    **** static uint32_t taskCount = 0;
+   9:Src/task.c    **** static uint32_t nextTaskIndex = 0;
+  10:Src/task.c    **** static uint32_t idleTaskIndex = 0;
+  11:Src/task.c    **** 
+  12:Src/task.c    **** struct task *currentTask;
+  13:Src/task.c    **** struct task *nextTask;
+  14:Src/task.c    **** 
+  15:Src/task.c    **** uint8_t mainStack[STACK_SIZE]; //Allocate memory in stack
+  16:Src/task.c    **** uint8_t *stack_ptr = mainStack; //pointer to stack
+  17:Src/task.c    **** 
+  18:Src/task.c    **** 
+  19:Src/task.c    **** static void TaskReturn()
+  20:Src/task.c    **** {
+  67              		.loc 1 20 0
+  68              		.cfi_startproc
+  69              		@ args = 0, pretend = 0, frame = 0
+  70              		@ frame_needed = 1, uses_anonymous_args = 0
+  71              		@ link register save eliminated.
+  72 0000 80B4     		push	{r7}
+  73              	.LCFI0:
+  74              		.cfi_def_cfa_offset 4
+  75              		.cfi_offset 7, -4
+  76 0002 00AF     		add	r7, sp, #0
+  77              	.LCFI1:
+  78              		.cfi_def_cfa_register 7
+  79              	.L2:
+  21:Src/task.c    ****     while(1);
+  80              		.loc 1 21 0 discriminator 1
+  81 0004 FEE7     		b	.L2
+  82              		.cfi_endproc
+  83              	.LFE130:
+  85              		.section	.text.idleTask,"ax",%progbits
+  86              		.align	1
+  87              		.syntax unified
+  88              		.thumb
+  89              		.thumb_func
+  90              		.fpu fpv4-sp-d16
+  92              	idleTask:
+  93              	.LFB131:
+  22:Src/task.c    **** }
+  23:Src/task.c    **** static void idleTask()
+  24:Src/task.c    **** {
+  94              		.loc 1 24 0
+  95              		.cfi_startproc
+  96              		@ args = 0, pretend = 0, frame = 0
+  97              		@ frame_needed = 1, uses_anonymous_args = 0
+  98              		@ link register save eliminated.
+  99 0000 80B4     		push	{r7}
+ 100              	.LCFI2:
+ 101              		.cfi_def_cfa_offset 4
+ARM GAS  /tmp/ccWMShQt.s 			page 3
+
+
+ 102              		.cfi_offset 7, -4
+ 103 0002 00AF     		add	r7, sp, #0
+ 104              	.LCFI3:
+ 105              		.cfi_def_cfa_register 7
+ 106              	.L4:
+  25:Src/task.c    ****     while (1);  
+ 107              		.loc 1 25 0 discriminator 1
+ 108 0004 FEE7     		b	.L4
+ 109              		.cfi_endproc
+ 110              	.LFE131:
+ 112              		.section	.text.TaskCreate,"ax",%progbits
+ 113              		.align	1
+ 114              		.global	TaskCreate
+ 115              		.syntax unified
+ 116              		.thumb
+ 117              		.thumb_func
+ 118              		.fpu fpv4-sp-d16
+ 120              	TaskCreate:
+ 121              	.LFB132:
+  26:Src/task.c    **** }
+  27:Src/task.c    **** 
   28:Src/task.c    **** 
-  29:Src/task.c    **** static void TaskReturn()
+  29:Src/task.c    **** taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
   30:Src/task.c    **** {
-  27              		.loc 1 30 0
-  28              		.cfi_startproc
-ARM GAS  /tmp/ccLbN7qM.s 			page 2
+ 122              		.loc 1 30 0
+ 123              		.cfi_startproc
+ 124              		@ args = 0, pretend = 0, frame = 88
+ 125              		@ frame_needed = 1, uses_anonymous_args = 0
+ 126 0000 80B5     		push	{r7, lr}
+ 127              	.LCFI4:
+ 128              		.cfi_def_cfa_offset 8
+ 129              		.cfi_offset 7, -8
+ 130              		.cfi_offset 14, -4
+ 131 0002 96B0     		sub	sp, sp, #88
+ 132              	.LCFI5:
+ 133              		.cfi_def_cfa_offset 96
+ 134 0004 00AF     		add	r7, sp, #0
+ 135              	.LCFI6:
+ 136              		.cfi_def_cfa_register 7
+ 137 0006 F860     		str	r0, [r7, #12]
+ 138 0008 B960     		str	r1, [r7, #8]
+ 139 000a 7A60     		str	r2, [r7, #4]
+ 140 000c FB70     		strb	r3, [r7, #3]
+  31:Src/task.c    ****     tasks[taskCount].stackSize = stackSize;
+ 141              		.loc 1 31 0
+ 142 000e 524B     		ldr	r3, .L7
+ 143 0010 1A68     		ldr	r2, [r3]
+ 144 0012 5249     		ldr	r1, .L7+4
+ 145 0014 1346     		mov	r3, r2
+ 146 0016 9B00     		lsls	r3, r3, #2
+ 147 0018 1344     		add	r3, r3, r2
+ 148 001a DB00     		lsls	r3, r3, #3
+ 149 001c 0B44     		add	r3, r3, r1
+ 150 001e 0833     		adds	r3, r3, #8
+ 151 0020 BA68     		ldr	r2, [r7, #8]
+ 152 0022 1A60     		str	r2, [r3]
+  32:Src/task.c    ****     tasks[taskCount].priority = priority;
+ARM GAS  /tmp/ccWMShQt.s 			page 4
 
 
-  29              		@ args = 0, pretend = 0, frame = 0
-  30              		@ frame_needed = 1, uses_anonymous_args = 0
-  31              		@ link register save eliminated.
-  32 0000 80B4     		push	{r7}
-  33              	.LCFI0:
-  34              		.cfi_def_cfa_offset 4
-  35              		.cfi_offset 7, -4
-  36 0002 00AF     		add	r7, sp, #0
-  37              	.LCFI1:
-  38              		.cfi_def_cfa_register 7
-  39              	.L2:
-  31:Src/task.c    ****     while(1);
-  40              		.loc 1 31 0 discriminator 1
-  41 0004 FEE7     		b	.L2
-  42              		.cfi_endproc
-  43              	.LFE130:
-  45              		.section	.bss.lastTick,"aw",%nobits
-  46              		.align	2
-  49              	lastTick:
-  50 0000 00000000 		.space	4
-  51              		.section	.bss.tasks,"aw",%nobits
-  52              		.align	2
-  55              	tasks:
-  56 0000 00000000 		.space	40
-  56      00000000 
-  56      00000000 
-  56      00000000 
-  56      00000000 
-  57              		.section	.bss.taskCount,"aw",%nobits
-  58              		.align	2
-  61              	taskCount:
-  62 0000 00000000 		.space	4
-  63              		.section	.bss.nextTaskIndex,"aw",%nobits
-  64              		.align	2
-  67              	nextTaskIndex:
-  68 0000 00000000 		.space	4
-  69              		.comm	currentTask,4,4
-  70              		.comm	nextTask,4,4
-  71              		.section	.text.TaskCreate,"ax",%progbits
-  72              		.align	1
-  73              		.global	TaskCreate
-  74              		.syntax unified
-  75              		.thumb
-  76              		.thumb_func
-  77              		.fpu fpv4-sp-d16
-  79              	TaskCreate:
-  80              	.LFB131:
-  32:Src/task.c    **** }
-  33:Src/task.c    **** 
-  34:Src/task.c    **** struct task
-  35:Src/task.c    **** {
-  36:Src/task.c    ****     uint32_t stackPointer;
-  37:Src/task.c    **** };
-  38:Src/task.c    **** static uint32_t lastTick = 0;
-  39:Src/task.c    **** static struct task tasks[10];
-  40:Src/task.c    **** 
-  41:Src/task.c    **** static uint32_t taskCount = 0;
-ARM GAS  /tmp/ccLbN7qM.s 			page 3
+ 153              		.loc 1 32 0
+ 154 0024 4C4B     		ldr	r3, .L7
+ 155 0026 1A68     		ldr	r2, [r3]
+ 156 0028 4C49     		ldr	r1, .L7+4
+ 157 002a 1346     		mov	r3, r2
+ 158 002c 9B00     		lsls	r3, r3, #2
+ 159 002e 1344     		add	r3, r3, r2
+ 160 0030 DB00     		lsls	r3, r3, #3
+ 161 0032 0B44     		add	r3, r3, r1
+ 162 0034 0C33     		adds	r3, r3, #12
+ 163 0036 FA78     		ldrb	r2, [r7, #3]
+ 164 0038 1A70     		strb	r2, [r3]
+  33:Src/task.c    ****     strcpy(tasks[taskCount].taskName,name);
+ 165              		.loc 1 33 0
+ 166 003a 474B     		ldr	r3, .L7
+ 167 003c 1A68     		ldr	r2, [r3]
+ 168 003e 1346     		mov	r3, r2
+ 169 0040 9B00     		lsls	r3, r3, #2
+ 170 0042 1344     		add	r3, r3, r2
+ 171 0044 DB00     		lsls	r3, r3, #3
+ 172 0046 1033     		adds	r3, r3, #16
+ 173 0048 444A     		ldr	r2, .L7+4
+ 174 004a 1344     		add	r3, r3, r2
+ 175 004c 0433     		adds	r3, r3, #4
+ 176 004e F968     		ldr	r1, [r7, #12]
+ 177 0050 1846     		mov	r0, r3
+ 178 0052 FFF7FEFF 		bl	strcpy
+  34:Src/task.c    ****     tasks[taskCount].taskId = (taskid_t)taskCount;
+ 179              		.loc 1 34 0
+ 180 0056 404B     		ldr	r3, .L7
+ 181 0058 1968     		ldr	r1, [r3]
+ 182 005a 3F4B     		ldr	r3, .L7
+ 183 005c 1A68     		ldr	r2, [r3]
+ 184 005e C8B2     		uxtb	r0, r1
+ 185 0060 3E49     		ldr	r1, .L7+4
+ 186 0062 1346     		mov	r3, r2
+ 187 0064 9B00     		lsls	r3, r3, #2
+ 188 0066 1344     		add	r3, r3, r2
+ 189 0068 DB00     		lsls	r3, r3, #3
+ 190 006a 0B44     		add	r3, r3, r1
+ 191 006c 0433     		adds	r3, r3, #4
+ 192 006e 0246     		mov	r2, r0
+ 193 0070 1A70     		strb	r2, [r3]
+  35:Src/task.c    ****     tasks[taskCount].taskState = TaskReady;
+ 194              		.loc 1 35 0
+ 195 0072 394B     		ldr	r3, .L7
+ 196 0074 1A68     		ldr	r2, [r3]
+ 197 0076 3949     		ldr	r1, .L7+4
+ 198 0078 1346     		mov	r3, r2
+ 199 007a 9B00     		lsls	r3, r3, #2
+ 200 007c 1344     		add	r3, r3, r2
+ 201 007e DB00     		lsls	r3, r3, #3
+ 202 0080 0B44     		add	r3, r3, r1
+ 203 0082 0D33     		adds	r3, r3, #13
+ 204 0084 0222     		movs	r2, #2
+ 205 0086 1A70     		strb	r2, [r3]
+  36:Src/task.c    ****     tasks[taskCount].delayUntil = 0;
+ARM GAS  /tmp/ccWMShQt.s 			page 5
 
 
-  42:Src/task.c    **** static uint32_t nextTaskIndex = 0;
-  43:Src/task.c    **** 
-  44:Src/task.c    **** struct task *currentTask;
-  45:Src/task.c    **** struct task *nextTask;
-  46:Src/task.c    **** 
-  47:Src/task.c    **** 
-  48:Src/task.c    **** void TaskCreate(uint8_t *stack, uint32_t stackSize, void (*entrypoint)())
-  49:Src/task.c    **** {
-  81              		.loc 1 49 0
-  82              		.cfi_startproc
-  83              		@ args = 0, pretend = 0, frame = 88
-  84              		@ frame_needed = 1, uses_anonymous_args = 0
-  85 0000 80B5     		push	{r7, lr}
-  86              	.LCFI2:
-  87              		.cfi_def_cfa_offset 8
-  88              		.cfi_offset 7, -8
-  89              		.cfi_offset 14, -4
-  90 0002 96B0     		sub	sp, sp, #88
-  91              	.LCFI3:
-  92              		.cfi_def_cfa_offset 96
-  93 0004 00AF     		add	r7, sp, #0
-  94              	.LCFI4:
-  95              		.cfi_def_cfa_register 7
-  96 0006 F860     		str	r0, [r7, #12]
-  97 0008 B960     		str	r1, [r7, #8]
-  98 000a 7A60     		str	r2, [r7, #4]
-  50:Src/task.c    ****     struct HardwareStackFrame hardwareStackFrame;
-  51:Src/task.c    ****     struct SoftwareStackFrame softwareStackFrame;
-  52:Src/task.c    ****     
-  53:Src/task.c    ****     hardwareStackFrame.R0 = 0;
-  99              		.loc 1 53 0
- 100 000c 0023     		movs	r3, #0
- 101 000e 7B63     		str	r3, [r7, #52]
-  54:Src/task.c    ****     hardwareStackFrame.R1 = 1;
- 102              		.loc 1 54 0
- 103 0010 0123     		movs	r3, #1
- 104 0012 BB63     		str	r3, [r7, #56]
-  55:Src/task.c    ****     hardwareStackFrame.R2 = 2;
- 105              		.loc 1 55 0
- 106 0014 0223     		movs	r3, #2
- 107 0016 FB63     		str	r3, [r7, #60]
-  56:Src/task.c    ****     hardwareStackFrame.R3 = 3;
- 108              		.loc 1 56 0
- 109 0018 0323     		movs	r3, #3
- 110 001a 3B64     		str	r3, [r7, #64]
-  57:Src/task.c    ****     hardwareStackFrame.R12 = 12;
- 111              		.loc 1 57 0
- 112 001c 0C23     		movs	r3, #12
- 113 001e 7B64     		str	r3, [r7, #68]
-  58:Src/task.c    ****     hardwareStackFrame.LR = (uint32_t)TaskReturn;
- 114              		.loc 1 58 0
- 115 0020 1F4B     		ldr	r3, .L4
- 116 0022 BB64     		str	r3, [r7, #72]
-  59:Src/task.c    ****     hardwareStackFrame.PC = (uint32_t)entrypoint;
- 117              		.loc 1 59 0
- 118 0024 7B68     		ldr	r3, [r7, #4]
- 119 0026 FB64     		str	r3, [r7, #76]
-ARM GAS  /tmp/ccLbN7qM.s 			page 4
+ 206              		.loc 1 36 0
+ 207 0088 334B     		ldr	r3, .L7
+ 208 008a 1A68     		ldr	r2, [r3]
+ 209 008c 3349     		ldr	r1, .L7+4
+ 210 008e 1346     		mov	r3, r2
+ 211 0090 9B00     		lsls	r3, r3, #2
+ 212 0092 1344     		add	r3, r3, r2
+ 213 0094 DB00     		lsls	r3, r3, #3
+ 214 0096 0B44     		add	r3, r3, r1
+ 215 0098 1033     		adds	r3, r3, #16
+ 216 009a 0022     		movs	r2, #0
+ 217 009c 1A60     		str	r2, [r3]
+  37:Src/task.c    **** 
+  38:Src/task.c    ****     struct HardwareStackFrame hardwareStackFrame;
+  39:Src/task.c    ****     struct SoftwareStackFrame softwareStackFrame;
+  40:Src/task.c    ****     
+  41:Src/task.c    ****     hardwareStackFrame.R0 = 0;
+ 218              		.loc 1 41 0
+ 219 009e 0023     		movs	r3, #0
+ 220 00a0 7B63     		str	r3, [r7, #52]
+  42:Src/task.c    ****     hardwareStackFrame.R1 = 1;
+ 221              		.loc 1 42 0
+ 222 00a2 0123     		movs	r3, #1
+ 223 00a4 BB63     		str	r3, [r7, #56]
+  43:Src/task.c    ****     hardwareStackFrame.R2 = 2;
+ 224              		.loc 1 43 0
+ 225 00a6 0223     		movs	r3, #2
+ 226 00a8 FB63     		str	r3, [r7, #60]
+  44:Src/task.c    ****     hardwareStackFrame.R3 = 3;
+ 227              		.loc 1 44 0
+ 228 00aa 0323     		movs	r3, #3
+ 229 00ac 3B64     		str	r3, [r7, #64]
+  45:Src/task.c    ****     hardwareStackFrame.R12 = 12;
+ 230              		.loc 1 45 0
+ 231 00ae 0C23     		movs	r3, #12
+ 232 00b0 7B64     		str	r3, [r7, #68]
+  46:Src/task.c    ****     hardwareStackFrame.LR = (uint32_t)TaskReturn;
+ 233              		.loc 1 46 0
+ 234 00b2 2B4B     		ldr	r3, .L7+8
+ 235 00b4 BB64     		str	r3, [r7, #72]
+  47:Src/task.c    ****     hardwareStackFrame.PC = (uint32_t)entrypoint;
+ 236              		.loc 1 47 0
+ 237 00b6 7B68     		ldr	r3, [r7, #4]
+ 238 00b8 FB64     		str	r3, [r7, #76]
+  48:Src/task.c    ****     hardwareStackFrame.xPSR = 0x01000000;
+ 239              		.loc 1 48 0
+ 240 00ba 4FF08073 		mov	r3, #16777216
+ 241 00be 3B65     		str	r3, [r7, #80]
+  49:Src/task.c    ****     
+  50:Src/task.c    ****     softwareStackFrame.R4 = 4;
+ 242              		.loc 1 50 0
+ 243 00c0 0423     		movs	r3, #4
+ 244 00c2 7B61     		str	r3, [r7, #20]
+  51:Src/task.c    ****     softwareStackFrame.R5 = 5;
+ 245              		.loc 1 51 0
+ 246 00c4 0523     		movs	r3, #5
+ 247 00c6 BB61     		str	r3, [r7, #24]
+ARM GAS  /tmp/ccWMShQt.s 			page 6
 
 
-  60:Src/task.c    ****     hardwareStackFrame.xPSR = 0x01000000;
- 120              		.loc 1 60 0
- 121 0028 4FF08073 		mov	r3, #16777216
- 122 002c 3B65     		str	r3, [r7, #80]
-  61:Src/task.c    ****     
-  62:Src/task.c    ****     softwareStackFrame.R4 = 4;
- 123              		.loc 1 62 0
- 124 002e 0423     		movs	r3, #4
- 125 0030 7B61     		str	r3, [r7, #20]
-  63:Src/task.c    ****     softwareStackFrame.R5 = 5;
- 126              		.loc 1 63 0
- 127 0032 0523     		movs	r3, #5
- 128 0034 BB61     		str	r3, [r7, #24]
-  64:Src/task.c    ****     softwareStackFrame.R6 = 6;
- 129              		.loc 1 64 0
- 130 0036 0623     		movs	r3, #6
- 131 0038 FB61     		str	r3, [r7, #28]
-  65:Src/task.c    ****     softwareStackFrame.R7 = 7;
- 132              		.loc 1 65 0
- 133 003a 0723     		movs	r3, #7
- 134 003c 3B62     		str	r3, [r7, #32]
-  66:Src/task.c    ****     softwareStackFrame.R8 = 8;
- 135              		.loc 1 66 0
- 136 003e 0823     		movs	r3, #8
- 137 0040 7B62     		str	r3, [r7, #36]
-  67:Src/task.c    ****     softwareStackFrame.R9 = 9;
- 138              		.loc 1 67 0
- 139 0042 0923     		movs	r3, #9
- 140 0044 BB62     		str	r3, [r7, #40]
-  68:Src/task.c    ****     softwareStackFrame.R10 = 10;
- 141              		.loc 1 68 0
- 142 0046 0A23     		movs	r3, #10
- 143 0048 FB62     		str	r3, [r7, #44]
-  69:Src/task.c    ****     softwareStackFrame.R11 = 11;
- 144              		.loc 1 69 0
- 145 004a 0B23     		movs	r3, #11
- 146 004c 3B63     		str	r3, [r7, #48]
-  70:Src/task.c    **** 	
-  71:Src/task.c    ****     stack += stackSize;
- 147              		.loc 1 71 0
- 148 004e FA68     		ldr	r2, [r7, #12]
- 149 0050 BB68     		ldr	r3, [r7, #8]
- 150 0052 1344     		add	r3, r3, r2
- 151 0054 FB60     		str	r3, [r7, #12]
-  72:Src/task.c    ****     uint32_t *stackPointer = (uint32_t *)stack;
- 152              		.loc 1 72 0
- 153 0056 FB68     		ldr	r3, [r7, #12]
- 154 0058 7B65     		str	r3, [r7, #84]
-  73:Src/task.c    ****     stackPointer -= sizeof(struct HardwareStackFrame) / sizeof(uint32_t); //make space for hardware
- 155              		.loc 1 73 0
- 156 005a 7B6D     		ldr	r3, [r7, #84]
- 157 005c 203B     		subs	r3, r3, #32
- 158 005e 7B65     		str	r3, [r7, #84]
-  74:Src/task.c    ****     memcpy(stackPointer, &hardwareStackFrame, sizeof(struct HardwareStackFrame));
- 159              		.loc 1 74 0
- 160 0060 07F13403 		add	r3, r7, #52
- 161 0064 2022     		movs	r2, #32
-ARM GAS  /tmp/ccLbN7qM.s 			page 5
+  52:Src/task.c    ****     softwareStackFrame.R6 = 6;
+ 248              		.loc 1 52 0
+ 249 00c8 0623     		movs	r3, #6
+ 250 00ca FB61     		str	r3, [r7, #28]
+  53:Src/task.c    ****     softwareStackFrame.R7 = 7;
+ 251              		.loc 1 53 0
+ 252 00cc 0723     		movs	r3, #7
+ 253 00ce 3B62     		str	r3, [r7, #32]
+  54:Src/task.c    ****     softwareStackFrame.R8 = 8;
+ 254              		.loc 1 54 0
+ 255 00d0 0823     		movs	r3, #8
+ 256 00d2 7B62     		str	r3, [r7, #36]
+  55:Src/task.c    ****     softwareStackFrame.R9 = 9;
+ 257              		.loc 1 55 0
+ 258 00d4 0923     		movs	r3, #9
+ 259 00d6 BB62     		str	r3, [r7, #40]
+  56:Src/task.c    ****     softwareStackFrame.R10 = 10;
+ 260              		.loc 1 56 0
+ 261 00d8 0A23     		movs	r3, #10
+ 262 00da FB62     		str	r3, [r7, #44]
+  57:Src/task.c    ****     softwareStackFrame.R11 = 11;
+ 263              		.loc 1 57 0
+ 264 00dc 0B23     		movs	r3, #11
+ 265 00de 3B63     		str	r3, [r7, #48]
+  58:Src/task.c    **** 	
+  59:Src/task.c    ****     stack_ptr += stackSize;
+ 266              		.loc 1 59 0
+ 267 00e0 204B     		ldr	r3, .L7+12
+ 268 00e2 1A68     		ldr	r2, [r3]
+ 269 00e4 BB68     		ldr	r3, [r7, #8]
+ 270 00e6 1344     		add	r3, r3, r2
+ 271 00e8 1E4A     		ldr	r2, .L7+12
+ 272 00ea 1360     		str	r3, [r2]
+  60:Src/task.c    ****     uint32_t *stackPointer = (uint32_t *)stack_ptr;
+ 273              		.loc 1 60 0
+ 274 00ec 1D4B     		ldr	r3, .L7+12
+ 275 00ee 1B68     		ldr	r3, [r3]
+ 276 00f0 7B65     		str	r3, [r7, #84]
+  61:Src/task.c    ****     stackPointer -= sizeof(struct HardwareStackFrame) / sizeof(uint32_t); //make space for hardware
+ 277              		.loc 1 61 0
+ 278 00f2 7B6D     		ldr	r3, [r7, #84]
+ 279 00f4 203B     		subs	r3, r3, #32
+ 280 00f6 7B65     		str	r3, [r7, #84]
+  62:Src/task.c    ****     memcpy(stackPointer, &hardwareStackFrame, sizeof(struct HardwareStackFrame));
+ 281              		.loc 1 62 0
+ 282 00f8 07F13403 		add	r3, r7, #52
+ 283 00fc 2022     		movs	r2, #32
+ 284 00fe 1946     		mov	r1, r3
+ 285 0100 786D     		ldr	r0, [r7, #84]
+ 286 0102 FFF7FEFF 		bl	memcpy
+  63:Src/task.c    ****     
+  64:Src/task.c    ****     stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); //make space for software
+ 287              		.loc 1 64 0
+ 288 0106 7B6D     		ldr	r3, [r7, #84]
+ 289 0108 203B     		subs	r3, r3, #32
+ 290 010a 7B65     		str	r3, [r7, #84]
+  65:Src/task.c    ****     memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
+ARM GAS  /tmp/ccWMShQt.s 			page 7
 
 
- 162 0066 1946     		mov	r1, r3
- 163 0068 786D     		ldr	r0, [r7, #84]
- 164 006a FFF7FEFF 		bl	memcpy
-  75:Src/task.c    ****     
-  76:Src/task.c    ****     stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); //make space for software
- 165              		.loc 1 76 0
- 166 006e 7B6D     		ldr	r3, [r7, #84]
- 167 0070 203B     		subs	r3, r3, #32
- 168 0072 7B65     		str	r3, [r7, #84]
-  77:Src/task.c    ****     memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
- 169              		.loc 1 77 0
- 170 0074 07F11403 		add	r3, r7, #20
- 171 0078 2022     		movs	r2, #32
- 172 007a 1946     		mov	r1, r3
- 173 007c 786D     		ldr	r0, [r7, #84]
- 174 007e FFF7FEFF 		bl	memcpy
-  78:Src/task.c    ****     
-  79:Src/task.c    ****     tasks[taskCount].stackPointer = (uint32_t)stackPointer;
- 175              		.loc 1 79 0
- 176 0082 084B     		ldr	r3, .L4+4
- 177 0084 1B68     		ldr	r3, [r3]
- 178 0086 7A6D     		ldr	r2, [r7, #84]
- 179 0088 0749     		ldr	r1, .L4+8
- 180 008a 41F82320 		str	r2, [r1, r3, lsl #2]
-  80:Src/task.c    ****     
-  81:Src/task.c    ****     taskCount++;    
- 181              		.loc 1 81 0
- 182 008e 054B     		ldr	r3, .L4+4
- 183 0090 1B68     		ldr	r3, [r3]
- 184 0092 0133     		adds	r3, r3, #1
- 185 0094 034A     		ldr	r2, .L4+4
- 186 0096 1360     		str	r3, [r2]
-  82:Src/task.c    **** }
- 187              		.loc 1 82 0
- 188 0098 00BF     		nop
- 189 009a 5837     		adds	r7, r7, #88
- 190              	.LCFI5:
- 191              		.cfi_def_cfa_offset 8
- 192 009c BD46     		mov	sp, r7
- 193              	.LCFI6:
- 194              		.cfi_def_cfa_register 13
- 195              		@ sp needed
- 196 009e 80BD     		pop	{r7, pc}
- 197              	.L5:
- 198              		.align	2
- 199              	.L4:
- 200 00a0 00000000 		.word	TaskReturn
- 201 00a4 00000000 		.word	taskCount
- 202 00a8 00000000 		.word	tasks
- 203              		.cfi_endproc
- 204              	.LFE131:
- 206              		.section	.text.switchTask,"ax",%progbits
- 207              		.align	1
- 208              		.global	switchTask
- 209              		.syntax unified
- 210              		.thumb
- 211              		.thumb_func
-ARM GAS  /tmp/ccLbN7qM.s 			page 6
+ 291              		.loc 1 65 0
+ 292 010c 07F11403 		add	r3, r7, #20
+ 293 0110 2022     		movs	r2, #32
+ 294 0112 1946     		mov	r1, r3
+ 295 0114 786D     		ldr	r0, [r7, #84]
+ 296 0116 FFF7FEFF 		bl	memcpy
+  66:Src/task.c    ****     
+  67:Src/task.c    ****     tasks[taskCount].stackPointer = (uint32_t)stackPointer;
+ 297              		.loc 1 67 0
+ 298 011a 0F4B     		ldr	r3, .L7
+ 299 011c 1A68     		ldr	r2, [r3]
+ 300 011e 796D     		ldr	r1, [r7, #84]
+ 301 0120 0E48     		ldr	r0, .L7+4
+ 302 0122 1346     		mov	r3, r2
+ 303 0124 9B00     		lsls	r3, r3, #2
+ 304 0126 1344     		add	r3, r3, r2
+ 305 0128 DB00     		lsls	r3, r3, #3
+ 306 012a 0344     		add	r3, r3, r0
+ 307 012c 1960     		str	r1, [r3]
+  68:Src/task.c    ****     
+  69:Src/task.c    ****     
+  70:Src/task.c    ****     taskCount++; 
+ 308              		.loc 1 70 0
+ 309 012e 0A4B     		ldr	r3, .L7
+ 310 0130 1B68     		ldr	r3, [r3]
+ 311 0132 0133     		adds	r3, r3, #1
+ 312 0134 084A     		ldr	r2, .L7
+ 313 0136 1360     		str	r3, [r2]
+  71:Src/task.c    ****     return tasks[taskCount -1].taskId;
+ 314              		.loc 1 71 0
+ 315 0138 074B     		ldr	r3, .L7
+ 316 013a 1B68     		ldr	r3, [r3]
+ 317 013c 5A1E     		subs	r2, r3, #1
+ 318 013e 0749     		ldr	r1, .L7+4
+ 319 0140 1346     		mov	r3, r2
+ 320 0142 9B00     		lsls	r3, r3, #2
+ 321 0144 1344     		add	r3, r3, r2
+ 322 0146 DB00     		lsls	r3, r3, #3
+ 323 0148 0B44     		add	r3, r3, r1
+ 324 014a 0433     		adds	r3, r3, #4
+ 325 014c 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+  72:Src/task.c    **** }
+ 326              		.loc 1 72 0
+ 327 014e 1846     		mov	r0, r3
+ 328 0150 5837     		adds	r7, r7, #88
+ 329              	.LCFI7:
+ 330              		.cfi_def_cfa_offset 8
+ 331 0152 BD46     		mov	sp, r7
+ 332              	.LCFI8:
+ 333              		.cfi_def_cfa_register 13
+ 334              		@ sp needed
+ 335 0154 80BD     		pop	{r7, pc}
+ 336              	.L8:
+ 337 0156 00BF     		.align	2
+ 338              	.L7:
+ 339 0158 00000000 		.word	taskCount
+ 340 015c 00000000 		.word	tasks
+ARM GAS  /tmp/ccWMShQt.s 			page 8
 
 
- 212              		.fpu fpv4-sp-d16
- 214              	switchTask:
- 215              	.LFB132:
-  83:Src/task.c    **** 
-  84:Src/task.c    **** void switchTask(void)
-  85:Src/task.c    **** {
- 216              		.loc 1 85 0
- 217              		.cfi_startproc
- 218              		@ args = 0, pretend = 0, frame = 0
- 219              		@ frame_needed = 1, uses_anonymous_args = 0
- 220              		@ link register save eliminated.
- 221 0000 80B4     		push	{r7}
- 222              	.LCFI7:
- 223              		.cfi_def_cfa_offset 4
- 224              		.cfi_offset 7, -4
- 225 0002 00AF     		add	r7, sp, #0
- 226              	.LCFI8:
- 227              		.cfi_def_cfa_register 7
-  86:Src/task.c    **** 
-  87:Src/task.c    **** 	__asm("cpsid i"); //disable irq
- 228              		.loc 1 87 0
- 229              		.syntax unified
- 230              	@ 87 "Src/task.c" 1
- 231 0004 72B6     		cpsid i
- 232              	@ 0 "" 2
-  88:Src/task.c    **** 	currentTask = nextTask;
- 233              		.loc 1 88 0
- 234              		.thumb
- 235              		.syntax unified
- 236 0006 104B     		ldr	r3, .L7
- 237 0008 1B68     		ldr	r3, [r3]
- 238 000a 104A     		ldr	r2, .L7+4
- 239 000c 1360     		str	r3, [r2]
-  89:Src/task.c    ****     nextTaskIndex++;
- 240              		.loc 1 89 0
- 241 000e 104B     		ldr	r3, .L7+8
- 242 0010 1B68     		ldr	r3, [r3]
- 243 0012 0133     		adds	r3, r3, #1
- 244 0014 0E4A     		ldr	r2, .L7+8
- 245 0016 1360     		str	r3, [r2]
-  90:Src/task.c    ****     nextTaskIndex %= taskCount;
- 246              		.loc 1 90 0
- 247 0018 0D4B     		ldr	r3, .L7+8
- 248 001a 1B68     		ldr	r3, [r3]
- 249 001c 0D4A     		ldr	r2, .L7+12
- 250 001e 1268     		ldr	r2, [r2]
- 251 0020 B3FBF2F1 		udiv	r1, r3, r2
- 252 0024 02FB01F2 		mul	r2, r2, r1
- 253 0028 9B1A     		subs	r3, r3, r2
- 254 002a 094A     		ldr	r2, .L7+8
- 255 002c 1360     		str	r3, [r2]
-  91:Src/task.c    ****     
-  92:Src/task.c    ****     nextTask = &tasks[nextTaskIndex];
- 256              		.loc 1 92 0
- 257 002e 084B     		ldr	r3, .L7+8
- 258 0030 1B68     		ldr	r3, [r3]
- 259 0032 9B00     		lsls	r3, r3, #2
-ARM GAS  /tmp/ccLbN7qM.s 			page 7
+ 341 0160 00000000 		.word	TaskReturn
+ 342 0164 00000000 		.word	stack_ptr
+ 343              		.cfi_endproc
+ 344              	.LFE132:
+ 346              		.section	.text.return_task_name,"ax",%progbits
+ 347              		.align	1
+ 348              		.global	return_task_name
+ 349              		.syntax unified
+ 350              		.thumb
+ 351              		.thumb_func
+ 352              		.fpu fpv4-sp-d16
+ 354              	return_task_name:
+ 355              	.LFB133:
+  73:Src/task.c    **** 
+  74:Src/task.c    **** const char* return_task_name()
+  75:Src/task.c    **** {
+ 356              		.loc 1 75 0
+ 357              		.cfi_startproc
+ 358              		@ args = 0, pretend = 0, frame = 0
+ 359              		@ frame_needed = 1, uses_anonymous_args = 0
+ 360              		@ link register save eliminated.
+ 361 0000 80B4     		push	{r7}
+ 362              	.LCFI9:
+ 363              		.cfi_def_cfa_offset 4
+ 364              		.cfi_offset 7, -4
+ 365 0002 00AF     		add	r7, sp, #0
+ 366              	.LCFI10:
+ 367              		.cfi_def_cfa_register 7
+  76:Src/task.c    ****     __asm("cpsid i"); //disable irq
+ 368              		.loc 1 76 0
+ 369              		.syntax unified
+ 370              	@ 76 "Src/task.c" 1
+ 371 0004 72B6     		cpsid i
+ 372              	@ 0 "" 2
+  77:Src/task.c    ****     return tasks[nextTaskIndex].taskName;
+ 373              		.loc 1 77 0
+ 374              		.thumb
+ 375              		.syntax unified
+ 376 0006 074B     		ldr	r3, .L11
+ 377 0008 1A68     		ldr	r2, [r3]
+ 378 000a 1346     		mov	r3, r2
+ 379 000c 9B00     		lsls	r3, r3, #2
+ 380 000e 1344     		add	r3, r3, r2
+ 381 0010 DB00     		lsls	r3, r3, #3
+ 382 0012 1033     		adds	r3, r3, #16
+ 383 0014 044A     		ldr	r2, .L11+4
+ 384 0016 1344     		add	r3, r3, r2
+ 385 0018 0433     		adds	r3, r3, #4
+  78:Src/task.c    ****     __ASM("cpsie i"); //reenable irq
+  79:Src/task.c    **** }
+ 386              		.loc 1 79 0
+ 387 001a 1846     		mov	r0, r3
+ 388 001c BD46     		mov	sp, r7
+ 389              	.LCFI11:
+ 390              		.cfi_def_cfa_register 13
+ 391              		@ sp needed
+ 392 001e 5DF8047B 		ldr	r7, [sp], #4
+ARM GAS  /tmp/ccWMShQt.s 			page 9
 
 
- 260 0034 084A     		ldr	r2, .L7+16
- 261 0036 1344     		add	r3, r3, r2
- 262 0038 034A     		ldr	r2, .L7
- 263 003a 1360     		str	r3, [r2]
-  93:Src/task.c    ****     __ASM("cpsie i"); //reenable irq
- 264              		.loc 1 93 0
- 265              		.syntax unified
- 266              	@ 93 "Src/task.c" 1
- 267 003c 62B6     		cpsie i
- 268              	@ 0 "" 2
-  94:Src/task.c    **** 
-  95:Src/task.c    ****     
-  96:Src/task.c    **** }
- 269              		.loc 1 96 0
- 270              		.thumb
- 271              		.syntax unified
- 272 003e 00BF     		nop
- 273 0040 BD46     		mov	sp, r7
- 274              	.LCFI9:
- 275              		.cfi_def_cfa_register 13
- 276              		@ sp needed
- 277 0042 5DF8047B 		ldr	r7, [sp], #4
- 278              	.LCFI10:
- 279              		.cfi_restore 7
- 280              		.cfi_def_cfa_offset 0
- 281 0046 7047     		bx	lr
- 282              	.L8:
- 283              		.align	2
- 284              	.L7:
- 285 0048 00000000 		.word	nextTask
- 286 004c 00000000 		.word	currentTask
- 287 0050 00000000 		.word	nextTaskIndex
- 288 0054 00000000 		.word	taskCount
- 289 0058 00000000 		.word	tasks
- 290              		.cfi_endproc
- 291              	.LFE132:
- 293              		.section	.text.TaskYield,"ax",%progbits
- 294              		.align	1
- 295              		.global	TaskYield
- 296              		.syntax unified
- 297              		.thumb
- 298              		.thumb_func
- 299              		.fpu fpv4-sp-d16
- 301              	TaskYield:
- 302              	.LFB133:
-  97:Src/task.c    **** 
-  98:Src/task.c    **** 
-  99:Src/task.c    **** void TaskYield(void)
- 100:Src/task.c    **** {
- 303              		.loc 1 100 0
- 304              		.cfi_startproc
- 305              		@ args = 0, pretend = 0, frame = 0
- 306              		@ frame_needed = 1, uses_anonymous_args = 0
- 307 0000 80B5     		push	{r7, lr}
- 308              	.LCFI11:
- 309              		.cfi_def_cfa_offset 8
- 310              		.cfi_offset 7, -8
-ARM GAS  /tmp/ccLbN7qM.s 			page 8
+ 393              	.LCFI12:
+ 394              		.cfi_restore 7
+ 395              		.cfi_def_cfa_offset 0
+ 396 0022 7047     		bx	lr
+ 397              	.L12:
+ 398              		.align	2
+ 399              	.L11:
+ 400 0024 00000000 		.word	nextTaskIndex
+ 401 0028 00000000 		.word	tasks
+ 402              		.cfi_endproc
+ 403              	.LFE133:
+ 405              		.section	.text.taskDelay,"ax",%progbits
+ 406              		.align	1
+ 407              		.global	taskDelay
+ 408              		.syntax unified
+ 409              		.thumb
+ 410              		.thumb_func
+ 411              		.fpu fpv4-sp-d16
+ 413              	taskDelay:
+ 414              	.LFB134:
+  80:Src/task.c    **** 
+  81:Src/task.c    **** 
+  82:Src/task.c    **** void taskDelay(uint32_t delayTime)
+  83:Src/task.c    **** {
+ 415              		.loc 1 83 0
+ 416              		.cfi_startproc
+ 417              		@ args = 0, pretend = 0, frame = 8
+ 418              		@ frame_needed = 1, uses_anonymous_args = 0
+ 419 0000 80B5     		push	{r7, lr}
+ 420              	.LCFI13:
+ 421              		.cfi_def_cfa_offset 8
+ 422              		.cfi_offset 7, -8
+ 423              		.cfi_offset 14, -4
+ 424 0002 82B0     		sub	sp, sp, #8
+ 425              	.LCFI14:
+ 426              		.cfi_def_cfa_offset 16
+ 427 0004 00AF     		add	r7, sp, #0
+ 428              	.LCFI15:
+ 429              		.cfi_def_cfa_register 7
+ 430 0006 7860     		str	r0, [r7, #4]
+  84:Src/task.c    ****     __asm("cpsid i"); //disable irq
+ 431              		.loc 1 84 0
+ 432              		.syntax unified
+ 433              	@ 84 "Src/task.c" 1
+ 434 0008 72B6     		cpsid i
+ 435              	@ 0 "" 2
+  85:Src/task.c    ****     tasks[nextTaskIndex].taskState = TaskBlocked;
+ 436              		.loc 1 85 0
+ 437              		.thumb
+ 438              		.syntax unified
+ 439 000a 134B     		ldr	r3, .L14
+ 440 000c 1A68     		ldr	r2, [r3]
+ 441 000e 1349     		ldr	r1, .L14+4
+ 442 0010 1346     		mov	r3, r2
+ 443 0012 9B00     		lsls	r3, r3, #2
+ 444 0014 1344     		add	r3, r3, r2
+ 445 0016 DB00     		lsls	r3, r3, #3
+ARM GAS  /tmp/ccWMShQt.s 			page 10
 
 
- 311              		.cfi_offset 14, -4
- 312 0002 00AF     		add	r7, sp, #0
- 313              	.LCFI12:
- 314              		.cfi_def_cfa_register 7
- 101:Src/task.c    **** 	switchTask();
- 315              		.loc 1 101 0
- 316 0004 FFF7FEFF 		bl	switchTask
- 102:Src/task.c    **** }
- 317              		.loc 1 102 0
- 318 0008 00BF     		nop
- 319 000a 80BD     		pop	{r7, pc}
- 320              		.cfi_endproc
- 321              	.LFE133:
- 323              		.section	.text.SVC_Handler,"ax",%progbits
- 324              		.align	1
- 325              		.global	SVC_Handler
- 326              		.syntax unified
- 327              		.thumb
- 328              		.thumb_func
- 329              		.fpu fpv4-sp-d16
- 331              	SVC_Handler:
- 332              	.LFB134:
- 103:Src/task.c    **** 
- 104:Src/task.c    **** __attribute__((naked)) 
- 105:Src/task.c    **** void SVC_Handler(void){
- 333              		.loc 1 105 0
- 334              		.cfi_startproc
- 335              		@ Naked Function: prologue and epilogue provided by programmer.
- 336              		@ args = 0, pretend = 0, frame = 0
- 337              		@ frame_needed = 1, uses_anonymous_args = 0
- 106:Src/task.c    **** 
- 107:Src/task.c    ****     __asm ("cpsid i");
- 338              		.loc 1 107 0
- 339              		.syntax unified
- 340              	@ 107 "Src/task.c" 1
- 341 0000 72B6     		cpsid i
- 342              	@ 0 "" 2
- 108:Src/task.c    ****     __asm("ldr r0, =nextTask");
- 343              		.loc 1 108 0
- 344              	@ 108 "Src/task.c" 1
- 345 0002 0648     		ldr r0, =nextTask
- 346              	@ 0 "" 2
- 109:Src/task.c    ****     __asm("ldr r0, [r0]");
- 347              		.loc 1 109 0
- 348              	@ 109 "Src/task.c" 1
- 349 0004 0068     		ldr r0, [r0]
- 350              	@ 0 "" 2
- 110:Src/task.c    ****     __asm("ldr r0, [r0]");
- 351              		.loc 1 110 0
- 352              	@ 110 "Src/task.c" 1
- 353 0006 0068     		ldr r0, [r0]
- 354              	@ 0 "" 2
- 111:Src/task.c    ****     __asm("ldmfd r0!, {r4-r11} ");
- 355              		.loc 1 111 0
- 356              	@ 111 "Src/task.c" 1
- 357 0008 B0E8F00F 		ldmfd r0!, {r4-r11} 
- 358              	@ 0 "" 2
-ARM GAS  /tmp/ccLbN7qM.s 			page 9
-
-
- 112:Src/task.c    ****     __asm("msr psp, r0             ");
- 359              		.loc 1 112 0
- 360              	@ 112 "Src/task.c" 1
- 361 000c 80F30988 		msr psp, r0             
- 362              	@ 0 "" 2
- 113:Src/task.c    ****     __asm("cpsie i                 ");
- 363              		.loc 1 113 0
- 364              	@ 113 "Src/task.c" 1
- 365 0010 62B6     		cpsie i                 
- 366              	@ 0 "" 2
- 114:Src/task.c    ****     __asm("MOV r0, #0xFFFFFFFD");
- 367              		.loc 1 114 0
- 368              	@ 114 "Src/task.c" 1
- 369 0012 6FF00200 		MOV r0, #0xFFFFFFFD
- 370              	@ 0 "" 2
- 115:Src/task.c    ****     __asm("bx r0");
- 371              		.loc 1 115 0
- 372              	@ 115 "Src/task.c" 1
- 373 0016 0047     		bx r0
- 374              	@ 0 "" 2
- 116:Src/task.c    ****    
- 117:Src/task.c    ****     
- 118:Src/task.c    **** }
- 375              		.loc 1 118 0
- 376              		.thumb
- 377              		.syntax unified
- 378 0018 00BF     		nop
- 379              		.cfi_endproc
- 380              	.LFE134:
- 382 001a 0000     		.section	.text.PendSV_Handler,"ax",%progbits
- 383              		.align	1
- 384              		.global	PendSV_Handler
- 385              		.syntax unified
- 386              		.thumb
- 387              		.thumb_func
- 388              		.fpu fpv4-sp-d16
- 390              	PendSV_Handler:
- 391              	.LFB135:
- 119:Src/task.c    **** 
- 120:Src/task.c    **** 
- 121:Src/task.c    **** __attribute__((naked)) 
- 122:Src/task.c    **** void PendSV_Handler(void)
- 123:Src/task.c    **** {
- 392              		.loc 1 123 0
- 393              		.cfi_startproc
- 394              		@ Naked Function: prologue and epilogue provided by programmer.
- 395              		@ args = 0, pretend = 0, frame = 0
- 396              		@ frame_needed = 1, uses_anonymous_args = 0
- 124:Src/task.c    ****  
- 125:Src/task.c    ****     __asm("cpsid i"); //disable irq
- 397              		.loc 1 125 0
- 398              		.syntax unified
- 399              	@ 125 "Src/task.c" 1
- 400 0000 72B6     		cpsid i
- 401              	@ 0 "" 2
- 126:Src/task.c    **** 
- 127:Src/task.c    **** 	currentTask = nextTask;
-ARM GAS  /tmp/ccLbN7qM.s 			page 10
-
-
- 402              		.loc 1 127 0
- 403              		.thumb
- 404              		.syntax unified
- 405 0002 174B     		ldr	r3, .L12
- 406 0004 1B68     		ldr	r3, [r3]
- 407 0006 174A     		ldr	r2, .L12+4
- 408 0008 1360     		str	r3, [r2]
- 128:Src/task.c    ****     nextTaskIndex++;
- 409              		.loc 1 128 0
- 410 000a 174B     		ldr	r3, .L12+8
- 411 000c 1B68     		ldr	r3, [r3]
- 412 000e 0133     		adds	r3, r3, #1
- 413 0010 154A     		ldr	r2, .L12+8
- 414 0012 1360     		str	r3, [r2]
- 129:Src/task.c    ****     nextTaskIndex %= taskCount;
- 415              		.loc 1 129 0
- 416 0014 144B     		ldr	r3, .L12+8
- 417 0016 1B68     		ldr	r3, [r3]
- 418 0018 144A     		ldr	r2, .L12+12
- 419 001a 1268     		ldr	r2, [r2]
- 420 001c B3FBF2F1 		udiv	r1, r3, r2
- 421 0020 02FB01F2 		mul	r2, r2, r1
- 422 0024 9B1A     		subs	r3, r3, r2
- 423 0026 104A     		ldr	r2, .L12+8
- 424 0028 1360     		str	r3, [r2]
- 130:Src/task.c    ****     
- 131:Src/task.c    ****     nextTask = &tasks[nextTaskIndex];
- 425              		.loc 1 131 0
- 426 002a 0F4B     		ldr	r3, .L12+8
- 427 002c 1B68     		ldr	r3, [r3]
- 428 002e 9B00     		lsls	r3, r3, #2
- 429 0030 0F4A     		ldr	r2, .L12+16
- 430 0032 1344     		add	r3, r3, r2
- 431 0034 0A4A     		ldr	r2, .L12
- 432 0036 1360     		str	r3, [r2]
- 132:Src/task.c    **** 
- 133:Src/task.c    **** 
- 134:Src/task.c    ****     //store
- 135:Src/task.c    ****     __asm ("mrs r0, psp");
- 433              		.loc 1 135 0
- 434              		.syntax unified
- 435              	@ 135 "Src/task.c" 1
- 436 0038 EFF30980 		mrs r0, psp
- 437              	@ 0 "" 2
- 136:Src/task.c    ****     __asm("ldr r1, =currentTask");
- 438              		.loc 1 136 0
- 439              	@ 136 "Src/task.c" 1
- 440 003c 0D49     		ldr r1, =currentTask
- 441              	@ 0 "" 2
- 137:Src/task.c    ****     __asm("ldr r1, [r1]");
- 442              		.loc 1 137 0
- 443              	@ 137 "Src/task.c" 1
- 444 003e 0968     		ldr r1, [r1]
- 445              	@ 0 "" 2
- 138:Src/task.c    ****     __asm("stmfd r0!, {r4-r11}");
- 446              		.loc 1 138 0
- 447              	@ 138 "Src/task.c" 1
-ARM GAS  /tmp/ccLbN7qM.s 			page 11
-
-
- 448 0040 20E9F00F 		stmfd r0!, {r4-r11}
- 449              	@ 0 "" 2
- 139:Src/task.c    ****     __asm("str r0, [r1]");
- 450              		.loc 1 139 0
- 451              	@ 139 "Src/task.c" 1
- 452 0044 0860     		str r0, [r1]
- 453              	@ 0 "" 2
- 140:Src/task.c    **** 
- 141:Src/task.c    ****     //load
- 142:Src/task.c    ****     __asm("ldr r0, =nextTask ");
- 454              		.loc 1 142 0
- 455              	@ 142 "Src/task.c" 1
- 456 0046 0C48     		ldr r0, =nextTask 
- 457              	@ 0 "" 2
- 143:Src/task.c    ****     __asm("ldr r0, [r0]");
- 458              		.loc 1 143 0
- 459              	@ 143 "Src/task.c" 1
- 460 0048 0068     		ldr r0, [r0]
- 461              	@ 0 "" 2
- 144:Src/task.c    ****     __asm("ldr r0, [r0]");
- 462              		.loc 1 144 0
- 463              	@ 144 "Src/task.c" 1
- 464 004a 0068     		ldr r0, [r0]
- 465              	@ 0 "" 2
- 145:Src/task.c    ****     __asm("ldmfd r0!, {r4-r11}");
- 466              		.loc 1 145 0
- 467              	@ 145 "Src/task.c" 1
- 468 004c B0E8F00F 		ldmfd r0!, {r4-r11}
+ 446 0018 0B44     		add	r3, r3, r1
+ 447 001a 0D33     		adds	r3, r3, #13
+ 448 001c 0022     		movs	r2, #0
+ 449 001e 1A70     		strb	r2, [r3]
+  86:Src/task.c    ****     tasks[nextTaskIndex].delayUntil = HAL_GetTick() + delayTime;
+ 450              		.loc 1 86 0
+ 451 0020 FFF7FEFF 		bl	HAL_GetTick
+ 452 0024 0146     		mov	r1, r0
+ 453 0026 0C4B     		ldr	r3, .L14
+ 454 0028 1A68     		ldr	r2, [r3]
+ 455 002a 7B68     		ldr	r3, [r7, #4]
+ 456 002c 1944     		add	r1, r1, r3
+ 457 002e 0B48     		ldr	r0, .L14+4
+ 458 0030 1346     		mov	r3, r2
+ 459 0032 9B00     		lsls	r3, r3, #2
+ 460 0034 1344     		add	r3, r3, r2
+ 461 0036 DB00     		lsls	r3, r3, #3
+ 462 0038 0344     		add	r3, r3, r0
+ 463 003a 1033     		adds	r3, r3, #16
+ 464 003c 1960     		str	r1, [r3]
+  87:Src/task.c    ****     __ASM("cpsie i"); //reenable irq
+ 465              		.loc 1 87 0
+ 466              		.syntax unified
+ 467              	@ 87 "Src/task.c" 1
+ 468 003e 62B6     		cpsie i
  469              	@ 0 "" 2
- 146:Src/task.c    ****     __asm("msr psp, r0 ");
- 470              		.loc 1 146 0
- 471              	@ 146 "Src/task.c" 1
- 472 0050 80F30988 		msr psp, r0 
- 473              	@ 0 "" 2
- 147:Src/task.c    **** 
- 148:Src/task.c    ****     //return
- 149:Src/task.c    ****     __asm("cpsie i   ");
- 474              		.loc 1 149 0
- 475              	@ 149 "Src/task.c" 1
- 476 0054 62B6     		cpsie i   
- 477              	@ 0 "" 2
- 150:Src/task.c    ****     __asm("MOV r0, #0xFFFFFFFD");
- 478              		.loc 1 150 0
- 479              	@ 150 "Src/task.c" 1
- 480 0056 6FF00200 		MOV r0, #0xFFFFFFFD
- 481              	@ 0 "" 2
- 151:Src/task.c    ****     __asm("bx r0");
- 482              		.loc 1 151 0
- 483              	@ 151 "Src/task.c" 1
- 484 005a 0047     		bx r0
- 485              	@ 0 "" 2
- 152:Src/task.c    ****     __asm("nop");
- 486              		.loc 1 152 0
- 487              	@ 152 "Src/task.c" 1
- 488 005c 00BF     		nop
- 489              	@ 0 "" 2
+  88:Src/task.c    ****     
+  89:Src/task.c    ****     switchTask();
+ 470              		.loc 1 89 0
+ 471              		.thumb
+ 472              		.syntax unified
+ 473 0040 FFF7FEFF 		bl	switchTask
+  90:Src/task.c    ****     SCB->ICSR |= (1<<28);
+ 474              		.loc 1 90 0
+ 475 0044 064B     		ldr	r3, .L14+8
+ 476 0046 5B68     		ldr	r3, [r3, #4]
+ 477 0048 054A     		ldr	r2, .L14+8
+ 478 004a 43F08053 		orr	r3, r3, #268435456
+ 479 004e 5360     		str	r3, [r2, #4]
+  91:Src/task.c    **** }
+ 480              		.loc 1 91 0
+ 481 0050 00BF     		nop
+ 482 0052 0837     		adds	r7, r7, #8
+ 483              	.LCFI16:
+ 484              		.cfi_def_cfa_offset 8
+ 485 0054 BD46     		mov	sp, r7
+ 486              	.LCFI17:
+ 487              		.cfi_def_cfa_register 13
+ 488              		@ sp needed
+ 489 0056 80BD     		pop	{r7, pc}
+ 490              	.L15:
+ 491              		.align	2
+ 492              	.L14:
+ 493 0058 00000000 		.word	nextTaskIndex
+ 494 005c 00000000 		.word	tasks
+ 495 0060 00ED00E0 		.word	-536810240
+ 496              		.cfi_endproc
+ARM GAS  /tmp/ccWMShQt.s 			page 11
+
+
+ 497              	.LFE134:
+ 499              		.section	.text.switchTask,"ax",%progbits
+ 500              		.align	1
+ 501              		.global	switchTask
+ 502              		.syntax unified
+ 503              		.thumb
+ 504              		.thumb_func
+ 505              		.fpu fpv4-sp-d16
+ 507              	switchTask:
+ 508              	.LFB135:
+  92:Src/task.c    **** 
+  93:Src/task.c    **** void switchTask(void)
+  94:Src/task.c    **** {
+ 509              		.loc 1 94 0
+ 510              		.cfi_startproc
+ 511              		@ args = 0, pretend = 0, frame = 8
+ 512              		@ frame_needed = 1, uses_anonymous_args = 0
+ 513 0000 90B5     		push	{r4, r7, lr}
+ 514              	.LCFI18:
+ 515              		.cfi_def_cfa_offset 12
+ 516              		.cfi_offset 4, -12
+ 517              		.cfi_offset 7, -8
+ 518              		.cfi_offset 14, -4
+ 519 0002 83B0     		sub	sp, sp, #12
+ 520              	.LCFI19:
+ 521              		.cfi_def_cfa_offset 24
+ 522 0004 00AF     		add	r7, sp, #0
+ 523              	.LCFI20:
+ 524              		.cfi_def_cfa_register 7
+  95:Src/task.c    **** 	__asm("cpsid i"); //disable irq
+ 525              		.loc 1 95 0
+ 526              		.syntax unified
+ 527              	@ 95 "Src/task.c" 1
+ 528 0006 72B6     		cpsid i
+ 529              	@ 0 "" 2
+  96:Src/task.c    **** 
+  97:Src/task.c    **** 
+  98:Src/task.c    **** 	
+  99:Src/task.c    ****     if(tasks[nextTaskIndex].taskState == TaskRunning)
+ 530              		.loc 1 99 0
+ 531              		.thumb
+ 532              		.syntax unified
+ 533 0008 4D4B     		ldr	r3, .L27
+ 534 000a 1A68     		ldr	r2, [r3]
+ 535 000c 4D49     		ldr	r1, .L27+4
+ 536 000e 1346     		mov	r3, r2
+ 537 0010 9B00     		lsls	r3, r3, #2
+ 538 0012 1344     		add	r3, r3, r2
+ 539 0014 DB00     		lsls	r3, r3, #3
+ 540 0016 0B44     		add	r3, r3, r1
+ 541 0018 0D33     		adds	r3, r3, #13
+ 542 001a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 543 001c 032B     		cmp	r3, #3
+ 544 001e 0AD1     		bne	.L17
+ 100:Src/task.c    ****     {
+ 101:Src/task.c    ****         tasks[nextTaskIndex].taskState = TaskReady;
+ 545              		.loc 1 101 0
+ARM GAS  /tmp/ccWMShQt.s 			page 12
+
+
+ 546 0020 474B     		ldr	r3, .L27
+ 547 0022 1A68     		ldr	r2, [r3]
+ 548 0024 4749     		ldr	r1, .L27+4
+ 549 0026 1346     		mov	r3, r2
+ 550 0028 9B00     		lsls	r3, r3, #2
+ 551 002a 1344     		add	r3, r3, r2
+ 552 002c DB00     		lsls	r3, r3, #3
+ 553 002e 0B44     		add	r3, r3, r1
+ 554 0030 0D33     		adds	r3, r3, #13
+ 555 0032 0222     		movs	r2, #2
+ 556 0034 1A70     		strb	r2, [r3]
+ 557              	.L17:
+ 102:Src/task.c    ****     }
+ 103:Src/task.c    ****         
+ 104:Src/task.c    **** 
+ 105:Src/task.c    ****     currentTask = nextTask;
+ 558              		.loc 1 105 0
+ 559 0036 444B     		ldr	r3, .L27+8
+ 560 0038 1B68     		ldr	r3, [r3]
+ 561 003a 444A     		ldr	r2, .L27+12
+ 562 003c 1360     		str	r3, [r2]
+ 106:Src/task.c    **** 
+ 107:Src/task.c    ****     bool switchIdleTask =true;
+ 563              		.loc 1 107 0
+ 564 003e 0123     		movs	r3, #1
+ 565 0040 FB71     		strb	r3, [r7, #7]
+ 566              	.LBB2:
+ 108:Src/task.c    **** 
+ 109:Src/task.c    ****     for(uint32_t i = nextTaskIndex;;){
+ 567              		.loc 1 109 0
+ 568 0042 3F4B     		ldr	r3, .L27
+ 569 0044 1B68     		ldr	r3, [r3]
+ 570 0046 3B60     		str	r3, [r7]
+ 571              	.L22:
+ 110:Src/task.c    ****         i++;
+ 572              		.loc 1 110 0
+ 573 0048 3B68     		ldr	r3, [r7]
+ 574 004a 0133     		adds	r3, r3, #1
+ 575 004c 3B60     		str	r3, [r7]
+ 111:Src/task.c    ****         i %= taskCount;
+ 576              		.loc 1 111 0
+ 577 004e 404B     		ldr	r3, .L27+16
+ 578 0050 1A68     		ldr	r2, [r3]
+ 579 0052 3B68     		ldr	r3, [r7]
+ 580 0054 B3FBF2F1 		udiv	r1, r3, r2
+ 581 0058 02FB01F2 		mul	r2, r2, r1
+ 582 005c 9B1A     		subs	r3, r3, r2
+ 583 005e 3B60     		str	r3, [r7]
+ 112:Src/task.c    ****         if(i==nextTaskIndex)
+ 584              		.loc 1 112 0
+ 585 0060 374B     		ldr	r3, .L27
+ 586 0062 1B68     		ldr	r3, [r3]
+ 587 0064 3A68     		ldr	r2, [r7]
+ 588 0066 9A42     		cmp	r2, r3
+ 589 0068 2FD0     		beq	.L26
+ 113:Src/task.c    ****             break;
+ 114:Src/task.c    ****         if(tasks[i].taskState == TaskBlocked)
+ARM GAS  /tmp/ccWMShQt.s 			page 13
+
+
+ 590              		.loc 1 114 0
+ 591 006a 3649     		ldr	r1, .L27+4
+ 592 006c 3A68     		ldr	r2, [r7]
+ 593 006e 1346     		mov	r3, r2
+ 594 0070 9B00     		lsls	r3, r3, #2
+ 595 0072 1344     		add	r3, r3, r2
+ 596 0074 DB00     		lsls	r3, r3, #3
+ 597 0076 0B44     		add	r3, r3, r1
+ 598 0078 0D33     		adds	r3, r3, #13
+ 599 007a 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 600 007c 002B     		cmp	r3, #0
+ 601 007e 13D1     		bne	.L20
+ 115:Src/task.c    ****         {
+ 116:Src/task.c    ****             if(tasks[i].delayUntil <= HAL_GetTick())
+ 602              		.loc 1 116 0
+ 603 0080 3049     		ldr	r1, .L27+4
+ 604 0082 3A68     		ldr	r2, [r7]
+ 605 0084 1346     		mov	r3, r2
+ 606 0086 9B00     		lsls	r3, r3, #2
+ 607 0088 1344     		add	r3, r3, r2
+ 608 008a DB00     		lsls	r3, r3, #3
+ 609 008c 0B44     		add	r3, r3, r1
+ 610 008e 1033     		adds	r3, r3, #16
+ 611 0090 1C68     		ldr	r4, [r3]
+ 612 0092 FFF7FEFF 		bl	HAL_GetTick
+ 613 0096 0346     		mov	r3, r0
+ 614 0098 9C42     		cmp	r4, r3
+ 615 009a D5D8     		bhi	.L22
+ 117:Src/task.c    ****             {
+ 118:Src/task.c    ****                 switchIdleTask =false;
+ 616              		.loc 1 118 0
+ 617 009c 0023     		movs	r3, #0
+ 618 009e FB71     		strb	r3, [r7, #7]
+ 119:Src/task.c    ****                 nextTaskIndex = i;
+ 619              		.loc 1 119 0
+ 620 00a0 274A     		ldr	r2, .L27
+ 621 00a2 3B68     		ldr	r3, [r7]
+ 622 00a4 1360     		str	r3, [r2]
+ 120:Src/task.c    ****                 break;
+ 623              		.loc 1 120 0
+ 624 00a6 11E0     		b	.L19
+ 625              	.L20:
+ 121:Src/task.c    ****                 //and continue with this task
+ 122:Src/task.c    ****             }
+ 123:Src/task.c    ****             else
+ 124:Src/task.c    ****             {
+ 125:Src/task.c    ****                 //check next one
+ 126:Src/task.c    ****             }
+ 127:Src/task.c    ****         }
+ 128:Src/task.c    ****         else if(tasks[i].taskState != TaskSuspend)
+ 626              		.loc 1 128 0
+ 627 00a8 2649     		ldr	r1, .L27+4
+ 628 00aa 3A68     		ldr	r2, [r7]
+ 629 00ac 1346     		mov	r3, r2
+ 630 00ae 9B00     		lsls	r3, r3, #2
+ 631 00b0 1344     		add	r3, r3, r2
+ 632 00b2 DB00     		lsls	r3, r3, #3
+ARM GAS  /tmp/ccWMShQt.s 			page 14
+
+
+ 633 00b4 0B44     		add	r3, r3, r1
+ 634 00b6 0D33     		adds	r3, r3, #13
+ 635 00b8 1B78     		ldrb	r3, [r3]	@ zero_extendqisi2
+ 636 00ba 012B     		cmp	r3, #1
+ 637 00bc C4D0     		beq	.L22
+ 129:Src/task.c    ****         {
+ 130:Src/task.c    ****             switchIdleTask =false;
+ 638              		.loc 1 130 0
+ 639 00be 0023     		movs	r3, #0
+ 640 00c0 FB71     		strb	r3, [r7, #7]
+ 131:Src/task.c    ****             nextTaskIndex = i;
+ 641              		.loc 1 131 0
+ 642 00c2 1F4A     		ldr	r2, .L27
+ 643 00c4 3B68     		ldr	r3, [r7]
+ 644 00c6 1360     		str	r3, [r2]
+ 132:Src/task.c    ****             break;
+ 645              		.loc 1 132 0
+ 646 00c8 00E0     		b	.L19
+ 647              	.L26:
+ 113:Src/task.c    ****         if(tasks[i].taskState == TaskBlocked)
+ 648              		.loc 1 113 0
+ 649 00ca 00BF     		nop
+ 650              	.L19:
+ 651              	.LBE2:
+ 133:Src/task.c    ****         }
+ 134:Src/task.c    ****     }
+ 135:Src/task.c    ****     if(switchIdleTask){
+ 652              		.loc 1 135 0
+ 653 00cc FB79     		ldrb	r3, [r7, #7]	@ zero_extendqisi2
+ 654 00ce 002B     		cmp	r3, #0
+ 655 00d0 1BD0     		beq	.L23
+ 136:Src/task.c    ****         nextTask = &tasks[idleTaskIndex];
+ 656              		.loc 1 136 0
+ 657 00d2 204B     		ldr	r3, .L27+20
+ 658 00d4 1A68     		ldr	r2, [r3]
+ 659 00d6 1346     		mov	r3, r2
+ 660 00d8 9B00     		lsls	r3, r3, #2
+ 661 00da 1344     		add	r3, r3, r2
+ 662 00dc DB00     		lsls	r3, r3, #3
+ 663 00de 194A     		ldr	r2, .L27+4
+ 664 00e0 1344     		add	r3, r3, r2
+ 665 00e2 194A     		ldr	r2, .L27+8
+ 666 00e4 1360     		str	r3, [r2]
+ 137:Src/task.c    ****         nextTaskIndex = idleTaskIndex;
+ 667              		.loc 1 137 0
+ 668 00e6 1B4B     		ldr	r3, .L27+20
+ 669 00e8 1B68     		ldr	r3, [r3]
+ 670 00ea 154A     		ldr	r2, .L27
+ 671 00ec 1360     		str	r3, [r2]
+ 138:Src/task.c    ****         if(currentTask->taskState == TaskReady)
+ 672              		.loc 1 138 0
+ 673 00ee 174B     		ldr	r3, .L27+12
+ 674 00f0 1B68     		ldr	r3, [r3]
+ 675 00f2 5B7B     		ldrb	r3, [r3, #13]	@ zero_extendqisi2
+ 676 00f4 022B     		cmp	r3, #2
+ 677 00f6 1DD1     		bne	.L25
+ 139:Src/task.c    ****         {
+ARM GAS  /tmp/ccWMShQt.s 			page 15
+
+
+ 140:Src/task.c    ****             nextTask = currentTask;
+ 678              		.loc 1 140 0
+ 679 00f8 144B     		ldr	r3, .L27+12
+ 680 00fa 1B68     		ldr	r3, [r3]
+ 681 00fc 124A     		ldr	r2, .L27+8
+ 682 00fe 1360     		str	r3, [r2]
+ 141:Src/task.c    ****             nextTaskIndex = idleTaskIndex;
+ 683              		.loc 1 141 0
+ 684 0100 144B     		ldr	r3, .L27+20
+ 685 0102 1B68     		ldr	r3, [r3]
+ 686 0104 0E4A     		ldr	r2, .L27
+ 687 0106 1360     		str	r3, [r2]
+ 688 0108 14E0     		b	.L25
+ 689              	.L23:
+ 142:Src/task.c    ****         }
+ 143:Src/task.c    ****     }
+ 144:Src/task.c    ****     else{
+ 145:Src/task.c    ****         tasks[nextTaskIndex].taskState = TaskRunning;
+ 690              		.loc 1 145 0
+ 691 010a 0D4B     		ldr	r3, .L27
+ 692 010c 1A68     		ldr	r2, [r3]
+ 693 010e 0D49     		ldr	r1, .L27+4
+ 694 0110 1346     		mov	r3, r2
+ 695 0112 9B00     		lsls	r3, r3, #2
+ 696 0114 1344     		add	r3, r3, r2
+ 697 0116 DB00     		lsls	r3, r3, #3
+ 698 0118 0B44     		add	r3, r3, r1
+ 699 011a 0D33     		adds	r3, r3, #13
+ 700 011c 0322     		movs	r2, #3
+ 701 011e 1A70     		strb	r2, [r3]
+ 146:Src/task.c    ****         nextTask = &tasks[nextTaskIndex];
+ 702              		.loc 1 146 0
+ 703 0120 074B     		ldr	r3, .L27
+ 704 0122 1A68     		ldr	r2, [r3]
+ 705 0124 1346     		mov	r3, r2
+ 706 0126 9B00     		lsls	r3, r3, #2
+ 707 0128 1344     		add	r3, r3, r2
+ 708 012a DB00     		lsls	r3, r3, #3
+ 709 012c 054A     		ldr	r2, .L27+4
+ 710 012e 1344     		add	r3, r3, r2
+ 711 0130 054A     		ldr	r2, .L27+8
+ 712 0132 1360     		str	r3, [r2]
+ 713              	.L25:
+ 147:Src/task.c    ****     }
+ 148:Src/task.c    ****     
+ 149:Src/task.c    ****     __ASM("cpsie i"); //reenable irq
+ 714              		.loc 1 149 0
+ 715              		.syntax unified
+ 716              	@ 149 "Src/task.c" 1
+ 717 0134 62B6     		cpsie i
+ 718              	@ 0 "" 2
+ 150:Src/task.c    ****     
+ 151:Src/task.c    **** }
+ 719              		.loc 1 151 0
+ 720              		.thumb
+ 721              		.syntax unified
+ 722 0136 00BF     		nop
+ARM GAS  /tmp/ccWMShQt.s 			page 16
+
+
+ 723 0138 0C37     		adds	r7, r7, #12
+ 724              	.LCFI21:
+ 725              		.cfi_def_cfa_offset 12
+ 726 013a BD46     		mov	sp, r7
+ 727              	.LCFI22:
+ 728              		.cfi_def_cfa_register 13
+ 729              		@ sp needed
+ 730 013c 90BD     		pop	{r4, r7, pc}
+ 731              	.L28:
+ 732 013e 00BF     		.align	2
+ 733              	.L27:
+ 734 0140 00000000 		.word	nextTaskIndex
+ 735 0144 00000000 		.word	tasks
+ 736 0148 00000000 		.word	nextTask
+ 737 014c 00000000 		.word	currentTask
+ 738 0150 00000000 		.word	taskCount
+ 739 0154 00000000 		.word	idleTaskIndex
+ 740              		.cfi_endproc
+ 741              	.LFE135:
+ 743              		.section	.text.TaskYield,"ax",%progbits
+ 744              		.align	1
+ 745              		.global	TaskYield
+ 746              		.syntax unified
+ 747              		.thumb
+ 748              		.thumb_func
+ 749              		.fpu fpv4-sp-d16
+ 751              	TaskYield:
+ 752              	.LFB136:
+ 152:Src/task.c    **** 
  153:Src/task.c    **** 
-ARM GAS  /tmp/ccLbN7qM.s 			page 12
+ 154:Src/task.c    **** void TaskYield(void)
+ 155:Src/task.c    **** {
+ 753              		.loc 1 155 0
+ 754              		.cfi_startproc
+ 755              		@ args = 0, pretend = 0, frame = 0
+ 756              		@ frame_needed = 1, uses_anonymous_args = 0
+ 757 0000 80B5     		push	{r7, lr}
+ 758              	.LCFI23:
+ 759              		.cfi_def_cfa_offset 8
+ 760              		.cfi_offset 7, -8
+ 761              		.cfi_offset 14, -4
+ 762 0002 00AF     		add	r7, sp, #0
+ 763              	.LCFI24:
+ 764              		.cfi_def_cfa_register 7
+ 156:Src/task.c    **** 	switchTask();
+ 765              		.loc 1 156 0
+ 766 0004 FFF7FEFF 		bl	switchTask
+ 157:Src/task.c    **** }
+ 767              		.loc 1 157 0
+ 768 0008 00BF     		nop
+ 769 000a 80BD     		pop	{r7, pc}
+ 770              		.cfi_endproc
+ 771              	.LFE136:
+ 773              		.section	.text.SVC_Handler,"ax",%progbits
+ 774              		.align	1
+ 775              		.global	SVC_Handler
+ 776              		.syntax unified
+ARM GAS  /tmp/ccWMShQt.s 			page 17
 
 
- 154:Src/task.c    **** }
- 490              		.loc 1 154 0
- 491              		.thumb
- 492              		.syntax unified
- 493 005e 00BF     		nop
- 494              	.L13:
- 495              		.align	2
- 496              	.L12:
- 497 0060 00000000 		.word	nextTask
- 498 0064 00000000 		.word	currentTask
- 499 0068 00000000 		.word	nextTaskIndex
- 500 006c 00000000 		.word	taskCount
- 501 0070 00000000 		.word	tasks
- 502              		.cfi_endproc
- 503              	.LFE135:
- 505              		.section	.text.KernelStart,"ax",%progbits
- 506              		.align	1
- 507              		.global	KernelStart
- 508              		.syntax unified
- 509              		.thumb
- 510              		.thumb_func
- 511              		.fpu fpv4-sp-d16
- 513              	KernelStart:
- 514              	.LFB136:
- 155:Src/task.c    **** 
- 156:Src/task.c    **** 
- 157:Src/task.c    **** void KernelStart(void)
- 158:Src/task.c    **** {
- 515              		.loc 1 158 0
- 516              		.cfi_startproc
- 517              		@ args = 0, pretend = 0, frame = 0
- 518              		@ frame_needed = 1, uses_anonymous_args = 0
- 519 0000 80B5     		push	{r7, lr}
- 520              	.LCFI13:
- 521              		.cfi_def_cfa_offset 8
- 522              		.cfi_offset 7, -8
- 523              		.cfi_offset 14, -4
- 524 0002 00AF     		add	r7, sp, #0
- 525              	.LCFI14:
- 526              		.cfi_def_cfa_register 7
- 159:Src/task.c    ****     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
- 527              		.loc 1 159 0
- 528 0004 0222     		movs	r2, #2
- 529 0006 0F21     		movs	r1, #15
- 530 0008 6FF00100 		mvn	r0, #1
- 531 000c FFF7FEFF 		bl	HAL_NVIC_SetPriority
- 160:Src/task.c    ****     nextTask = &tasks[nextTaskIndex];
- 532              		.loc 1 160 0
- 533 0010 044B     		ldr	r3, .L16
- 534 0012 1B68     		ldr	r3, [r3]
- 535 0014 9B00     		lsls	r3, r3, #2
- 536 0016 044A     		ldr	r2, .L16+4
- 537 0018 1344     		add	r3, r3, r2
- 538 001a 044A     		ldr	r2, .L16+8
- 539 001c 1360     		str	r3, [r2]
- 161:Src/task.c    ****     __asm("SVC #0");
- 540              		.loc 1 161 0
-ARM GAS  /tmp/ccLbN7qM.s 			page 13
+ 777              		.thumb
+ 778              		.thumb_func
+ 779              		.fpu fpv4-sp-d16
+ 781              	SVC_Handler:
+ 782              	.LFB137:
+ 158:Src/task.c    **** 
+ 159:Src/task.c    **** __attribute__((naked)) 
+ 160:Src/task.c    **** void SVC_Handler(void)
+ 161:Src/task.c    **** {
+ 783              		.loc 1 161 0
+ 784              		.cfi_startproc
+ 785              		@ Naked Function: prologue and epilogue provided by programmer.
+ 786              		@ args = 0, pretend = 0, frame = 0
+ 787              		@ frame_needed = 1, uses_anonymous_args = 0
+ 162:Src/task.c    ****     __asm ("cpsid i");
+ 788              		.loc 1 162 0
+ 789              		.syntax unified
+ 790              	@ 162 "Src/task.c" 1
+ 791 0000 72B6     		cpsid i
+ 792              	@ 0 "" 2
+ 163:Src/task.c    ****     __asm("ldr r0, =nextTask");
+ 793              		.loc 1 163 0
+ 794              	@ 163 "Src/task.c" 1
+ 795 0002 0648     		ldr r0, =nextTask
+ 796              	@ 0 "" 2
+ 164:Src/task.c    ****     __asm("ldr r0, [r0]");
+ 797              		.loc 1 164 0
+ 798              	@ 164 "Src/task.c" 1
+ 799 0004 0068     		ldr r0, [r0]
+ 800              	@ 0 "" 2
+ 165:Src/task.c    ****     __asm("ldr r0, [r0]");
+ 801              		.loc 1 165 0
+ 802              	@ 165 "Src/task.c" 1
+ 803 0006 0068     		ldr r0, [r0]
+ 804              	@ 0 "" 2
+ 166:Src/task.c    ****     __asm("ldmfd r0!, {r4-r11} ");
+ 805              		.loc 1 166 0
+ 806              	@ 166 "Src/task.c" 1
+ 807 0008 B0E8F00F 		ldmfd r0!, {r4-r11} 
+ 808              	@ 0 "" 2
+ 167:Src/task.c    ****     __asm("msr psp, r0             ");
+ 809              		.loc 1 167 0
+ 810              	@ 167 "Src/task.c" 1
+ 811 000c 80F30988 		msr psp, r0             
+ 812              	@ 0 "" 2
+ 168:Src/task.c    ****     __asm("cpsie i                 ");
+ 813              		.loc 1 168 0
+ 814              	@ 168 "Src/task.c" 1
+ 815 0010 62B6     		cpsie i                 
+ 816              	@ 0 "" 2
+ 169:Src/task.c    ****     __asm("MOV r0, #0xFFFFFFFD");
+ 817              		.loc 1 169 0
+ 818              	@ 169 "Src/task.c" 1
+ 819 0012 6FF00200 		MOV r0, #0xFFFFFFFD
+ 820              	@ 0 "" 2
+ 170:Src/task.c    ****     __asm("bx r0");
+ 821              		.loc 1 170 0
+ARM GAS  /tmp/ccWMShQt.s 			page 18
 
 
- 541              		.syntax unified
- 542              	@ 161 "Src/task.c" 1
- 543 001e 00DF     		SVC #0
- 544              	@ 0 "" 2
- 545              		.thumb
- 546              		.syntax unified
- 547              	.L15:
- 162:Src/task.c    **** 
- 163:Src/task.c    ****     while(1);
- 548              		.loc 1 163 0 discriminator 1
- 549 0020 FEE7     		b	.L15
- 550              	.L17:
- 551 0022 00BF     		.align	2
- 552              	.L16:
- 553 0024 00000000 		.word	nextTaskIndex
- 554 0028 00000000 		.word	tasks
- 555 002c 00000000 		.word	nextTask
- 556              		.cfi_endproc
- 557              	.LFE136:
- 559              		.section	.text.SysTick_Handler,"ax",%progbits
- 560              		.align	1
- 561              		.global	SysTick_Handler
- 562              		.syntax unified
- 563              		.thumb
- 564              		.thumb_func
- 565              		.fpu fpv4-sp-d16
- 567              	SysTick_Handler:
- 568              	.LFB137:
- 164:Src/task.c    **** }
- 165:Src/task.c    **** 
- 166:Src/task.c    **** void SysTick_Handler(void)
- 167:Src/task.c    **** {
- 569              		.loc 1 167 0
- 570              		.cfi_startproc
- 571              		@ args = 0, pretend = 0, frame = 0
- 572              		@ frame_needed = 1, uses_anonymous_args = 0
- 573 0000 80B5     		push	{r7, lr}
- 574              	.LCFI15:
- 575              		.cfi_def_cfa_offset 8
- 576              		.cfi_offset 7, -8
- 577              		.cfi_offset 14, -4
- 578 0002 00AF     		add	r7, sp, #0
- 579              	.LCFI16:
- 580              		.cfi_def_cfa_register 7
- 168:Src/task.c    **** 
- 169:Src/task.c    ****     HAL_IncTick();
- 581              		.loc 1 169 0
- 582 0004 FFF7FEFF 		bl	HAL_IncTick
- 170:Src/task.c    ****     if(!(HAL_GetTick() - lastTick >= 5)){
- 583              		.loc 1 170 0
- 584 0008 FFF7FEFF 		bl	HAL_GetTick
- 585 000c 0246     		mov	r2, r0
- 586 000e 094B     		ldr	r3, .L22
- 587 0010 1B68     		ldr	r3, [r3]
- 588 0012 D31A     		subs	r3, r2, r3
- 589 0014 042B     		cmp	r3, #4
- 590 0016 0BD9     		bls	.L21
-ARM GAS  /tmp/ccLbN7qM.s 			page 14
+ 822              	@ 170 "Src/task.c" 1
+ 823 0016 0047     		bx r0
+ 824              	@ 0 "" 2
+ 171:Src/task.c    **** }
+ 825              		.loc 1 171 0
+ 826              		.thumb
+ 827              		.syntax unified
+ 828 0018 00BF     		nop
+ 829              		.cfi_endproc
+ 830              	.LFE137:
+ 832 001a 0000     		.section	.text.PendSV_Handler,"ax",%progbits
+ 833              		.align	1
+ 834              		.global	PendSV_Handler
+ 835              		.syntax unified
+ 836              		.thumb
+ 837              		.thumb_func
+ 838              		.fpu fpv4-sp-d16
+ 840              	PendSV_Handler:
+ 841              	.LFB138:
+ 172:Src/task.c    **** 
+ 173:Src/task.c    **** 
+ 174:Src/task.c    **** __attribute__((naked)) 
+ 175:Src/task.c    **** void PendSV_Handler(void)
+ 176:Src/task.c    **** {
+ 842              		.loc 1 176 0
+ 843              		.cfi_startproc
+ 844              		@ Naked Function: prologue and epilogue provided by programmer.
+ 845              		@ args = 0, pretend = 0, frame = 0
+ 846              		@ frame_needed = 1, uses_anonymous_args = 0
+ 177:Src/task.c    ****     __asm("cpsid i"); //disable irq
+ 847              		.loc 1 177 0
+ 848              		.syntax unified
+ 849              	@ 177 "Src/task.c" 1
+ 850 0000 72B6     		cpsid i
+ 851              	@ 0 "" 2
+ 178:Src/task.c    **** 
+ 179:Src/task.c    ****     //store
+ 180:Src/task.c    ****     __asm ("mrs r0, psp");
+ 852              		.loc 1 180 0
+ 853              	@ 180 "Src/task.c" 1
+ 854 0002 EFF30980 		mrs r0, psp
+ 855              	@ 0 "" 2
+ 181:Src/task.c    ****     __asm("ldr r1, =currentTask");
+ 856              		.loc 1 181 0
+ 857              	@ 181 "Src/task.c" 1
+ 858 0006 0949     		ldr r1, =currentTask
+ 859              	@ 0 "" 2
+ 182:Src/task.c    ****     __asm("ldr r1, [r1]");
+ 860              		.loc 1 182 0
+ 861              	@ 182 "Src/task.c" 1
+ 862 0008 0968     		ldr r1, [r1]
+ 863              	@ 0 "" 2
+ 183:Src/task.c    ****     __asm("stmfd r0!, {r4-r11}");
+ 864              		.loc 1 183 0
+ 865              	@ 183 "Src/task.c" 1
+ 866 000a 20E9F00F 		stmfd r0!, {r4-r11}
+ 867              	@ 0 "" 2
+ARM GAS  /tmp/ccWMShQt.s 			page 19
 
 
- 171:Src/task.c    ****         
- 172:Src/task.c    ****         return;
- 173:Src/task.c    ****     }
- 174:Src/task.c    ****     lastTick = HAL_GetTick();
- 591              		.loc 1 174 0
- 592 0018 FFF7FEFF 		bl	HAL_GetTick
- 593 001c 0246     		mov	r2, r0
- 594 001e 054B     		ldr	r3, .L22
- 595 0020 1A60     		str	r2, [r3]
- 175:Src/task.c    **** 
- 176:Src/task.c    ****     SCB->ICSR |= (1<<28);
- 596              		.loc 1 176 0
- 597 0022 054B     		ldr	r3, .L22+4
- 598 0024 5B68     		ldr	r3, [r3, #4]
- 599 0026 044A     		ldr	r2, .L22+4
- 600 0028 43F08053 		orr	r3, r3, #268435456
- 601 002c 5360     		str	r3, [r2, #4]
- 602 002e 00E0     		b	.L18
- 603              	.L21:
- 172:Src/task.c    ****     }
- 604              		.loc 1 172 0
- 605 0030 00BF     		nop
- 606              	.L18:
- 177:Src/task.c    **** 
- 178:Src/task.c    **** }...
- 607              		.loc 1 178 0
- 608 0032 80BD     		pop	{r7, pc}
- 609              	.L23:
- 610              		.align	2
- 611              	.L22:
- 612 0034 00000000 		.word	lastTick
- 613 0038 00ED00E0 		.word	-536810240
- 614              		.cfi_endproc
- 615              	.LFE137:
- 617              		.text
- 618              	.Letext0:
- 619              		.file 2 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_typ
- 620              		.file 3 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
- 621              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 622              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
- 623              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
- 624              		.file 7 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
- 625              		.file 8 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
- 626              		.file 9 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
- 627              		.file 10 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stdde
- 628              		.file 11 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
-ARM GAS  /tmp/ccLbN7qM.s 			page 15
+ 184:Src/task.c    ****     __asm("str r0, [r1]");
+ 868              		.loc 1 184 0
+ 869              	@ 184 "Src/task.c" 1
+ 870 000e 0860     		str r0, [r1]
+ 871              	@ 0 "" 2
+ 185:Src/task.c    **** 
+ 186:Src/task.c    ****     //load
+ 187:Src/task.c    ****     __asm("ldr r0, =nextTask ");
+ 872              		.loc 1 187 0
+ 873              	@ 187 "Src/task.c" 1
+ 874 0010 0748     		ldr r0, =nextTask 
+ 875              	@ 0 "" 2
+ 188:Src/task.c    ****     __asm("ldr r0, [r0]");
+ 876              		.loc 1 188 0
+ 877              	@ 188 "Src/task.c" 1
+ 878 0012 0068     		ldr r0, [r0]
+ 879              	@ 0 "" 2
+ 189:Src/task.c    ****     __asm("ldr r0, [r0]");
+ 880              		.loc 1 189 0
+ 881              	@ 189 "Src/task.c" 1
+ 882 0014 0068     		ldr r0, [r0]
+ 883              	@ 0 "" 2
+ 190:Src/task.c    ****     __asm("ldmfd r0!, {r4-r11}");
+ 884              		.loc 1 190 0
+ 885              	@ 190 "Src/task.c" 1
+ 886 0016 B0E8F00F 		ldmfd r0!, {r4-r11}
+ 887              	@ 0 "" 2
+ 191:Src/task.c    ****     __asm("msr psp, r0 ");
+ 888              		.loc 1 191 0
+ 889              	@ 191 "Src/task.c" 1
+ 890 001a 80F30988 		msr psp, r0 
+ 891              	@ 0 "" 2
+ 192:Src/task.c    **** 
+ 193:Src/task.c    ****     //return
+ 194:Src/task.c    ****     __asm("cpsie i   ");
+ 892              		.loc 1 194 0
+ 893              	@ 194 "Src/task.c" 1
+ 894 001e 62B6     		cpsie i   
+ 895              	@ 0 "" 2
+ 195:Src/task.c    ****     __asm("MOV r0, #0xFFFFFFFD");
+ 896              		.loc 1 195 0
+ 897              	@ 195 "Src/task.c" 1
+ 898 0020 6FF00200 		MOV r0, #0xFFFFFFFD
+ 899              	@ 0 "" 2
+ 196:Src/task.c    ****     __asm("bx r0");
+ 900              		.loc 1 196 0
+ 901              	@ 196 "Src/task.c" 1
+ 902 0024 0047     		bx r0
+ 903              	@ 0 "" 2
+ 197:Src/task.c    ****     __asm("nop");
+ 904              		.loc 1 197 0
+ 905              	@ 197 "Src/task.c" 1
+ 906 0026 00BF     		nop
+ 907              	@ 0 "" 2
+ 198:Src/task.c    **** }
+ 908              		.loc 1 198 0
+ 909              		.thumb
+ARM GAS  /tmp/ccWMShQt.s 			page 20
+
+
+ 910              		.syntax unified
+ 911 0028 00BF     		nop
+ 912              		.cfi_endproc
+ 913              	.LFE138:
+ 915 002a 0000     		.section	.rodata
+ 916              		.align	2
+ 917              	.LC0:
+ 918 0000 49444C45 		.ascii	"IDLE_TASK\000"
+ 918      5F544153 
+ 918      4B00
+ 919              		.section	.text.KernelStart,"ax",%progbits
+ 920              		.align	1
+ 921              		.global	KernelStart
+ 922              		.syntax unified
+ 923              		.thumb
+ 924              		.thumb_func
+ 925              		.fpu fpv4-sp-d16
+ 927              	KernelStart:
+ 928              	.LFB139:
+ 199:Src/task.c    **** 
+ 200:Src/task.c    **** 
+ 201:Src/task.c    **** void KernelStart(void)
+ 202:Src/task.c    **** {
+ 929              		.loc 1 202 0
+ 930              		.cfi_startproc
+ 931              		@ args = 0, pretend = 0, frame = 0
+ 932              		@ frame_needed = 1, uses_anonymous_args = 0
+ 933 0000 80B5     		push	{r7, lr}
+ 934              	.LCFI25:
+ 935              		.cfi_def_cfa_offset 8
+ 936              		.cfi_offset 7, -8
+ 937              		.cfi_offset 14, -4
+ 938 0002 00AF     		add	r7, sp, #0
+ 939              	.LCFI26:
+ 940              		.cfi_def_cfa_register 7
+ 203:Src/task.c    ****     idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
+ 941              		.loc 1 203 0
+ 942 0004 0023     		movs	r3, #0
+ 943 0006 134A     		ldr	r2, .L34
+ 944 0008 4021     		movs	r1, #64
+ 945 000a 1348     		ldr	r0, .L34+4
+ 946 000c FFF7FEFF 		bl	TaskCreate
+ 947 0010 0346     		mov	r3, r0
+ 948 0012 1A46     		mov	r2, r3
+ 949 0014 114B     		ldr	r3, .L34+8
+ 950 0016 1A60     		str	r2, [r3]
+ 204:Src/task.c    ****     tasks[idleTaskIndex].taskState = TaskSuspend; //do not get schedule like other tasks
+ 951              		.loc 1 204 0
+ 952 0018 104B     		ldr	r3, .L34+8
+ 953 001a 1A68     		ldr	r2, [r3]
+ 954 001c 1049     		ldr	r1, .L34+12
+ 955 001e 1346     		mov	r3, r2
+ 956 0020 9B00     		lsls	r3, r3, #2
+ 957 0022 1344     		add	r3, r3, r2
+ 958 0024 DB00     		lsls	r3, r3, #3
+ 959 0026 0B44     		add	r3, r3, r1
+ 960 0028 0D33     		adds	r3, r3, #13
+ARM GAS  /tmp/ccWMShQt.s 			page 21
+
+
+ 961 002a 0122     		movs	r2, #1
+ 962 002c 1A70     		strb	r2, [r3]
+ 205:Src/task.c    **** 
+ 206:Src/task.c    ****     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
+ 963              		.loc 1 206 0
+ 964 002e 0222     		movs	r2, #2
+ 965 0030 0F21     		movs	r1, #15
+ 966 0032 6FF00100 		mvn	r0, #1
+ 967 0036 FFF7FEFF 		bl	HAL_NVIC_SetPriority
+ 207:Src/task.c    ****     nextTask = &tasks[nextTaskIndex];
+ 968              		.loc 1 207 0
+ 969 003a 0A4B     		ldr	r3, .L34+16
+ 970 003c 1A68     		ldr	r2, [r3]
+ 971 003e 1346     		mov	r3, r2
+ 972 0040 9B00     		lsls	r3, r3, #2
+ 973 0042 1344     		add	r3, r3, r2
+ 974 0044 DB00     		lsls	r3, r3, #3
+ 975 0046 064A     		ldr	r2, .L34+12
+ 976 0048 1344     		add	r3, r3, r2
+ 977 004a 074A     		ldr	r2, .L34+20
+ 978 004c 1360     		str	r3, [r2]
+ 208:Src/task.c    ****     __asm("SVC #0");
+ 979              		.loc 1 208 0
+ 980              		.syntax unified
+ 981              	@ 208 "Src/task.c" 1
+ 982 004e 00DF     		SVC #0
+ 983              	@ 0 "" 2
+ 984              		.thumb
+ 985              		.syntax unified
+ 986              	.L33:
+ 209:Src/task.c    **** 
+ 210:Src/task.c    ****     while(1);
+ 987              		.loc 1 210 0 discriminator 1
+ 988 0050 FEE7     		b	.L33
+ 989              	.L35:
+ 990 0052 00BF     		.align	2
+ 991              	.L34:
+ 992 0054 00000000 		.word	idleTask
+ 993 0058 00000000 		.word	.LC0
+ 994 005c 00000000 		.word	idleTaskIndex
+ 995 0060 00000000 		.word	tasks
+ 996 0064 00000000 		.word	nextTaskIndex
+ 997 0068 00000000 		.word	nextTask
+ 998              		.cfi_endproc
+ 999              	.LFE139:
+ 1001              		.section	.text.saveAndSwitch,"ax",%progbits
+ 1002              		.align	1
+ 1003              		.global	saveAndSwitch
+ 1004              		.syntax unified
+ 1005              		.thumb
+ 1006              		.thumb_func
+ 1007              		.fpu fpv4-sp-d16
+ 1009              	saveAndSwitch:
+ 1010              	.LFB140:
+ 211:Src/task.c    **** }
+ 212:Src/task.c    **** 
+ 213:Src/task.c    **** void saveAndSwitch()
+ARM GAS  /tmp/ccWMShQt.s 			page 22
+
+
+ 214:Src/task.c    **** {
+ 1011              		.loc 1 214 0
+ 1012              		.cfi_startproc
+ 1013              		@ args = 0, pretend = 0, frame = 0
+ 1014              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1015 0000 80B5     		push	{r7, lr}
+ 1016              	.LCFI27:
+ 1017              		.cfi_def_cfa_offset 8
+ 1018              		.cfi_offset 7, -8
+ 1019              		.cfi_offset 14, -4
+ 1020 0002 00AF     		add	r7, sp, #0
+ 1021              	.LCFI28:
+ 1022              		.cfi_def_cfa_register 7
+ 215:Src/task.c    ****     lastTick = HAL_GetTick();
+ 1023              		.loc 1 215 0
+ 1024 0004 FFF7FEFF 		bl	HAL_GetTick
+ 1025 0008 0246     		mov	r2, r0
+ 1026 000a 064B     		ldr	r3, .L37
+ 1027 000c 1A60     		str	r2, [r3]
+ 216:Src/task.c    ****     
+ 217:Src/task.c    ****     switchTask();
+ 1028              		.loc 1 217 0
+ 1029 000e FFF7FEFF 		bl	switchTask
+ 218:Src/task.c    ****     SCB->ICSR |= (1<<28);
+ 1030              		.loc 1 218 0
+ 1031 0012 054B     		ldr	r3, .L37+4
+ 1032 0014 5B68     		ldr	r3, [r3, #4]
+ 1033 0016 044A     		ldr	r2, .L37+4
+ 1034 0018 43F08053 		orr	r3, r3, #268435456
+ 1035 001c 5360     		str	r3, [r2, #4]
+ 219:Src/task.c    **** }
+ 1036              		.loc 1 219 0
+ 1037 001e 00BF     		nop
+ 1038 0020 80BD     		pop	{r7, pc}
+ 1039              	.L38:
+ 1040 0022 00BF     		.align	2
+ 1041              	.L37:
+ 1042 0024 00000000 		.word	lastTick
+ 1043 0028 00ED00E0 		.word	-536810240
+ 1044              		.cfi_endproc
+ 1045              	.LFE140:
+ 1047              		.section	.text.runScheduler,"ax",%progbits
+ 1048              		.align	1
+ 1049              		.global	runScheduler
+ 1050              		.syntax unified
+ 1051              		.thumb
+ 1052              		.thumb_func
+ 1053              		.fpu fpv4-sp-d16
+ 1055              	runScheduler:
+ 1056              	.LFB141:
+ 220:Src/task.c    **** 
+ 221:Src/task.c    **** void runScheduler()
+ 222:Src/task.c    **** {
+ 1057              		.loc 1 222 0
+ 1058              		.cfi_startproc
+ 1059              		@ args = 0, pretend = 0, frame = 0
+ 1060              		@ frame_needed = 1, uses_anonymous_args = 0
+ARM GAS  /tmp/ccWMShQt.s 			page 23
+
+
+ 1061 0000 80B5     		push	{r7, lr}
+ 1062              	.LCFI29:
+ 1063              		.cfi_def_cfa_offset 8
+ 1064              		.cfi_offset 7, -8
+ 1065              		.cfi_offset 14, -4
+ 1066 0002 00AF     		add	r7, sp, #0
+ 1067              	.LCFI30:
+ 1068              		.cfi_def_cfa_register 7
+ 223:Src/task.c    ****     if(!(HAL_GetTick() - lastTick >= 1)){
+ 1069              		.loc 1 223 0
+ 1070 0004 FFF7FEFF 		bl	HAL_GetTick
+ 1071 0008 0246     		mov	r2, r0
+ 1072 000a 044B     		ldr	r3, .L43
+ 1073 000c 1B68     		ldr	r3, [r3]
+ 1074 000e 9A42     		cmp	r2, r3
+ 1075 0010 02D0     		beq	.L42
+ 224:Src/task.c    ****         
+ 225:Src/task.c    ****         return;
+ 226:Src/task.c    ****     }
+ 227:Src/task.c    ****     saveAndSwitch();
+ 1076              		.loc 1 227 0
+ 1077 0012 FFF7FEFF 		bl	saveAndSwitch
+ 1078 0016 00E0     		b	.L39
+ 1079              	.L42:
+ 225:Src/task.c    ****     }
+ 1080              		.loc 1 225 0
+ 1081 0018 00BF     		nop
+ 1082              	.L39:
+ 228:Src/task.c    **** }
+ 1083              		.loc 1 228 0
+ 1084 001a 80BD     		pop	{r7, pc}
+ 1085              	.L44:
+ 1086              		.align	2
+ 1087              	.L43:
+ 1088 001c 00000000 		.word	lastTick
+ 1089              		.cfi_endproc
+ 1090              	.LFE141:
+ 1092              		.section	.text.SysTick_Handler,"ax",%progbits
+ 1093              		.align	1
+ 1094              		.global	SysTick_Handler
+ 1095              		.syntax unified
+ 1096              		.thumb
+ 1097              		.thumb_func
+ 1098              		.fpu fpv4-sp-d16
+ 1100              	SysTick_Handler:
+ 1101              	.LFB142:
+ 229:Src/task.c    **** 
+ 230:Src/task.c    **** void SysTick_Handler(void)
+ 231:Src/task.c    **** {
+ 1102              		.loc 1 231 0
+ 1103              		.cfi_startproc
+ 1104              		@ args = 0, pretend = 0, frame = 0
+ 1105              		@ frame_needed = 1, uses_anonymous_args = 0
+ 1106 0000 80B5     		push	{r7, lr}
+ 1107              	.LCFI31:
+ 1108              		.cfi_def_cfa_offset 8
+ 1109              		.cfi_offset 7, -8
+ARM GAS  /tmp/ccWMShQt.s 			page 24
+
+
+ 1110              		.cfi_offset 14, -4
+ 1111 0002 00AF     		add	r7, sp, #0
+ 1112              	.LCFI32:
+ 1113              		.cfi_def_cfa_register 7
+ 232:Src/task.c    ****     HAL_IncTick();
+ 1114              		.loc 1 232 0
+ 1115 0004 FFF7FEFF 		bl	HAL_IncTick
+ 233:Src/task.c    **** 
+ 234:Src/task.c    ****     //runScheduler();
+ 235:Src/task.c    ****     switchTask();
+ 1116              		.loc 1 235 0
+ 1117 0008 FFF7FEFF 		bl	switchTask
+ 236:Src/task.c    ****     SCB->ICSR |= (1<<28);
+ 1118              		.loc 1 236 0
+ 1119 000c 034B     		ldr	r3, .L46
+ 1120 000e 5B68     		ldr	r3, [r3, #4]
+ 1121 0010 024A     		ldr	r2, .L46
+ 1122 0012 43F08053 		orr	r3, r3, #268435456
+ 1123 0016 5360     		str	r3, [r2, #4]
+ 237:Src/task.c    **** }
+ 1124              		.loc 1 237 0
+ 1125 0018 00BF     		nop
+ 1126 001a 80BD     		pop	{r7, pc}
+ 1127              	.L47:
+ 1128              		.align	2
+ 1129              	.L46:
+ 1130 001c 00ED00E0 		.word	-536810240
+ 1131              		.cfi_endproc
+ 1132              	.LFE142:
+ 1134              		.text
+ 1135              	.Letext0:
+ 1136              		.file 2 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_typ
+ 1137              		.file 3 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 1138              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 1139              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 1140              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 1141              		.file 7 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 1142              		.file 8 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 1143              		.file 9 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 1144              		.file 10 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stdde
+ 1145              		.file 11 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ 1146              		.file 12 "Src/task.h"
+ARM GAS  /tmp/ccWMShQt.s 			page 25
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 task.c
-     /tmp/ccLbN7qM.s:18     .text.TaskReturn:0000000000000000 $t
-     /tmp/ccLbN7qM.s:24     .text.TaskReturn:0000000000000000 TaskReturn
-     /tmp/ccLbN7qM.s:46     .bss.lastTick:0000000000000000 $d
-     /tmp/ccLbN7qM.s:49     .bss.lastTick:0000000000000000 lastTick
-     /tmp/ccLbN7qM.s:52     .bss.tasks:0000000000000000 $d
-     /tmp/ccLbN7qM.s:55     .bss.tasks:0000000000000000 tasks
-     /tmp/ccLbN7qM.s:58     .bss.taskCount:0000000000000000 $d
-     /tmp/ccLbN7qM.s:61     .bss.taskCount:0000000000000000 taskCount
-     /tmp/ccLbN7qM.s:64     .bss.nextTaskIndex:0000000000000000 $d
-     /tmp/ccLbN7qM.s:67     .bss.nextTaskIndex:0000000000000000 nextTaskIndex
+     /tmp/ccWMShQt.s:18     .bss.lastTick:0000000000000000 $d
+     /tmp/ccWMShQt.s:21     .bss.lastTick:0000000000000000 lastTick
+     /tmp/ccWMShQt.s:24     .bss.tasks:0000000000000000 $d
+     /tmp/ccWMShQt.s:27     .bss.tasks:0000000000000000 tasks
+     /tmp/ccWMShQt.s:30     .bss.taskCount:0000000000000000 $d
+     /tmp/ccWMShQt.s:33     .bss.taskCount:0000000000000000 taskCount
+     /tmp/ccWMShQt.s:36     .bss.nextTaskIndex:0000000000000000 $d
+     /tmp/ccWMShQt.s:39     .bss.nextTaskIndex:0000000000000000 nextTaskIndex
+     /tmp/ccWMShQt.s:42     .bss.idleTaskIndex:0000000000000000 $d
+     /tmp/ccWMShQt.s:45     .bss.idleTaskIndex:0000000000000000 idleTaskIndex
                             *COM*:0000000000000004 currentTask
                             *COM*:0000000000000004 nextTask
-     /tmp/ccLbN7qM.s:72     .text.TaskCreate:0000000000000000 $t
-     /tmp/ccLbN7qM.s:79     .text.TaskCreate:0000000000000000 TaskCreate
-     /tmp/ccLbN7qM.s:200    .text.TaskCreate:00000000000000a0 $d
-     /tmp/ccLbN7qM.s:207    .text.switchTask:0000000000000000 $t
-     /tmp/ccLbN7qM.s:214    .text.switchTask:0000000000000000 switchTask
-     /tmp/ccLbN7qM.s:285    .text.switchTask:0000000000000048 $d
-     /tmp/ccLbN7qM.s:294    .text.TaskYield:0000000000000000 $t
-     /tmp/ccLbN7qM.s:301    .text.TaskYield:0000000000000000 TaskYield
-     /tmp/ccLbN7qM.s:324    .text.SVC_Handler:0000000000000000 $t
-     /tmp/ccLbN7qM.s:331    .text.SVC_Handler:0000000000000000 SVC_Handler
-     /tmp/ccLbN7qM.s:383    .text.PendSV_Handler:0000000000000000 $t
-     /tmp/ccLbN7qM.s:390    .text.PendSV_Handler:0000000000000000 PendSV_Handler
-     /tmp/ccLbN7qM.s:497    .text.PendSV_Handler:0000000000000060 $d
-     /tmp/ccLbN7qM.s:506    .text.KernelStart:0000000000000000 $t
-     /tmp/ccLbN7qM.s:513    .text.KernelStart:0000000000000000 KernelStart
-     /tmp/ccLbN7qM.s:553    .text.KernelStart:0000000000000024 $d
-     /tmp/ccLbN7qM.s:560    .text.SysTick_Handler:0000000000000000 $t
-     /tmp/ccLbN7qM.s:567    .text.SysTick_Handler:0000000000000000 SysTick_Handler
-     /tmp/ccLbN7qM.s:612    .text.SysTick_Handler:0000000000000034 $d
-     /tmp/ccLbN7qM.s:4187   .text.PendSV_Handler:0000000000000074 $d
-     /tmp/ccLbN7qM.s:382    .text.SVC_Handler:000000000000001a $d
-     /tmp/ccLbN7qM.s:4187   .text.SVC_Handler:000000000000001c $d
+                            *COM*:0000000000004000 mainStack
+     /tmp/ccWMShQt.s:55     .data.stack_ptr:0000000000000000 stack_ptr
+     /tmp/ccWMShQt.s:52     .data.stack_ptr:0000000000000000 $d
+     /tmp/ccWMShQt.s:58     .text.TaskReturn:0000000000000000 $t
+     /tmp/ccWMShQt.s:64     .text.TaskReturn:0000000000000000 TaskReturn
+     /tmp/ccWMShQt.s:86     .text.idleTask:0000000000000000 $t
+     /tmp/ccWMShQt.s:92     .text.idleTask:0000000000000000 idleTask
+     /tmp/ccWMShQt.s:113    .text.TaskCreate:0000000000000000 $t
+     /tmp/ccWMShQt.s:120    .text.TaskCreate:0000000000000000 TaskCreate
+     /tmp/ccWMShQt.s:339    .text.TaskCreate:0000000000000158 $d
+     /tmp/ccWMShQt.s:347    .text.return_task_name:0000000000000000 $t
+     /tmp/ccWMShQt.s:354    .text.return_task_name:0000000000000000 return_task_name
+     /tmp/ccWMShQt.s:400    .text.return_task_name:0000000000000024 $d
+     /tmp/ccWMShQt.s:406    .text.taskDelay:0000000000000000 $t
+     /tmp/ccWMShQt.s:413    .text.taskDelay:0000000000000000 taskDelay
+     /tmp/ccWMShQt.s:507    .text.switchTask:0000000000000000 switchTask
+     /tmp/ccWMShQt.s:493    .text.taskDelay:0000000000000058 $d
+     /tmp/ccWMShQt.s:500    .text.switchTask:0000000000000000 $t
+     /tmp/ccWMShQt.s:734    .text.switchTask:0000000000000140 $d
+     /tmp/ccWMShQt.s:744    .text.TaskYield:0000000000000000 $t
+     /tmp/ccWMShQt.s:751    .text.TaskYield:0000000000000000 TaskYield
+     /tmp/ccWMShQt.s:774    .text.SVC_Handler:0000000000000000 $t
+     /tmp/ccWMShQt.s:781    .text.SVC_Handler:0000000000000000 SVC_Handler
+     /tmp/ccWMShQt.s:833    .text.PendSV_Handler:0000000000000000 $t
+     /tmp/ccWMShQt.s:840    .text.PendSV_Handler:0000000000000000 PendSV_Handler
+     /tmp/ccWMShQt.s:916    .rodata:0000000000000000 $d
+     /tmp/ccWMShQt.s:920    .text.KernelStart:0000000000000000 $t
+     /tmp/ccWMShQt.s:927    .text.KernelStart:0000000000000000 KernelStart
+     /tmp/ccWMShQt.s:992    .text.KernelStart:0000000000000054 $d
+     /tmp/ccWMShQt.s:1002   .text.saveAndSwitch:0000000000000000 $t
+     /tmp/ccWMShQt.s:1009   .text.saveAndSwitch:0000000000000000 saveAndSwitch
+     /tmp/ccWMShQt.s:1042   .text.saveAndSwitch:0000000000000024 $d
+     /tmp/ccWMShQt.s:1048   .text.runScheduler:0000000000000000 $t
+     /tmp/ccWMShQt.s:1055   .text.runScheduler:0000000000000000 runScheduler
+     /tmp/ccWMShQt.s:1088   .text.runScheduler:000000000000001c $d
+     /tmp/ccWMShQt.s:1093   .text.SysTick_Handler:0000000000000000 $t
+     /tmp/ccWMShQt.s:1100   .text.SysTick_Handler:0000000000000000 SysTick_Handler
+     /tmp/ccWMShQt.s:1130   .text.SysTick_Handler:000000000000001c $d
+     /tmp/ccWMShQt.s:915    .text.PendSV_Handler:000000000000002a $d
+     /tmp/ccWMShQt.s:5179   .text.PendSV_Handler:000000000000002c $d
+     /tmp/ccWMShQt.s:832    .text.SVC_Handler:000000000000001a $d
+     /tmp/ccWMShQt.s:5179   .text.SVC_Handler:000000000000001c $d
+
+ARM GAS  /tmp/ccWMShQt.s 			page 26
+
 
 UNDEFINED SYMBOLS
+strcpy
 memcpy
+HAL_GetTick
 HAL_NVIC_SetPriority
 HAL_IncTick
-HAL_GetTick

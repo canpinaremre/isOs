@@ -1,4 +1,4 @@
-ARM GAS  /tmp/cckC2aia.s 			page 1
+ARM GAS  /tmp/ccg3t4ii.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   30:Drivers/CMSIS/Include/core_cm4.h **** 
   31:Drivers/CMSIS/Include/core_cm4.h **** #ifndef __CORE_CM4_H_GENERIC
   32:Drivers/CMSIS/Include/core_cm4.h **** #define __CORE_CM4_H_GENERIC
-ARM GAS  /tmp/cckC2aia.s 			page 2
+ARM GAS  /tmp/ccg3t4ii.s 			page 2
 
 
   33:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   87:Drivers/CMSIS/Include/core_cm4.h **** 
   88:Drivers/CMSIS/Include/core_cm4.h **** #elif defined (__ARMCC_VERSION) && (__ARMCC_VERSION >= 6010050)
   89:Drivers/CMSIS/Include/core_cm4.h ****   #if defined __ARM_PCS_VFP
-ARM GAS  /tmp/cckC2aia.s 			page 3
+ARM GAS  /tmp/ccg3t4ii.s 			page 3
 
 
   90:Drivers/CMSIS/Include/core_cm4.h ****     #if defined (__FPU_PRESENT) && (__FPU_PRESENT == 1U)
@@ -178,7 +178,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  144:Drivers/CMSIS/Include/core_cm4.h ****   #else
  145:Drivers/CMSIS/Include/core_cm4.h ****     #define __FPU_USED         0U
  146:Drivers/CMSIS/Include/core_cm4.h ****   #endif
-ARM GAS  /tmp/cckC2aia.s 			page 4
+ARM GAS  /tmp/ccg3t4ii.s 			page 4
 
 
  147:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -238,7 +238,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  201:Drivers/CMSIS/Include/core_cm4.h **** 
  202:Drivers/CMSIS/Include/core_cm4.h ****   #ifndef __Vendor_SysTickConfig
  203:Drivers/CMSIS/Include/core_cm4.h ****     #define __Vendor_SysTickConfig    0U
-ARM GAS  /tmp/cckC2aia.s 			page 5
+ARM GAS  /tmp/ccg3t4ii.s 			page 5
 
 
  204:Drivers/CMSIS/Include/core_cm4.h ****     #warning "__Vendor_SysTickConfig not defined in device header file; using default!"
@@ -298,7 +298,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  258:Drivers/CMSIS/Include/core_cm4.h ****  */
  259:Drivers/CMSIS/Include/core_cm4.h **** typedef union
  260:Drivers/CMSIS/Include/core_cm4.h **** {
-ARM GAS  /tmp/cckC2aia.s 			page 6
+ARM GAS  /tmp/ccg3t4ii.s 			page 6
 
 
  261:Drivers/CMSIS/Include/core_cm4.h ****   struct
@@ -358,7 +358,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  315:Drivers/CMSIS/Include/core_cm4.h ****  */
  316:Drivers/CMSIS/Include/core_cm4.h **** typedef union
  317:Drivers/CMSIS/Include/core_cm4.h **** {
-ARM GAS  /tmp/cckC2aia.s 			page 7
+ARM GAS  /tmp/ccg3t4ii.s 			page 7
 
 
  318:Drivers/CMSIS/Include/core_cm4.h ****   struct
@@ -418,7 +418,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  372:Drivers/CMSIS/Include/core_cm4.h **** {
  373:Drivers/CMSIS/Include/core_cm4.h ****   struct
  374:Drivers/CMSIS/Include/core_cm4.h ****   {
-ARM GAS  /tmp/cckC2aia.s 			page 8
+ARM GAS  /tmp/ccg3t4ii.s 			page 8
 
 
  375:Drivers/CMSIS/Include/core_cm4.h ****     uint32_t nPRIV:1;                    /*!< bit:      0  Execution privilege in Thread mode */
@@ -478,7 +478,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  429:Drivers/CMSIS/Include/core_cm4.h **** 
  430:Drivers/CMSIS/Include/core_cm4.h **** /**
  431:Drivers/CMSIS/Include/core_cm4.h ****   \ingroup  CMSIS_core_register
-ARM GAS  /tmp/cckC2aia.s 			page 9
+ARM GAS  /tmp/ccg3t4ii.s 			page 9
 
 
  432:Drivers/CMSIS/Include/core_cm4.h ****   \defgroup CMSIS_SCB     System Control Block (SCB)
@@ -538,7 +538,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  486:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_ICSR_PENDSVSET_Msk             (1UL << SCB_ICSR_PENDSVSET_Pos)                /*!< SCB 
  487:Drivers/CMSIS/Include/core_cm4.h **** 
  488:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_ICSR_PENDSVCLR_Pos             27U                                            /*!< SCB 
-ARM GAS  /tmp/cckC2aia.s 			page 10
+ARM GAS  /tmp/ccg3t4ii.s 			page 10
 
 
  489:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_ICSR_PENDSVCLR_Msk             (1UL << SCB_ICSR_PENDSVCLR_Pos)                /*!< SCB 
@@ -598,7 +598,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  543:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_SCR_SLEEPDEEP_Msk              (1UL << SCB_SCR_SLEEPDEEP_Pos)                 /*!< SCB 
  544:Drivers/CMSIS/Include/core_cm4.h **** 
  545:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_SCR_SLEEPONEXIT_Pos             1U                                            /*!< SCB 
-ARM GAS  /tmp/cckC2aia.s 			page 11
+ARM GAS  /tmp/ccg3t4ii.s 			page 11
 
 
  546:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_SCR_SLEEPONEXIT_Msk            (1UL << SCB_SCR_SLEEPONEXIT_Pos)               /*!< SCB 
@@ -658,7 +658,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  600:Drivers/CMSIS/Include/core_cm4.h **** 
  601:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_SHCSR_USGFAULTACT_Pos           3U                                            /*!< SCB 
  602:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_SHCSR_USGFAULTACT_Msk          (1UL << SCB_SHCSR_USGFAULTACT_Pos)             /*!< SCB 
-ARM GAS  /tmp/cckC2aia.s 			page 12
+ARM GAS  /tmp/ccg3t4ii.s 			page 12
 
 
  603:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -718,7 +718,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  657:Drivers/CMSIS/Include/core_cm4.h **** 
  658:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_CFSR_IBUSERR_Pos              (SCB_CFSR_BUSFAULTSR_Pos + 0U)                  /*!< SCB 
  659:Drivers/CMSIS/Include/core_cm4.h **** #define SCB_CFSR_IBUSERR_Msk              (1UL << SCB_CFSR_IBUSERR_Pos)                   /*!< SCB 
-ARM GAS  /tmp/cckC2aia.s 			page 13
+ARM GAS  /tmp/ccg3t4ii.s 			page 13
 
 
  660:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -778,7 +778,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  714:Drivers/CMSIS/Include/core_cm4.h ****  */
  715:Drivers/CMSIS/Include/core_cm4.h **** 
  716:Drivers/CMSIS/Include/core_cm4.h **** /**
-ARM GAS  /tmp/cckC2aia.s 			page 14
+ARM GAS  /tmp/ccg3t4ii.s 			page 14
 
 
  717:Drivers/CMSIS/Include/core_cm4.h ****   \brief  Structure type to access the System Control and ID Register not in the SCB.
@@ -838,7 +838,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  771:Drivers/CMSIS/Include/core_cm4.h **** #define SysTick_CTRL_CLKSOURCE_Pos          2U                                            /*!< SysT
  772:Drivers/CMSIS/Include/core_cm4.h **** #define SysTick_CTRL_CLKSOURCE_Msk         (1UL << SysTick_CTRL_CLKSOURCE_Pos)            /*!< SysT
  773:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 15
+ARM GAS  /tmp/ccg3t4ii.s 			page 15
 
 
  774:Drivers/CMSIS/Include/core_cm4.h **** #define SysTick_CTRL_TICKINT_Pos            1U                                            /*!< SysT
@@ -898,7 +898,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  828:Drivers/CMSIS/Include/core_cm4.h ****   __IOM uint32_t IMCR;                   /*!< Offset: 0xF00 (R/W)  ITM Integration Mode Control Reg
  829:Drivers/CMSIS/Include/core_cm4.h ****         uint32_t RESERVED4[43U];
  830:Drivers/CMSIS/Include/core_cm4.h ****   __OM  uint32_t LAR;                    /*!< Offset: 0xFB0 ( /W)  ITM Lock Access Register */
-ARM GAS  /tmp/cckC2aia.s 			page 16
+ARM GAS  /tmp/ccg3t4ii.s 			page 16
 
 
  831:Drivers/CMSIS/Include/core_cm4.h ****   __IM  uint32_t LSR;                    /*!< Offset: 0xFB4 (R/ )  ITM Lock Status Register */
@@ -958,7 +958,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  885:Drivers/CMSIS/Include/core_cm4.h **** #define ITM_IRR_ATREADYM_Msk               (1UL /*<< ITM_IRR_ATREADYM_Pos*/)              /*!< ITM 
  886:Drivers/CMSIS/Include/core_cm4.h **** 
  887:Drivers/CMSIS/Include/core_cm4.h **** /* ITM Integration Mode Control Register Definitions */
-ARM GAS  /tmp/cckC2aia.s 			page 17
+ARM GAS  /tmp/ccg3t4ii.s 			page 17
 
 
  888:Drivers/CMSIS/Include/core_cm4.h **** #define ITM_IMCR_INTEGRATION_Pos            0U                                            /*!< ITM 
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  942:Drivers/CMSIS/Include/core_cm4.h **** #define DWT_CTRL_NUMCOMP_Pos               28U                                         /*!< DWT CTR
  943:Drivers/CMSIS/Include/core_cm4.h **** #define DWT_CTRL_NUMCOMP_Msk               (0xFUL << DWT_CTRL_NUMCOMP_Pos)             /*!< DWT CTR
  944:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 18
+ARM GAS  /tmp/ccg3t4ii.s 			page 18
 
 
  945:Drivers/CMSIS/Include/core_cm4.h **** #define DWT_CTRL_NOTRCPKT_Pos              27U                                         /*!< DWT CTR
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  999:Drivers/CMSIS/Include/core_cm4.h **** 
 1000:Drivers/CMSIS/Include/core_cm4.h **** /* DWT Exception Overhead Count Register Definitions */
 1001:Drivers/CMSIS/Include/core_cm4.h **** #define DWT_EXCCNT_EXCCNT_Pos               0U                                         /*!< DWT EXC
-ARM GAS  /tmp/cckC2aia.s 			page 19
+ARM GAS  /tmp/ccg3t4ii.s 			page 19
 
 
 1002:Drivers/CMSIS/Include/core_cm4.h **** #define DWT_EXCCNT_EXCCNT_Msk              (0xFFUL /*<< DWT_EXCCNT_EXCCNT_Pos*/)       /*!< DWT EXC
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1056:Drivers/CMSIS/Include/core_cm4.h ****  */
 1057:Drivers/CMSIS/Include/core_cm4.h **** 
 1058:Drivers/CMSIS/Include/core_cm4.h **** /**
-ARM GAS  /tmp/cckC2aia.s 			page 20
+ARM GAS  /tmp/ccg3t4ii.s 			page 20
 
 
 1059:Drivers/CMSIS/Include/core_cm4.h ****   \brief  Structure type to access the Trace Port Interface Register (TPI).
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1113:Drivers/CMSIS/Include/core_cm4.h **** 
 1114:Drivers/CMSIS/Include/core_cm4.h **** #define TPI_FFCR_EnFCont_Pos                1U                                         /*!< TPI FFC
 1115:Drivers/CMSIS/Include/core_cm4.h **** #define TPI_FFCR_EnFCont_Msk               (0x1UL << TPI_FFCR_EnFCont_Pos)             /*!< TPI FFC
-ARM GAS  /tmp/cckC2aia.s 			page 21
+ARM GAS  /tmp/ccg3t4ii.s 			page 21
 
 
 1116:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1170:Drivers/CMSIS/Include/core_cm4.h **** #define TPI_FIFO1_ITM0_Msk                 (0xFFUL /*<< TPI_FIFO1_ITM0_Pos*/)          /*!< TPI FIF
 1171:Drivers/CMSIS/Include/core_cm4.h **** 
 1172:Drivers/CMSIS/Include/core_cm4.h **** /* TPI ITATBCTR0 Register Definitions */
-ARM GAS  /tmp/cckC2aia.s 			page 22
+ARM GAS  /tmp/ccg3t4ii.s 			page 22
 
 
 1173:Drivers/CMSIS/Include/core_cm4.h **** #define TPI_ITATBCTR0_ATREADY2_Pos          0U                                         /*!< TPI ITA
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1227:Drivers/CMSIS/Include/core_cm4.h ****   __IOM uint32_t RNR;                    /*!< Offset: 0x008 (R/W)  MPU Region RNRber Register */
 1228:Drivers/CMSIS/Include/core_cm4.h ****   __IOM uint32_t RBAR;                   /*!< Offset: 0x00C (R/W)  MPU Region Base Address Register
 1229:Drivers/CMSIS/Include/core_cm4.h ****   __IOM uint32_t RASR;                   /*!< Offset: 0x010 (R/W)  MPU Region Attribute and Size Re
-ARM GAS  /tmp/cckC2aia.s 			page 23
+ARM GAS  /tmp/ccg3t4ii.s 			page 23
 
 
 1230:Drivers/CMSIS/Include/core_cm4.h ****   __IOM uint32_t RBAR_A1;                /*!< Offset: 0x014 (R/W)  MPU Alias 1 Region Base Address 
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1284:Drivers/CMSIS/Include/core_cm4.h **** #define MPU_RASR_TEX_Pos                   19U                                            /*!< MPU 
 1285:Drivers/CMSIS/Include/core_cm4.h **** #define MPU_RASR_TEX_Msk                   (0x7UL << MPU_RASR_TEX_Pos)                    /*!< MPU 
 1286:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 24
+ARM GAS  /tmp/ccg3t4ii.s 			page 24
 
 
 1287:Drivers/CMSIS/Include/core_cm4.h **** #define MPU_RASR_S_Pos                     18U                                            /*!< MPU 
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1341:Drivers/CMSIS/Include/core_cm4.h **** 
 1342:Drivers/CMSIS/Include/core_cm4.h **** #define FPU_FPCCR_MMRDY_Pos                 5U                                            /*!< FPCC
 1343:Drivers/CMSIS/Include/core_cm4.h **** #define FPU_FPCCR_MMRDY_Msk                (1UL << FPU_FPCCR_MMRDY_Pos)                   /*!< FPCC
-ARM GAS  /tmp/cckC2aia.s 			page 25
+ARM GAS  /tmp/ccg3t4ii.s 			page 25
 
 
 1344:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1398:Drivers/CMSIS/Include/core_cm4.h **** 
 1399:Drivers/CMSIS/Include/core_cm4.h **** /* Media and FP Feature Register 1 Definitions */
 1400:Drivers/CMSIS/Include/core_cm4.h **** #define FPU_MVFR1_FP_fused_MAC_Pos         28U                                            /*!< MVFR
-ARM GAS  /tmp/cckC2aia.s 			page 26
+ARM GAS  /tmp/ccg3t4ii.s 			page 26
 
 
 1401:Drivers/CMSIS/Include/core_cm4.h **** #define FPU_MVFR1_FP_fused_MAC_Msk         (0xFUL << FPU_MVFR1_FP_fused_MAC_Pos)          /*!< MVFR
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1455:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DHCSR_C_SNAPSTALL_Pos     5U                                            /*!< Core
 1456:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DHCSR_C_SNAPSTALL_Msk    (1UL << CoreDebug_DHCSR_C_SNAPSTALL_Pos)       /*!< Core
 1457:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 27
+ARM GAS  /tmp/ccg3t4ii.s 			page 27
 
 
 1458:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DHCSR_C_MASKINTS_Pos      3U                                            /*!< Core
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1512:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DEMCR_VC_MMERR_Msk       (1UL << CoreDebug_DEMCR_VC_MMERR_Pos)          /*!< Core
 1513:Drivers/CMSIS/Include/core_cm4.h **** 
 1514:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DEMCR_VC_CORERESET_Pos    0U                                            /*!< Core
-ARM GAS  /tmp/cckC2aia.s 			page 28
+ARM GAS  /tmp/ccg3t4ii.s 			page 28
 
 
 1515:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug_DEMCR_VC_CORERESET_Msk   (1UL /*<< CoreDebug_DEMCR_VC_CORERESET_Pos*/)  /*!< Core
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1569:Drivers/CMSIS/Include/core_cm4.h **** #define TPI                 ((TPI_Type       *)     TPI_BASE      )   /*!< TPI configuration struct
 1570:Drivers/CMSIS/Include/core_cm4.h **** #define CoreDebug           ((CoreDebug_Type *)     CoreDebug_BASE)   /*!< Core Debug configuration
 1571:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 29
+ARM GAS  /tmp/ccg3t4ii.s 			page 29
 
 
 1572:Drivers/CMSIS/Include/core_cm4.h **** #if defined (__MPU_PRESENT) && (__MPU_PRESENT == 1U)
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1626:Drivers/CMSIS/Include/core_cm4.h **** #ifdef CMSIS_VECTAB_VIRTUAL
 1627:Drivers/CMSIS/Include/core_cm4.h ****   #ifndef CMSIS_VECTAB_VIRTUAL_HEADER_FILE
 1628:Drivers/CMSIS/Include/core_cm4.h ****    #define CMSIS_VECTAB_VIRTUAL_HEADER_FILE "cmsis_vectab_virtual.h"
-ARM GAS  /tmp/cckC2aia.s 			page 30
+ARM GAS  /tmp/ccg3t4ii.s 			page 30
 
 
 1629:Drivers/CMSIS/Include/core_cm4.h ****   #endif
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   47              		.loc 1 1662 0
   48 0010 0C4B     		ldr	r3, .L2
   49 0012 DB68     		ldr	r3, [r3, #12]
-ARM GAS  /tmp/cckC2aia.s 			page 31
+ARM GAS  /tmp/ccg3t4ii.s 			page 31
 
 
   50 0014 BB60     		str	r3, [r7, #8]
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   98              	__NVIC_GetPriorityGrouping:
   99              	.LFB103:
 1669:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 32
+ARM GAS  /tmp/ccg3t4ii.s 			page 32
 
 
 1670:Drivers/CMSIS/Include/core_cm4.h **** 
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1682:Drivers/CMSIS/Include/core_cm4.h **** /**
 1683:Drivers/CMSIS/Include/core_cm4.h ****   \brief   Enable Interrupt
 1684:Drivers/CMSIS/Include/core_cm4.h ****   \details Enables a device specific interrupt in the NVIC interrupt controller.
-ARM GAS  /tmp/cckC2aia.s 			page 33
+ARM GAS  /tmp/ccg3t4ii.s 			page 33
 
 
 1685:Drivers/CMSIS/Include/core_cm4.h ****   \param [in]      IRQn  Device specific interrupt number.
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  188 0034 7047     		bx	lr
  189              	.L12:
  190 0036 00BF     		.align	2
-ARM GAS  /tmp/cckC2aia.s 			page 34
+ARM GAS  /tmp/ccg3t4ii.s 			page 34
 
 
  191              	.L11:
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  216              		.cfi_def_cfa_offset 16
  217 0004 00AF     		add	r7, sp, #0
  218              	.LCFI18:
-ARM GAS  /tmp/cckC2aia.s 			page 35
+ARM GAS  /tmp/ccg3t4ii.s 			page 35
 
 
  219              		.cfi_def_cfa_register 7
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   32:Drivers/CMSIS/Include/cmsis_gcc.h **** #pragma GCC diagnostic ignored "-Wunused-parameter"
   33:Drivers/CMSIS/Include/cmsis_gcc.h **** 
   34:Drivers/CMSIS/Include/cmsis_gcc.h **** /* Fallback for __has_builtin */
-ARM GAS  /tmp/cckC2aia.s 			page 36
+ARM GAS  /tmp/ccg3t4ii.s 			page 36
 
 
   35:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef __has_builtin
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   89:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic ignored "-Wattributes"
   90:Drivers/CMSIS/Include/cmsis_gcc.h ****   __PACKED_STRUCT T_UINT16_READ { uint16_t v; };
   91:Drivers/CMSIS/Include/cmsis_gcc.h ****   #pragma GCC diagnostic pop
-ARM GAS  /tmp/cckC2aia.s 			page 37
+ARM GAS  /tmp/ccg3t4ii.s 			page 37
 
 
   92:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __UNALIGNED_UINT16_READ(addr)          (((const struct T_UINT16_READ *)(const void *)(add
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  146:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  147:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Control Register
  148:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the Control Register.
-ARM GAS  /tmp/cckC2aia.s 			page 38
+ARM GAS  /tmp/ccg3t4ii.s 			page 38
 
 
  149:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Control Register value
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  203:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               IPSR Register value
  204:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  205:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __get_IPSR(void)
-ARM GAS  /tmp/cckC2aia.s 			page 39
+ARM GAS  /tmp/ccg3t4ii.s 			page 39
 
 
  206:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  260:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               PSP Register value
  261:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  262:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE uint32_t __TZ_get_PSP_NS(void)
-ARM GAS  /tmp/cckC2aia.s 			page 40
+ARM GAS  /tmp/ccg3t4ii.s 			page 40
 
 
  263:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  317:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  318:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
  319:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 41
+ARM GAS  /tmp/ccg3t4ii.s 			page 41
 
 
  320:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msp_ns" : "=r" (result) );
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  374:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  375:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  376:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 42
+ARM GAS  /tmp/ccg3t4ii.s 			page 42
 
 
  377:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  431:Drivers/CMSIS/Include/cmsis_gcc.h **** #if ((defined (__ARM_ARCH_7M__      ) && (__ARM_ARCH_7M__      == 1)) || \
  432:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_7EM__     ) && (__ARM_ARCH_7EM__     == 1)) || \
  433:Drivers/CMSIS/Include/cmsis_gcc.h ****      (defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1))    )
-ARM GAS  /tmp/cckC2aia.s 			page 43
+ARM GAS  /tmp/ccg3t4ii.s 			page 43
 
 
  434:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  488:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the Base Priority register.
  489:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
  490:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/cckC2aia.s 			page 44
+ARM GAS  /tmp/ccg3t4ii.s 			page 44
 
 
  491:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __set_BASEPRI(uint32_t basePri)
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  545:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  546:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, faultmask_ns" : "=r" (result) );
  547:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
-ARM GAS  /tmp/cckC2aia.s 			page 45
+ARM GAS  /tmp/ccg3t4ii.s 			page 45
 
 
  548:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  602:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  603:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  604:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 46
+ARM GAS  /tmp/ccg3t4ii.s 			page 46
 
 
  605:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (defined (__ARM_FEATURE_CMSE) && (__ARM_FEATURE_CMSE == 3))
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  659:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  660:Drivers/CMSIS/Include/cmsis_gcc.h **** #if (!(defined (__ARM_ARCH_8M_MAIN__ ) && (__ARM_ARCH_8M_MAIN__ == 1)))
  661:Drivers/CMSIS/Include/cmsis_gcc.h ****   // without main extensions, the non-secure PSPLIM is RAZ/WI
-ARM GAS  /tmp/cckC2aia.s 			page 47
+ARM GAS  /tmp/ccg3t4ii.s 			page 47
 
 
  662:Drivers/CMSIS/Include/cmsis_gcc.h ****   (void)ProcStackPtrLimit;
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  716:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  717:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Main Stack Pointer Limit
  718:Drivers/CMSIS/Include/cmsis_gcc.h ****   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
-ARM GAS  /tmp/cckC2aia.s 			page 48
+ARM GAS  /tmp/ccg3t4ii.s 			page 48
 
 
  719:Drivers/CMSIS/Include/cmsis_gcc.h ****   Stack Pointer Limit register hence the write is silently ignored in non-secure
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  773:Drivers/CMSIS/Include/cmsis_gcc.h ****   /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
  774:Drivers/CMSIS/Include/cmsis_gcc.h ****   return __builtin_arm_get_fpscr();
  775:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
-ARM GAS  /tmp/cckC2aia.s 			page 49
+ARM GAS  /tmp/ccg3t4ii.s 			page 49
 
 
  776:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  830:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  831:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  832:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
-ARM GAS  /tmp/cckC2aia.s 			page 50
+ARM GAS  /tmp/ccg3t4ii.s 			page 50
 
 
  833:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   No Operation
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  246              	.LBE11:
  247              	.LBE10:
  248              	.LBB12:
-ARM GAS  /tmp/cckC2aia.s 			page 51
+ARM GAS  /tmp/ccg3t4ii.s 			page 51
 
 
  249              	.LBB13:
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1743:Drivers/CMSIS/Include/core_cm4.h **** __STATIC_INLINE uint32_t __NVIC_GetPendingIRQ(IRQn_Type IRQn)
 1744:Drivers/CMSIS/Include/core_cm4.h **** {
  290              		.loc 1 1744 0
-ARM GAS  /tmp/cckC2aia.s 			page 52
+ARM GAS  /tmp/ccg3t4ii.s 			page 52
 
 
  291              		.cfi_startproc
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  336              	.LCFI27:
  337              		.cfi_restore 7
  338              		.cfi_def_cfa_offset 0
-ARM GAS  /tmp/cckC2aia.s 			page 53
+ARM GAS  /tmp/ccg3t4ii.s 			page 53
 
 
  339 003c 7047     		bx	lr
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  382 001e 5B09     		lsrs	r3, r3, #5
  383 0020 0120     		movs	r0, #1
  384 0022 00FA02F2 		lsl	r2, r0, r2
-ARM GAS  /tmp/cckC2aia.s 			page 54
+ARM GAS  /tmp/ccg3t4ii.s 			page 54
 
 
  385 0026 4033     		adds	r3, r3, #64
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  429              		.cfi_def_cfa_offset 16
  430 0004 00AF     		add	r7, sp, #0
  431              	.LCFI36:
-ARM GAS  /tmp/cckC2aia.s 			page 55
+ARM GAS  /tmp/ccg3t4ii.s 			page 55
 
 
  432              		.cfi_def_cfa_register 7
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1787:Drivers/CMSIS/Include/core_cm4.h ****   \brief   Get Active Interrupt
 1788:Drivers/CMSIS/Include/core_cm4.h ****   \details Reads the active register in the NVIC and returns the active bit for the device specific
 1789:Drivers/CMSIS/Include/core_cm4.h ****   \param [in]      IRQn  Device specific interrupt number.
-ARM GAS  /tmp/cckC2aia.s 			page 56
+ARM GAS  /tmp/ccg3t4ii.s 			page 56
 
 
 1790:Drivers/CMSIS/Include/core_cm4.h ****   \return             0  Interrupt status is not active.
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  519              	.LCFI43:
  520              		.cfi_def_cfa_offset 4
  521 0036 BD46     		mov	sp, r7
-ARM GAS  /tmp/cckC2aia.s 			page 57
+ARM GAS  /tmp/ccg3t4ii.s 			page 57
 
 
  522              	.LCFI44:
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  564              		.loc 1 1818 0
  565 000c 97F90730 		ldrsb	r3, [r7, #7]
  566 0010 002B     		cmp	r3, #0
-ARM GAS  /tmp/cckC2aia.s 			page 58
+ARM GAS  /tmp/ccg3t4ii.s 			page 58
 
 
  567 0012 0ADB     		blt	.L39
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  612              	.LFE111:
  614              		.section	.text.__NVIC_GetPriority,"ax",%progbits
  615              		.align	1
-ARM GAS  /tmp/cckC2aia.s 			page 59
+ARM GAS  /tmp/ccg3t4ii.s 			page 59
 
 
  616              		.syntax unified
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1844:Drivers/CMSIS/Include/core_cm4.h ****   }
 1845:Drivers/CMSIS/Include/core_cm4.h ****   else
 1846:Drivers/CMSIS/Include/core_cm4.h ****   {
-ARM GAS  /tmp/cckC2aia.s 			page 60
+ARM GAS  /tmp/ccg3t4ii.s 			page 60
 
 
 1847:Drivers/CMSIS/Include/core_cm4.h ****     return(((uint32_t)SCB->SHP[(((uint32_t)IRQn) & 0xFUL)-4UL] >> (8U - __NVIC_PRIO_BITS)));
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1861:Drivers/CMSIS/Include/core_cm4.h ****   \return                        Encoded priority. Value can be used in the function \ref NVIC_SetP
 1862:Drivers/CMSIS/Include/core_cm4.h ****  */
 1863:Drivers/CMSIS/Include/core_cm4.h **** __STATIC_INLINE uint32_t NVIC_EncodePriority (uint32_t PriorityGroup, uint32_t PreemptPriority, uin
-ARM GAS  /tmp/cckC2aia.s 			page 61
+ARM GAS  /tmp/ccg3t4ii.s 			page 61
 
 
 1864:Drivers/CMSIS/Include/core_cm4.h **** {
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  740              		.loc 1 1873 0 is_stmt 1 discriminator 4
  741 0034 4FF0FF32 		mov	r2, #-1
  742 0038 BB69     		ldr	r3, [r7, #24]
-ARM GAS  /tmp/cckC2aia.s 			page 62
+ARM GAS  /tmp/ccg3t4ii.s 			page 62
 
 
  743 003a 02FA03F3 		lsl	r3, r2, r3
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1888:Drivers/CMSIS/Include/core_cm4.h ****   \param [out]     pSubPriority  Subpriority value (starting from 0).
 1889:Drivers/CMSIS/Include/core_cm4.h ****  */
 1890:Drivers/CMSIS/Include/core_cm4.h **** __STATIC_INLINE void NVIC_DecodePriority (uint32_t Priority, uint32_t PriorityGroup, uint32_t* cons
-ARM GAS  /tmp/cckC2aia.s 			page 63
+ARM GAS  /tmp/ccg3t4ii.s 			page 63
 
 
 1891:Drivers/CMSIS/Include/core_cm4.h **** {
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  829              		.loc 1 1899 0 is_stmt 1 discriminator 4
  830 0036 FA68     		ldr	r2, [r7, #12]
  831 0038 7B69     		ldr	r3, [r7, #20]
-ARM GAS  /tmp/cckC2aia.s 			page 64
+ARM GAS  /tmp/ccg3t4ii.s 			page 64
 
 
  832 003a DA40     		lsrs	r2, r2, r3
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1913:Drivers/CMSIS/Include/core_cm4.h **** __STATIC_INLINE void __NVIC_SetVector(IRQn_Type IRQn, uint32_t vector)
 1914:Drivers/CMSIS/Include/core_cm4.h **** {
 1915:Drivers/CMSIS/Include/core_cm4.h ****   uint32_t *vectors = (uint32_t *)SCB->VTOR;
-ARM GAS  /tmp/cckC2aia.s 			page 65
+ARM GAS  /tmp/ccg3t4ii.s 			page 65
 
 
 1916:Drivers/CMSIS/Include/core_cm4.h ****   vectors[(int32_t)IRQn + NVIC_USER_IRQ_OFFSET] = vector;
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  900 000a DB68     		ldr	r3, [r3, #12]
  901 000c 03F4E062 		and	r2, r3, #1792
 1943:Drivers/CMSIS/Include/core_cm4.h ****                            (SCB->AIRCR & SCB_AIRCR_PRIGROUP_Msk) |
-ARM GAS  /tmp/cckC2aia.s 			page 66
+ARM GAS  /tmp/ccg3t4ii.s 			page 66
 
 
  902              		.loc 1 1943 0
@@ -3958,7 +3958,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 1959:Drivers/CMSIS/Include/core_cm4.h **** 
 1960:Drivers/CMSIS/Include/core_cm4.h **** #include "mpu_armv7.h"
 1961:Drivers/CMSIS/Include/core_cm4.h **** 
-ARM GAS  /tmp/cckC2aia.s 			page 67
+ARM GAS  /tmp/ccg3t4ii.s 			page 67
 
 
 1962:Drivers/CMSIS/Include/core_cm4.h **** #endif
@@ -4018,7 +4018,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
 2016:Drivers/CMSIS/Include/core_cm4.h ****   \return          0  Function succeeded.
 2017:Drivers/CMSIS/Include/core_cm4.h ****   \return          1  Function failed.
 2018:Drivers/CMSIS/Include/core_cm4.h ****   \note    When the variable <b>__Vendor_SysTickConfig</b> is set to 1, then the
-ARM GAS  /tmp/cckC2aia.s 			page 68
+ARM GAS  /tmp/ccg3t4ii.s 			page 68
 
 
 2019:Drivers/CMSIS/Include/core_cm4.h ****            function <b>SysTick_Config</b> is not included. In this case, the file <b><i>device</i>.
@@ -4078,7 +4078,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  984 0030 0722     		movs	r2, #7
  985 0032 1A60     		str	r2, [r3]
 2033:Drivers/CMSIS/Include/core_cm4.h ****                    SysTick_CTRL_TICKINT_Msk   |
-ARM GAS  /tmp/cckC2aia.s 			page 69
+ARM GAS  /tmp/ccg3t4ii.s 			page 69
 
 
 2034:Drivers/CMSIS/Include/core_cm4.h ****                    SysTick_CTRL_ENABLE_Msk;                         /* Enable SysTick IRQ and SysTi
@@ -4138,7 +4138,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   23:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****     (#) Configure the NVIC Priority Grouping using HAL_NVIC_SetPriorityGrouping() function
   24:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** 
   25:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****      (#)  Configure the priority of the selected IRQ Channels using HAL_NVIC_SetPriority()
-ARM GAS  /tmp/cckC2aia.s 			page 70
+ARM GAS  /tmp/ccg3t4ii.s 			page 70
 
 
   26:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** 
@@ -4198,7 +4198,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
   80:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   ******************************************************************************
   81:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   */
   82:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** 
-ARM GAS  /tmp/cckC2aia.s 			page 71
+ARM GAS  /tmp/ccg3t4ii.s 			page 71
 
 
   83:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** /*
@@ -4258,7 +4258,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  137:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** @verbatim
  138:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   ==============================================================================
  139:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****               ##### Initialization and de-initialization functions #####
-ARM GAS  /tmp/cckC2aia.s 			page 72
+ARM GAS  /tmp/ccg3t4ii.s 			page 72
 
 
  140:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   ==============================================================================
@@ -4318,7 +4318,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1035 000a FFF7FEFF 		bl	__NVIC_SetPriorityGrouping
  176:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** }
  1036              		.loc 3 176 0
-ARM GAS  /tmp/cckC2aia.s 			page 73
+ARM GAS  /tmp/ccg3t4ii.s 			page 73
 
 
  1037 000e 00BF     		nop
@@ -4378,7 +4378,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1077 000c FB73     		strb	r3, [r7, #15]
  193:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   uint32_t prioritygroup = 0x00U;
  1078              		.loc 3 193 0
-ARM GAS  /tmp/cckC2aia.s 			page 74
+ARM GAS  /tmp/ccg3t4ii.s 			page 74
 
 
  1079 000e 0023     		movs	r3, #0
@@ -4438,7 +4438,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  212:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   */
  213:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** void HAL_NVIC_EnableIRQ(IRQn_Type IRQn)
  214:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** {
-ARM GAS  /tmp/cckC2aia.s 			page 75
+ARM GAS  /tmp/ccg3t4ii.s 			page 75
 
 
  1117              		.loc 3 214 0
@@ -4498,7 +4498,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  227:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   * @retval None
  228:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   */
  229:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** void HAL_NVIC_DisableIRQ(IRQn_Type IRQn)
-ARM GAS  /tmp/cckC2aia.s 			page 76
+ARM GAS  /tmp/ccg3t4ii.s 			page 76
 
 
  230:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** {
@@ -4558,7 +4558,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  242:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** void HAL_NVIC_SystemReset(void)
  243:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c **** {
  1205              		.loc 3 243 0
-ARM GAS  /tmp/cckC2aia.s 			page 77
+ARM GAS  /tmp/ccg3t4ii.s 			page 77
 
 
  1206              		.cfi_startproc
@@ -4618,7 +4618,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1248              		.loc 3 257 0
  1249 0008 7868     		ldr	r0, [r7, #4]
  1250 000a FFF7FEFF 		bl	SysTick_Config
-ARM GAS  /tmp/cckC2aia.s 			page 78
+ARM GAS  /tmp/ccg3t4ii.s 			page 78
 
 
  1251 000e 0346     		mov	r3, r0
@@ -4678,7 +4678,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1278              		@ frame_needed = 1, uses_anonymous_args = 0
  1279              		@ link register save eliminated.
  1280 0000 80B4     		push	{r7}
-ARM GAS  /tmp/cckC2aia.s 			page 79
+ARM GAS  /tmp/ccg3t4ii.s 			page 79
 
 
  1281              	.LCFI104:
@@ -4738,7 +4738,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  298:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   *          This parameter can be one of the following values:
  299:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   *            @arg MPU_HFNMI_PRIVDEF_NONE
  300:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   *            @arg MPU_HARDFAULT_NMI
-ARM GAS  /tmp/cckC2aia.s 			page 80
+ARM GAS  /tmp/ccg3t4ii.s 			page 80
 
 
  301:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   *            @arg MPU_PRIVILEGED_DEFAULT
@@ -4798,7 +4798,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1368 002a 00BF     		.align	2
  1369              	.L76:
  1370 002c 90ED00E0 		.word	-536810096
-ARM GAS  /tmp/cckC2aia.s 			page 81
+ARM GAS  /tmp/ccg3t4ii.s 			page 81
 
 
  1371 0030 00ED00E0 		.word	-536810240
@@ -4858,7 +4858,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1410 0016 29D0     		beq	.L79
  330:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   {
  331:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****     /* Check the parameters */
-ARM GAS  /tmp/cckC2aia.s 			page 82
+ARM GAS  /tmp/ccg3t4ii.s 			page 82
 
 
  332:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****     assert_param(IS_MPU_INSTRUCTION_ACCESS(MPU_Init->DisableExec));
@@ -4918,7 +4918,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1445 0046 7B68     		ldr	r3, [r7, #4]
  1446 0048 DB7B     		ldrb	r3, [r3, #15]	@ zero_extendqisi2
  1447 004a 1B04     		lsls	r3, r3, #16
-ARM GAS  /tmp/cckC2aia.s 			page 83
+ARM GAS  /tmp/ccg3t4ii.s 			page 83
 
 
  346:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****                 ((uint32_t)MPU_Init->IsCacheable             << MPU_RASR_C_Pos)    |
@@ -4978,7 +4978,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1484              		.loc 3 357 0
  1485 0078 00BF     		nop
  1486 007a 0C37     		adds	r7, r7, #12
-ARM GAS  /tmp/cckC2aia.s 			page 84
+ARM GAS  /tmp/ccg3t4ii.s 			page 84
 
 
  1487              	.LCFI117:
@@ -5038,7 +5038,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1532 000c 80BD     		pop	{r7, pc}
  1533              		.cfi_endproc
  1534              	.LFE139:
-ARM GAS  /tmp/cckC2aia.s 			page 85
+ARM GAS  /tmp/ccg3t4ii.s 			page 85
 
 
  1536              		.section	.text.HAL_NVIC_GetPriority,"ax",%progbits
@@ -5098,7 +5098,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  394:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   assert_param(IS_NVIC_PRIORITY_GROUP(PriorityGroup));
  395:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Get priority for Cortex-M system or device specific interrupts */
  396:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   NVIC_DecodePriority(NVIC_GetPriority(IRQn), PriorityGroup, pPreemptPriority, pSubPriority);
-ARM GAS  /tmp/cckC2aia.s 			page 86
+ARM GAS  /tmp/ccg3t4ii.s 			page 86
 
 
  1566              		.loc 3 396 0
@@ -5158,7 +5158,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1611              		.cfi_def_cfa_register 7
  1612 0006 0346     		mov	r3, r0
  1613 0008 FB71     		strb	r3, [r7, #7]
-ARM GAS  /tmp/cckC2aia.s 			page 87
+ARM GAS  /tmp/ccg3t4ii.s 			page 87
 
 
  408:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Set interrupt pending */
@@ -5218,7 +5218,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1655              		.cfi_def_cfa_register 7
  1656 0006 0346     		mov	r3, r0
  1657 0008 FB71     		strb	r3, [r7, #7]
-ARM GAS  /tmp/cckC2aia.s 			page 88
+ARM GAS  /tmp/ccg3t4ii.s 			page 88
 
 
  423:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Return 1 if pending else 0U */
@@ -5278,7 +5278,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1701 0006 0346     		mov	r3, r0
  1702 0008 FB71     		strb	r3, [r7, #7]
  436:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Clear pending interrupt */
-ARM GAS  /tmp/cckC2aia.s 			page 89
+ARM GAS  /tmp/ccg3t4ii.s 			page 89
 
 
  437:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   NVIC_ClearPendingIRQ(IRQn);
@@ -5338,7 +5338,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1746 0008 FB71     		strb	r3, [r7, #7]
  450:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Return 1 if active else 0U */
  451:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   return NVIC_GetActive(IRQn);
-ARM GAS  /tmp/cckC2aia.s 			page 90
+ARM GAS  /tmp/ccg3t4ii.s 			page 90
 
 
  1747              		.loc 3 451 0
@@ -5398,7 +5398,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  464:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* Check the parameters */
  465:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   assert_param(IS_SYSTICK_CLK_SOURCE(CLKSource));
  466:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   if (CLKSource == SYSTICK_CLKSOURCE_HCLK)
-ARM GAS  /tmp/cckC2aia.s 			page 91
+ARM GAS  /tmp/ccg3t4ii.s 			page 91
 
 
  1791              		.loc 3 466 0
@@ -5458,7 +5458,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1837              		.thumb_func
  1838              		.fpu fpv4-sp-d16
  1840              	HAL_SYSTICK_IRQHandler:
-ARM GAS  /tmp/cckC2aia.s 			page 92
+ARM GAS  /tmp/ccg3t4ii.s 			page 92
 
 
  1841              	.LFB146:
@@ -5518,7 +5518,7 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1881 0002 00AF     		add	r7, sp, #0
  1882              	.LCFI156:
  1883              		.cfi_def_cfa_register 7
-ARM GAS  /tmp/cckC2aia.s 			page 93
+ARM GAS  /tmp/ccg3t4ii.s 			page 93
 
 
  491:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_cortex.c ****   /* NOTE : This function Should not be modified, when the callback is needed,
@@ -5547,93 +5547,93 @@ ARM GAS  /tmp/cckC2aia.s 			page 1
  1904              		.file 8 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f3xx.h"
  1905              		.file 9 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_cortex.h"
  1906              		.file 10 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
-ARM GAS  /tmp/cckC2aia.s 			page 94
+ARM GAS  /tmp/ccg3t4ii.s 			page 94
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f3xx_hal_cortex.c
-     /tmp/cckC2aia.s:18     .text.__NVIC_SetPriorityGrouping:0000000000000000 $t
-     /tmp/cckC2aia.s:24     .text.__NVIC_SetPriorityGrouping:0000000000000000 __NVIC_SetPriorityGrouping
-     /tmp/cckC2aia.s:87     .text.__NVIC_SetPriorityGrouping:0000000000000044 $d
-     /tmp/cckC2aia.s:92     .text.__NVIC_GetPriorityGrouping:0000000000000000 $t
-     /tmp/cckC2aia.s:98     .text.__NVIC_GetPriorityGrouping:0000000000000000 __NVIC_GetPriorityGrouping
-     /tmp/cckC2aia.s:131    .text.__NVIC_GetPriorityGrouping:0000000000000018 $d
-     /tmp/cckC2aia.s:136    .text.__NVIC_EnableIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:142    .text.__NVIC_EnableIRQ:0000000000000000 __NVIC_EnableIRQ
-     /tmp/cckC2aia.s:192    .text.__NVIC_EnableIRQ:0000000000000038 $d
-     /tmp/cckC2aia.s:197    .text.__NVIC_DisableIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:203    .text.__NVIC_DisableIRQ:0000000000000000 __NVIC_DisableIRQ
-     /tmp/cckC2aia.s:277    .text.__NVIC_DisableIRQ:0000000000000040 $d
-     /tmp/cckC2aia.s:282    .text.__NVIC_GetPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:288    .text.__NVIC_GetPendingIRQ:0000000000000000 __NVIC_GetPendingIRQ
-     /tmp/cckC2aia.s:343    .text.__NVIC_GetPendingIRQ:0000000000000040 $d
-     /tmp/cckC2aia.s:348    .text.__NVIC_SetPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:354    .text.__NVIC_SetPendingIRQ:0000000000000000 __NVIC_SetPendingIRQ
-     /tmp/cckC2aia.s:405    .text.__NVIC_SetPendingIRQ:0000000000000038 $d
-     /tmp/cckC2aia.s:410    .text.__NVIC_ClearPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:416    .text.__NVIC_ClearPendingIRQ:0000000000000000 __NVIC_ClearPendingIRQ
-     /tmp/cckC2aia.s:467    .text.__NVIC_ClearPendingIRQ:0000000000000038 $d
-     /tmp/cckC2aia.s:472    .text.__NVIC_GetActive:0000000000000000 $t
-     /tmp/cckC2aia.s:478    .text.__NVIC_GetActive:0000000000000000 __NVIC_GetActive
-     /tmp/cckC2aia.s:533    .text.__NVIC_GetActive:0000000000000040 $d
-     /tmp/cckC2aia.s:538    .text.__NVIC_SetPriority:0000000000000000 $t
-     /tmp/cckC2aia.s:544    .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
-     /tmp/cckC2aia.s:609    .text.__NVIC_SetPriority:000000000000004c $d
-     /tmp/cckC2aia.s:615    .text.__NVIC_GetPriority:0000000000000000 $t
-     /tmp/cckC2aia.s:621    .text.__NVIC_GetPriority:0000000000000000 __NVIC_GetPriority
-     /tmp/cckC2aia.s:682    .text.__NVIC_GetPriority:0000000000000048 $d
-     /tmp/cckC2aia.s:688    .text.NVIC_EncodePriority:0000000000000000 $t
-     /tmp/cckC2aia.s:694    .text.NVIC_EncodePriority:0000000000000000 NVIC_EncodePriority
-     /tmp/cckC2aia.s:776    .text.NVIC_DecodePriority:0000000000000000 $t
-     /tmp/cckC2aia.s:782    .text.NVIC_DecodePriority:0000000000000000 NVIC_DecodePriority
-     /tmp/cckC2aia.s:867    .text.__NVIC_SystemReset:0000000000000000 $t
-     /tmp/cckC2aia.s:873    .text.__NVIC_SystemReset:0000000000000000 __NVIC_SystemReset
-     /tmp/cckC2aia.s:930    .text.__NVIC_SystemReset:0000000000000020 $d
-     /tmp/cckC2aia.s:936    .text.SysTick_Config:0000000000000000 $t
-     /tmp/cckC2aia.s:942    .text.SysTick_Config:0000000000000000 SysTick_Config
-     /tmp/cckC2aia.s:1002   .text.SysTick_Config:0000000000000040 $d
-     /tmp/cckC2aia.s:1007   .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 $t
-     /tmp/cckC2aia.s:1014   .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 HAL_NVIC_SetPriorityGrouping
-     /tmp/cckC2aia.s:1050   .text.HAL_NVIC_SetPriority:0000000000000000 $t
-     /tmp/cckC2aia.s:1057   .text.HAL_NVIC_SetPriority:0000000000000000 HAL_NVIC_SetPriority
-     /tmp/cckC2aia.s:1108   .text.HAL_NVIC_EnableIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:1115   .text.HAL_NVIC_EnableIRQ:0000000000000000 HAL_NVIC_EnableIRQ
-     /tmp/cckC2aia.s:1152   .text.HAL_NVIC_DisableIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:1159   .text.HAL_NVIC_DisableIRQ:0000000000000000 HAL_NVIC_DisableIRQ
-     /tmp/cckC2aia.s:1196   .text.HAL_NVIC_SystemReset:0000000000000000 $t
-     /tmp/cckC2aia.s:1203   .text.HAL_NVIC_SystemReset:0000000000000000 HAL_NVIC_SystemReset
-     /tmp/cckC2aia.s:1223   .text.HAL_SYSTICK_Config:0000000000000000 $t
-     /tmp/cckC2aia.s:1230   .text.HAL_SYSTICK_Config:0000000000000000 HAL_SYSTICK_Config
-     /tmp/cckC2aia.s:1266   .text.HAL_MPU_Disable:0000000000000000 $t
-     /tmp/cckC2aia.s:1273   .text.HAL_MPU_Disable:0000000000000000 HAL_MPU_Disable
-     /tmp/cckC2aia.s:1311   .text.HAL_MPU_Disable:0000000000000020 $d
-ARM GAS  /tmp/cckC2aia.s 			page 95
+     /tmp/ccg3t4ii.s:18     .text.__NVIC_SetPriorityGrouping:0000000000000000 $t
+     /tmp/ccg3t4ii.s:24     .text.__NVIC_SetPriorityGrouping:0000000000000000 __NVIC_SetPriorityGrouping
+     /tmp/ccg3t4ii.s:87     .text.__NVIC_SetPriorityGrouping:0000000000000044 $d
+     /tmp/ccg3t4ii.s:92     .text.__NVIC_GetPriorityGrouping:0000000000000000 $t
+     /tmp/ccg3t4ii.s:98     .text.__NVIC_GetPriorityGrouping:0000000000000000 __NVIC_GetPriorityGrouping
+     /tmp/ccg3t4ii.s:131    .text.__NVIC_GetPriorityGrouping:0000000000000018 $d
+     /tmp/ccg3t4ii.s:136    .text.__NVIC_EnableIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:142    .text.__NVIC_EnableIRQ:0000000000000000 __NVIC_EnableIRQ
+     /tmp/ccg3t4ii.s:192    .text.__NVIC_EnableIRQ:0000000000000038 $d
+     /tmp/ccg3t4ii.s:197    .text.__NVIC_DisableIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:203    .text.__NVIC_DisableIRQ:0000000000000000 __NVIC_DisableIRQ
+     /tmp/ccg3t4ii.s:277    .text.__NVIC_DisableIRQ:0000000000000040 $d
+     /tmp/ccg3t4ii.s:282    .text.__NVIC_GetPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:288    .text.__NVIC_GetPendingIRQ:0000000000000000 __NVIC_GetPendingIRQ
+     /tmp/ccg3t4ii.s:343    .text.__NVIC_GetPendingIRQ:0000000000000040 $d
+     /tmp/ccg3t4ii.s:348    .text.__NVIC_SetPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:354    .text.__NVIC_SetPendingIRQ:0000000000000000 __NVIC_SetPendingIRQ
+     /tmp/ccg3t4ii.s:405    .text.__NVIC_SetPendingIRQ:0000000000000038 $d
+     /tmp/ccg3t4ii.s:410    .text.__NVIC_ClearPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:416    .text.__NVIC_ClearPendingIRQ:0000000000000000 __NVIC_ClearPendingIRQ
+     /tmp/ccg3t4ii.s:467    .text.__NVIC_ClearPendingIRQ:0000000000000038 $d
+     /tmp/ccg3t4ii.s:472    .text.__NVIC_GetActive:0000000000000000 $t
+     /tmp/ccg3t4ii.s:478    .text.__NVIC_GetActive:0000000000000000 __NVIC_GetActive
+     /tmp/ccg3t4ii.s:533    .text.__NVIC_GetActive:0000000000000040 $d
+     /tmp/ccg3t4ii.s:538    .text.__NVIC_SetPriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:544    .text.__NVIC_SetPriority:0000000000000000 __NVIC_SetPriority
+     /tmp/ccg3t4ii.s:609    .text.__NVIC_SetPriority:000000000000004c $d
+     /tmp/ccg3t4ii.s:615    .text.__NVIC_GetPriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:621    .text.__NVIC_GetPriority:0000000000000000 __NVIC_GetPriority
+     /tmp/ccg3t4ii.s:682    .text.__NVIC_GetPriority:0000000000000048 $d
+     /tmp/ccg3t4ii.s:688    .text.NVIC_EncodePriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:694    .text.NVIC_EncodePriority:0000000000000000 NVIC_EncodePriority
+     /tmp/ccg3t4ii.s:776    .text.NVIC_DecodePriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:782    .text.NVIC_DecodePriority:0000000000000000 NVIC_DecodePriority
+     /tmp/ccg3t4ii.s:867    .text.__NVIC_SystemReset:0000000000000000 $t
+     /tmp/ccg3t4ii.s:873    .text.__NVIC_SystemReset:0000000000000000 __NVIC_SystemReset
+     /tmp/ccg3t4ii.s:930    .text.__NVIC_SystemReset:0000000000000020 $d
+     /tmp/ccg3t4ii.s:936    .text.SysTick_Config:0000000000000000 $t
+     /tmp/ccg3t4ii.s:942    .text.SysTick_Config:0000000000000000 SysTick_Config
+     /tmp/ccg3t4ii.s:1002   .text.SysTick_Config:0000000000000040 $d
+     /tmp/ccg3t4ii.s:1007   .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1014   .text.HAL_NVIC_SetPriorityGrouping:0000000000000000 HAL_NVIC_SetPriorityGrouping
+     /tmp/ccg3t4ii.s:1050   .text.HAL_NVIC_SetPriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1057   .text.HAL_NVIC_SetPriority:0000000000000000 HAL_NVIC_SetPriority
+     /tmp/ccg3t4ii.s:1108   .text.HAL_NVIC_EnableIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1115   .text.HAL_NVIC_EnableIRQ:0000000000000000 HAL_NVIC_EnableIRQ
+     /tmp/ccg3t4ii.s:1152   .text.HAL_NVIC_DisableIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1159   .text.HAL_NVIC_DisableIRQ:0000000000000000 HAL_NVIC_DisableIRQ
+     /tmp/ccg3t4ii.s:1196   .text.HAL_NVIC_SystemReset:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1203   .text.HAL_NVIC_SystemReset:0000000000000000 HAL_NVIC_SystemReset
+     /tmp/ccg3t4ii.s:1223   .text.HAL_SYSTICK_Config:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1230   .text.HAL_SYSTICK_Config:0000000000000000 HAL_SYSTICK_Config
+     /tmp/ccg3t4ii.s:1266   .text.HAL_MPU_Disable:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1273   .text.HAL_MPU_Disable:0000000000000000 HAL_MPU_Disable
+     /tmp/ccg3t4ii.s:1311   .text.HAL_MPU_Disable:0000000000000020 $d
+ARM GAS  /tmp/ccg3t4ii.s 			page 95
 
 
-     /tmp/cckC2aia.s:1317   .text.HAL_MPU_Enable:0000000000000000 $t
-     /tmp/cckC2aia.s:1324   .text.HAL_MPU_Enable:0000000000000000 HAL_MPU_Enable
-     /tmp/cckC2aia.s:1370   .text.HAL_MPU_Enable:000000000000002c $d
-     /tmp/cckC2aia.s:1376   .text.HAL_MPU_ConfigRegion:0000000000000000 $t
-     /tmp/cckC2aia.s:1383   .text.HAL_MPU_ConfigRegion:0000000000000000 HAL_MPU_ConfigRegion
-     /tmp/cckC2aia.s:1501   .text.HAL_MPU_ConfigRegion:0000000000000084 $d
-     /tmp/cckC2aia.s:1506   .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 $t
-     /tmp/cckC2aia.s:1513   .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 HAL_NVIC_GetPriorityGrouping
-     /tmp/cckC2aia.s:1537   .text.HAL_NVIC_GetPriority:0000000000000000 $t
-     /tmp/cckC2aia.s:1544   .text.HAL_NVIC_GetPriority:0000000000000000 HAL_NVIC_GetPriority
-     /tmp/cckC2aia.s:1588   .text.HAL_NVIC_SetPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:1595   .text.HAL_NVIC_SetPendingIRQ:0000000000000000 HAL_NVIC_SetPendingIRQ
-     /tmp/cckC2aia.s:1632   .text.HAL_NVIC_GetPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:1639   .text.HAL_NVIC_GetPendingIRQ:0000000000000000 HAL_NVIC_GetPendingIRQ
-     /tmp/cckC2aia.s:1677   .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 $t
-     /tmp/cckC2aia.s:1684   .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 HAL_NVIC_ClearPendingIRQ
-     /tmp/cckC2aia.s:1721   .text.HAL_NVIC_GetActive:0000000000000000 $t
-     /tmp/cckC2aia.s:1728   .text.HAL_NVIC_GetActive:0000000000000000 HAL_NVIC_GetActive
-     /tmp/cckC2aia.s:1766   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 $t
-     /tmp/cckC2aia.s:1773   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 HAL_SYSTICK_CLKSourceConfig
-     /tmp/cckC2aia.s:1828   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000034 $d
-     /tmp/cckC2aia.s:1833   .text.HAL_SYSTICK_IRQHandler:0000000000000000 $t
-     /tmp/cckC2aia.s:1840   .text.HAL_SYSTICK_IRQHandler:0000000000000000 HAL_SYSTICK_IRQHandler
-     /tmp/cckC2aia.s:1870   .text.HAL_SYSTICK_Callback:0000000000000000 HAL_SYSTICK_Callback
-     /tmp/cckC2aia.s:1863   .text.HAL_SYSTICK_Callback:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1317   .text.HAL_MPU_Enable:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1324   .text.HAL_MPU_Enable:0000000000000000 HAL_MPU_Enable
+     /tmp/ccg3t4ii.s:1370   .text.HAL_MPU_Enable:000000000000002c $d
+     /tmp/ccg3t4ii.s:1376   .text.HAL_MPU_ConfigRegion:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1383   .text.HAL_MPU_ConfigRegion:0000000000000000 HAL_MPU_ConfigRegion
+     /tmp/ccg3t4ii.s:1501   .text.HAL_MPU_ConfigRegion:0000000000000084 $d
+     /tmp/ccg3t4ii.s:1506   .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1513   .text.HAL_NVIC_GetPriorityGrouping:0000000000000000 HAL_NVIC_GetPriorityGrouping
+     /tmp/ccg3t4ii.s:1537   .text.HAL_NVIC_GetPriority:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1544   .text.HAL_NVIC_GetPriority:0000000000000000 HAL_NVIC_GetPriority
+     /tmp/ccg3t4ii.s:1588   .text.HAL_NVIC_SetPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1595   .text.HAL_NVIC_SetPendingIRQ:0000000000000000 HAL_NVIC_SetPendingIRQ
+     /tmp/ccg3t4ii.s:1632   .text.HAL_NVIC_GetPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1639   .text.HAL_NVIC_GetPendingIRQ:0000000000000000 HAL_NVIC_GetPendingIRQ
+     /tmp/ccg3t4ii.s:1677   .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1684   .text.HAL_NVIC_ClearPendingIRQ:0000000000000000 HAL_NVIC_ClearPendingIRQ
+     /tmp/ccg3t4ii.s:1721   .text.HAL_NVIC_GetActive:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1728   .text.HAL_NVIC_GetActive:0000000000000000 HAL_NVIC_GetActive
+     /tmp/ccg3t4ii.s:1766   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1773   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000000 HAL_SYSTICK_CLKSourceConfig
+     /tmp/ccg3t4ii.s:1828   .text.HAL_SYSTICK_CLKSourceConfig:0000000000000034 $d
+     /tmp/ccg3t4ii.s:1833   .text.HAL_SYSTICK_IRQHandler:0000000000000000 $t
+     /tmp/ccg3t4ii.s:1840   .text.HAL_SYSTICK_IRQHandler:0000000000000000 HAL_SYSTICK_IRQHandler
+     /tmp/ccg3t4ii.s:1870   .text.HAL_SYSTICK_Callback:0000000000000000 HAL_SYSTICK_Callback
+     /tmp/ccg3t4ii.s:1863   .text.HAL_SYSTICK_Callback:0000000000000000 $t
 
 NO UNDEFINED SYMBOLS

@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccwdlPow.s 			page 1
+ARM GAS  /tmp/ccBQkIsA.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
   29:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @attention
   30:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   *
   31:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-ARM GAS  /tmp/ccwdlPow.s 			page 2
+ARM GAS  /tmp/ccBQkIsA.s 			page 2
 
 
   32:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * All rights reserved.</center></h2>
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
   86:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   */
   87:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** /**
   88:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @}
-ARM GAS  /tmp/ccwdlPow.s 			page 3
+ARM GAS  /tmp/ccBQkIsA.s 			page 3
 
 
   89:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   */ 
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  143:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
  144:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** /**
  145:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @brief  Perform a mass erase or erase the specified FLASH memory pages
-ARM GAS  /tmp/ccwdlPow.s 			page 4
+ARM GAS  /tmp/ccBQkIsA.s 			page 4
 
 
  146:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @note   To correctly run this function, the @ref HAL_FLASH_Unlock() function
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
   62 0020 0122     		movs	r2, #1
   63 0022 1A76     		strb	r2, [r3, #24]
  166:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 5
+ARM GAS  /tmp/ccBQkIsA.s 			page 5
 
 
  167:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   /* Check the parameters */
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  195:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       if (FLASH_WaitForLastOperation((uint32_t)FLASH_TIMEOUT_VALUE) == HAL_OK)
   90              		.loc 1 195 0
   91 0058 4CF25030 		movw	r0, #50000
-ARM GAS  /tmp/ccwdlPow.s 			page 6
+ARM GAS  /tmp/ccBQkIsA.s 			page 6
 
 
   92 005c FFF7FEFF 		bl	FLASH_WaitForLastOperation
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  125 009a 3B68     		ldr	r3, [r7]
  126 009c BA68     		ldr	r2, [r7, #8]
  127 009e 1A60     		str	r2, [r3]
-ARM GAS  /tmp/ccwdlPow.s 			page 7
+ARM GAS  /tmp/ccBQkIsA.s 			page 7
 
 
  217:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****             break;
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  168 00cc 00000000 		.word	pFlash
  169 00d0 00200240 		.word	1073881088
  170              		.cfi_endproc
-ARM GAS  /tmp/ccwdlPow.s 			page 8
+ARM GAS  /tmp/ccBQkIsA.s 			page 8
 
 
  171              	.LFE130:
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  209 0016 2AE0     		b	.L14
  210              	.L13:
  211              		.loc 1 245 0 discriminator 2
-ARM GAS  /tmp/ccwdlPow.s 			page 9
+ARM GAS  /tmp/ccBQkIsA.s 			page 9
 
 
  212 0018 174B     		ldr	r3, .L18
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  268:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
  269:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     /* Check the parameters */
  270:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     assert_param(IS_FLASH_PROGRAM_ADDRESS(pEraseInit->PageAddress));
-ARM GAS  /tmp/ccwdlPow.s 			page 10
+ARM GAS  /tmp/ccBQkIsA.s 			page 10
 
 
  271:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     assert_param(IS_FLASH_NB_PAGES(pEraseInit->PageAddress, pEraseInit->NbPages));
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  287              		.global	HAL_FLASHEx_OBErase
  288              		.syntax unified
  289              		.thumb
-ARM GAS  /tmp/ccwdlPow.s 			page 11
+ARM GAS  /tmp/ccBQkIsA.s 			page 11
 
 
  290              		.thumb_func
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  312 0008 BB71     		strb	r3, [r7, #6]
  316:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   HAL_StatusTypeDef status = HAL_ERROR;
  313              		.loc 1 316 0
-ARM GAS  /tmp/ccwdlPow.s 			page 12
+ARM GAS  /tmp/ccBQkIsA.s 			page 12
 
 
  314 000a 0123     		movs	r3, #1
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  335:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
  336:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     /* If the erase operation is completed, disable the OPTER Bit */
  337:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     CLEAR_BIT(FLASH->CR, FLASH_CR_OPTER);
-ARM GAS  /tmp/ccwdlPow.s 			page 13
+ARM GAS  /tmp/ccBQkIsA.s 			page 13
 
 
  350              		.loc 1 337 0
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  395              	HAL_FLASHEx_OBProgram:
  396              	.LFB133:
  349:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 14
+ARM GAS  /tmp/ccBQkIsA.s 			page 14
 
 
  350:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** /**
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  372:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   /* Write protection configuration */
  373:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   if((pOBInit->OptionType & OPTIONBYTE_WRP) == OPTIONBYTE_WRP)
  429              		.loc 1 373 0 is_stmt 1 discriminator 2
-ARM GAS  /tmp/ccwdlPow.s 			page 15
+ARM GAS  /tmp/ccBQkIsA.s 			page 15
 
 
  430 001e 7B68     		ldr	r3, [r7, #4]
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  467 005e 45E0     		b	.L27
  468              	.L28:
  391:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     }
-ARM GAS  /tmp/ccwdlPow.s 			page 16
+ARM GAS  /tmp/ccBQkIsA.s 			page 16
 
 
  392:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   }
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  505 00a0 0346     		mov	r3, r0
  506 00a2 FB73     		strb	r3, [r7, #15]
  410:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     if (status != HAL_OK)
-ARM GAS  /tmp/ccwdlPow.s 			page 17
+ARM GAS  /tmp/ccBQkIsA.s 			page 17
 
 
  507              		.loc 1 410 0
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  545 00e2 03E0     		b	.L27
  546              	.L33:
  427:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     }
-ARM GAS  /tmp/ccwdlPow.s 			page 18
+ARM GAS  /tmp/ccBQkIsA.s 			page 18
 
 
  428:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   }
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  586              	.LCFI20:
  587              		.cfi_def_cfa_offset 8
  588              		.cfi_offset 7, -8
-ARM GAS  /tmp/ccwdlPow.s 			page 19
+ARM GAS  /tmp/ccBQkIsA.s 			page 19
 
 
  589              		.cfi_offset 14, -4
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  633              		.global	HAL_FLASHEx_OBGetUserData
  634              		.syntax unified
  635              		.thumb
-ARM GAS  /tmp/ccwdlPow.s 			page 20
+ARM GAS  /tmp/ccBQkIsA.s 			page 20
 
 
  636              		.thumb_func
@@ -1198,7 +1198,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
    1:Drivers/CMSIS/Include/cmsis_gcc.h **** /**************************************************************************//**
    2:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @file     cmsis_gcc.h
    3:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @brief    CMSIS compiler GCC header file
-ARM GAS  /tmp/ccwdlPow.s 			page 21
+ARM GAS  /tmp/ccBQkIsA.s 			page 21
 
 
    4:Drivers/CMSIS/Include/cmsis_gcc.h ****  * @version  V5.0.4
@@ -1258,7 +1258,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
   58:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __WEAK
   59:Drivers/CMSIS/Include/cmsis_gcc.h ****   #define __WEAK                                 __attribute__((weak))
   60:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccwdlPow.s 			page 22
+ARM GAS  /tmp/ccBQkIsA.s 			page 22
 
 
   61:Drivers/CMSIS/Include/cmsis_gcc.h **** #ifndef   __PACKED
@@ -1318,7 +1318,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  115:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  116:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  117:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 23
+ARM GAS  /tmp/ccBQkIsA.s 			page 23
 
 
  118:Drivers/CMSIS/Include/cmsis_gcc.h **** /* ###########################  Core Function Access  ########################### */
@@ -1378,7 +1378,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  172:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  173:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
  174:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 24
+ARM GAS  /tmp/ccBQkIsA.s 			page 24
 
 
  175:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1438,7 +1438,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  229:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get xPSR Register
  230:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the content of the xPSR Register.
  231:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               xPSR Register value
-ARM GAS  /tmp/ccwdlPow.s 			page 25
+ARM GAS  /tmp/ccBQkIsA.s 			page 25
 
 
  232:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1498,7 +1498,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  286:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Process Stack Pointer (PSP) when in secure sta
  287:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    topOfProcStack  Process Stack Pointer value to set
  288:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
-ARM GAS  /tmp/ccwdlPow.s 			page 26
+ARM GAS  /tmp/ccBQkIsA.s 			page 26
 
 
  289:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __TZ_set_PSP_NS(uint32_t topOfProcStack)
@@ -1558,7 +1558,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  343:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __TZ_set_MSP_NS(uint32_t topOfMainStack)
  344:Drivers/CMSIS/Include/cmsis_gcc.h **** {
  345:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR msp_ns, %0" : : "r" (topOfMainStack) : );
-ARM GAS  /tmp/ccwdlPow.s 			page 27
+ARM GAS  /tmp/ccBQkIsA.s 			page 27
 
 
  346:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -1618,7 +1618,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  400:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  401:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, primask_ns" : "=r" (result) :: "memory");
  402:Drivers/CMSIS/Include/cmsis_gcc.h ****   return(result);
-ARM GAS  /tmp/ccwdlPow.s 			page 28
+ARM GAS  /tmp/ccBQkIsA.s 			page 28
 
 
  403:Drivers/CMSIS/Include/cmsis_gcc.h **** }
@@ -1678,7 +1678,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  457:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Get Base Priority
  458:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Returns the current value of the Base Priority register.
  459:Drivers/CMSIS/Include/cmsis_gcc.h ****   \return               Base Priority register value
-ARM GAS  /tmp/ccwdlPow.s 			page 29
+ARM GAS  /tmp/ccBQkIsA.s 			page 29
 
 
  460:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -1738,7 +1738,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  514:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    basePri  Base Priority value to set
  515:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  516:Drivers/CMSIS/Include/cmsis_gcc.h **** __STATIC_FORCEINLINE void __set_BASEPRI_MAX(uint32_t basePri)
-ARM GAS  /tmp/ccwdlPow.s 			page 30
+ARM GAS  /tmp/ccBQkIsA.s 			page 30
 
 
  517:Drivers/CMSIS/Include/cmsis_gcc.h **** {
@@ -1798,7 +1798,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  571:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MSR faultmask_ns, %0" : : "r" (faultMask) : "memory");
  572:Drivers/CMSIS/Include/cmsis_gcc.h **** }
  573:Drivers/CMSIS/Include/cmsis_gcc.h **** #endif
-ARM GAS  /tmp/ccwdlPow.s 			page 31
+ARM GAS  /tmp/ccBQkIsA.s 			page 31
 
 
  574:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -1858,7 +1858,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  628:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  629:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Set Process Stack Pointer Limit
  630:Drivers/CMSIS/Include/cmsis_gcc.h ****   Devices without ARMv8-M Main Extensions (i.e. Cortex-M23) lack the non-secure
-ARM GAS  /tmp/ccwdlPow.s 			page 32
+ARM GAS  /tmp/ccBQkIsA.s 			page 32
 
 
  631:Drivers/CMSIS/Include/cmsis_gcc.h ****   Stack Pointer Limit register hence the write is silently ignored in non-secure
@@ -1918,7 +1918,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  685:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
  686:Drivers/CMSIS/Include/cmsis_gcc.h ****   uint32_t result;
  687:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("MRS %0, msplim" : "=r" (result) );
-ARM GAS  /tmp/ccwdlPow.s 			page 33
+ARM GAS  /tmp/ccBQkIsA.s 			page 33
 
 
  688:Drivers/CMSIS/Include/cmsis_gcc.h ****   return result;
@@ -1978,7 +1978,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  742:Drivers/CMSIS/Include/cmsis_gcc.h **** 
  743:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Assigns the given value to the non-secure Main Stack Pointer Limit (MSPLIM) when in secu
  744:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    MainStackPtrLimit  Main Stack Pointer value to set
-ARM GAS  /tmp/ccwdlPow.s 			page 34
+ARM GAS  /tmp/ccBQkIsA.s 			page 34
 
 
  745:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
@@ -2038,7 +2038,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  799:Drivers/CMSIS/Include/cmsis_gcc.h ****   /* see https://gcc.gnu.org/ml/gcc-patches/2017-04/msg00443.html */
  800:Drivers/CMSIS/Include/cmsis_gcc.h ****   __builtin_arm_set_fpscr(fpscr);
  801:Drivers/CMSIS/Include/cmsis_gcc.h **** #else
-ARM GAS  /tmp/ccwdlPow.s 			page 35
+ARM GAS  /tmp/ccBQkIsA.s 			page 35
 
 
  802:Drivers/CMSIS/Include/cmsis_gcc.h ****   __ASM volatile ("VMSR fpscr, %0" : : "r" (fpscr) : "vfpcc", "memory");
@@ -2098,7 +2098,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  856:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  857:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __SEV()                             __ASM volatile ("sev")
  858:Drivers/CMSIS/Include/cmsis_gcc.h **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 36
+ARM GAS  /tmp/ccBQkIsA.s 			page 36
 
 
  859:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -2158,7 +2158,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  913:Drivers/CMSIS/Include/cmsis_gcc.h **** /**
  914:Drivers/CMSIS/Include/cmsis_gcc.h ****   \brief   Reverse byte order (16 bit)
  915:Drivers/CMSIS/Include/cmsis_gcc.h ****   \details Reverses the byte order within each halfword of a word. For example, 0x12345678 becomes 
-ARM GAS  /tmp/ccwdlPow.s 			page 37
+ARM GAS  /tmp/ccBQkIsA.s 			page 37
 
 
  916:Drivers/CMSIS/Include/cmsis_gcc.h ****   \param [in]    value  Value to reverse
@@ -2218,7 +2218,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  970:Drivers/CMSIS/Include/cmsis_gcc.h ****                  If required, a debugger can use it to store additional information about the break
  971:Drivers/CMSIS/Include/cmsis_gcc.h ****  */
  972:Drivers/CMSIS/Include/cmsis_gcc.h **** #define __BKPT(value)                       __ASM volatile ("bkpt "#value)
-ARM GAS  /tmp/ccwdlPow.s 			page 38
+ARM GAS  /tmp/ccBQkIsA.s 			page 38
 
 
  973:Drivers/CMSIS/Include/cmsis_gcc.h **** 
@@ -2278,7 +2278,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  694              		.loc 1 477 0
  695 0038 0C4B     		ldr	r3, .L43+4
  696 003a DB69     		ldr	r3, [r3, #28]
-ARM GAS  /tmp/ccwdlPow.s 			page 39
+ARM GAS  /tmp/ccBQkIsA.s 			page 39
 
 
  697 003c 03F07F43 		and	r3, r3, #-16777216
@@ -2338,7 +2338,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  747              		.syntax unified
  748              		.thumb
  749              		.thumb_func
-ARM GAS  /tmp/ccwdlPow.s 			page 40
+ARM GAS  /tmp/ccBQkIsA.s 			page 40
 
 
  750              		.fpu fpv4-sp-d16
@@ -2398,7 +2398,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  779 001a 054A     		ldr	r2, .L46+4
  780 001c 43F04003 		orr	r3, r3, #64
  781 0020 1361     		str	r3, [r2, #16]
-ARM GAS  /tmp/ccwdlPow.s 			page 41
+ARM GAS  /tmp/ccBQkIsA.s 			page 41
 
 
  508:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** }
@@ -2458,7 +2458,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  823              	.LCFI37:
  824              		.cfi_def_cfa_register 7
  825 0006 7860     		str	r0, [r7, #4]
-ARM GAS  /tmp/ccwdlPow.s 			page 42
+ARM GAS  /tmp/ccBQkIsA.s 			page 42
 
 
  523:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   HAL_StatusTypeDef status = HAL_OK;
@@ -2518,7 +2518,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  856 003e 1B0A     		lsrs	r3, r3, #8
  857 0040 9BB2     		uxth	r3, r3
  858 0042 DBB2     		uxtb	r3, r3
-ARM GAS  /tmp/ccwdlPow.s 			page 43
+ARM GAS  /tmp/ccBQkIsA.s 			page 43
 
 
  859 0044 7B82     		strh	r3, [r7, #18]	@ movhi
@@ -2578,7 +2578,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  890 007a 58D1     		bne	.L49
  570:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     {
  571:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       /* Enable write protection */
-ARM GAS  /tmp/ccwdlPow.s 			page 44
+ARM GAS  /tmp/ccBQkIsA.s 			page 44
 
 
  572:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       SET_BIT(FLASH->CR, FLASH_CR_OPTPG);
@@ -2638,7 +2638,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  929 00be 7B8A     		ldrh	r3, [r7, #18]	@ movhi
  930 00c0 1340     		ands	r3, r3, r2
  931 00c2 9BB2     		uxth	r3, r3
-ARM GAS  /tmp/ccwdlPow.s 			page 45
+ARM GAS  /tmp/ccBQkIsA.s 			page 45
 
 
  932 00c4 4B81     		strh	r3, [r1, #10]	@ movhi
@@ -2698,7 +2698,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  968 0102 FF2B     		cmp	r3, #255
  969 0104 0DD0     		beq	.L53
  606:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       {
-ARM GAS  /tmp/ccwdlPow.s 			page 46
+ARM GAS  /tmp/ccBQkIsA.s 			page 46
 
 
  607:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****         OB->WRP3 &= WRP3_Data;
@@ -2758,7 +2758,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1010              		.cfi_endproc
  1011              	.LFE137:
  1013              		.section	.text.FLASH_OB_DisableWRP,"ax",%progbits
-ARM GAS  /tmp/ccwdlPow.s 			page 47
+ARM GAS  /tmp/ccBQkIsA.s 			page 47
 
 
  1014              		.align	1
@@ -2818,7 +2818,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1048 0018 4FF6FF73 		movw	r3, #65535
  1049 001c 3B82     		strh	r3, [r7, #16]	@ movhi
  642:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** #endif /* OB_WRP2_WRP2 */
-ARM GAS  /tmp/ccwdlPow.s 			page 48
+ARM GAS  /tmp/ccBQkIsA.s 			page 48
 
 
  643:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** #if defined(OB_WRP3_WRP3)
@@ -2878,7 +2878,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1078 004e 1B0E     		lsrs	r3, r3, #24
  1079 0050 FB81     		strh	r3, [r7, #14]	@ movhi
  669:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** #endif /* OB_WRP_PAGES48TO63MASK */
-ARM GAS  /tmp/ccwdlPow.s 			page 49
+ARM GAS  /tmp/ccBQkIsA.s 			page 49
 
 
  670:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
@@ -2938,7 +2938,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1114 008e 9AB2     		uxth	r2, r3
  1115 0090 2A49     		ldr	r1, .L64+8
  1116 0092 BB8A     		ldrh	r3, [r7, #20]	@ movhi
-ARM GAS  /tmp/ccwdlPow.s 			page 50
+ARM GAS  /tmp/ccBQkIsA.s 			page 50
 
 
  1117 0094 1343     		orrs	r3, r3, r2
@@ -2998,7 +2998,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1153              		.loc 1 707 0 is_stmt 0 discriminator 1
  1154 00d4 3B8A     		ldrh	r3, [r7, #16]
  1155 00d6 FF2B     		cmp	r3, #255
-ARM GAS  /tmp/ccwdlPow.s 			page 51
+ARM GAS  /tmp/ccBQkIsA.s 			page 51
 
 
  1156 00d8 0DD0     		beq	.L61
@@ -3058,7 +3058,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  723:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       }
  724:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** #endif /* OB_WRP3_WRP3 */
  725:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 52
+ARM GAS  /tmp/ccBQkIsA.s 			page 52
 
 
  726:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****       /* if the program operation is completed, disable the OPTPG Bit */
@@ -3118,7 +3118,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1232              		.loc 1 744 0
  1233              		.cfi_startproc
  1234              		@ args = 0, pretend = 0, frame = 16
-ARM GAS  /tmp/ccwdlPow.s 			page 53
+ARM GAS  /tmp/ccBQkIsA.s 			page 53
 
 
  1235              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -3178,7 +3178,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1273 0034 1B69     		ldr	r3, [r3, #16]
  1274 0036 184A     		ldr	r2, .L69+4
  1275 0038 43F04003 		orr	r3, r3, #64
-ARM GAS  /tmp/ccwdlPow.s 			page 54
+ARM GAS  /tmp/ccBQkIsA.s 			page 54
 
 
  1276 003c 1361     		str	r3, [r2, #16]
@@ -3238,7 +3238,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1311 0080 054A     		ldr	r2, .L69+4
  1312 0082 23F01003 		bic	r3, r3, #16
  1313 0086 1361     		str	r3, [r2, #16]
-ARM GAS  /tmp/ccwdlPow.s 			page 55
+ARM GAS  /tmp/ccBQkIsA.s 			page 55
 
 
  1314              	.L67:
@@ -3298,7 +3298,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1354 0002 84B0     		sub	sp, sp, #16
  1355              	.LCFI51:
  1356              		.cfi_def_cfa_offset 24
-ARM GAS  /tmp/ccwdlPow.s 			page 56
+ARM GAS  /tmp/ccBQkIsA.s 			page 56
 
 
  1357 0004 00AF     		add	r7, sp, #0
@@ -3358,7 +3358,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  823:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     OB->USER = (UserConfig | 0x88U);
  1384              		.loc 1 823 0
  1385 0032 FB79     		ldrb	r3, [r7, #7]
-ARM GAS  /tmp/ccwdlPow.s 			page 57
+ARM GAS  /tmp/ccBQkIsA.s 			page 57
 
 
  1386 0034 63F07703 		orn	r3, r3, #119
@@ -3418,7 +3418,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1431              	FLASH_OB_ProgramData:
  1432              	.LFB141:
  835:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** 
-ARM GAS  /tmp/ccwdlPow.s 			page 58
+ARM GAS  /tmp/ccBQkIsA.s 			page 58
 
 
  836:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** /**
@@ -3478,7 +3478,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  860:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     /* Clean the error context */
  861:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     pFlash.ErrorCode = HAL_FLASH_ERROR_NONE;
  1463              		.loc 1 861 0
-ARM GAS  /tmp/ccwdlPow.s 			page 59
+ARM GAS  /tmp/ccBQkIsA.s 			page 59
 
 
  1464 0022 0F4B     		ldr	r3, .L79
@@ -3538,7 +3538,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1504              	.L79:
  1505 0060 00000000 		.word	pFlash
  1506 0064 00200240 		.word	1073881088
-ARM GAS  /tmp/ccwdlPow.s 			page 60
+ARM GAS  /tmp/ccBQkIsA.s 			page 60
 
 
  1507              		.cfi_endproc
@@ -3598,7 +3598,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1554              		.syntax unified
  1555              		.thumb
  1556              		.thumb_func
-ARM GAS  /tmp/ccwdlPow.s 			page 61
+ARM GAS  /tmp/ccBQkIsA.s 			page 61
 
 
  1557              		.fpu fpv4-sp-d16
@@ -3658,7 +3658,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  910:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** #endif /* FLASH_OBR_RDPRT */
  911:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   {
  912:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****     return OB_RDP_LEVEL_2;
-ARM GAS  /tmp/ccwdlPow.s 			page 62
+ARM GAS  /tmp/ccBQkIsA.s 			page 62
 
 
  1588              		.loc 1 912 0
@@ -3718,7 +3718,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  924:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c **** /**
  925:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @brief  Return the FLASH User Option Byte value.
  926:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   * @retval  The FLASH User Option Bytes values: IWDG_SW(Bit0), RST_STOP(Bit1), RST_STDBY(Bit2), nB
-ARM GAS  /tmp/ccwdlPow.s 			page 63
+ARM GAS  /tmp/ccBQkIsA.s 			page 63
 
 
  927:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_flash_ex.c ****   *         VDDA_Analog_Monitoring(Bit5) and SRAM_Parity_Enable(Bit6). 
@@ -3778,7 +3778,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1678              		.cfi_def_cfa_offset 4
  1679 002c BD46     		mov	sp, r7
  1680              	.LCFI74:
-ARM GAS  /tmp/ccwdlPow.s 			page 64
+ARM GAS  /tmp/ccBQkIsA.s 			page 64
 
 
  1681              		.cfi_def_cfa_register 13
@@ -3838,7 +3838,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1711              	.LCFI76:
  1712              		.cfi_def_cfa_offset 4
  1713              		.cfi_offset 7, -4
-ARM GAS  /tmp/ccwdlPow.s 			page 65
+ARM GAS  /tmp/ccBQkIsA.s 			page 65
 
 
  1714 0002 83B0     		sub	sp, sp, #12
@@ -3898,7 +3898,7 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1760              		.cfi_endproc
  1761              	.LFE145:
  1763              		.text
-ARM GAS  /tmp/ccwdlPow.s 			page 66
+ARM GAS  /tmp/ccBQkIsA.s 			page 66
 
 
  1764              	.Letext0:
@@ -3911,58 +3911,58 @@ ARM GAS  /tmp/ccwdlPow.s 			page 1
  1771              		.file 9 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_flash.h"
  1772              		.file 10 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_flash_ex.h"
  1773              		.file 11 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
-ARM GAS  /tmp/ccwdlPow.s 			page 67
+ARM GAS  /tmp/ccBQkIsA.s 			page 67
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f3xx_hal_flash_ex.c
-     /tmp/ccwdlPow.s:18     .text.HAL_FLASHEx_Erase:0000000000000000 $t
-     /tmp/ccwdlPow.s:25     .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
-     /tmp/ccwdlPow.s:752    .text.FLASH_MassErase:0000000000000000 FLASH_MassErase
-     /tmp/ccwdlPow.s:1703   .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
-     /tmp/ccwdlPow.s:168    .text.HAL_FLASHEx_Erase:00000000000000cc $d
-     /tmp/ccwdlPow.s:174    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
-     /tmp/ccwdlPow.s:181    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
-     /tmp/ccwdlPow.s:280    .text.HAL_FLASHEx_Erase_IT:0000000000000078 $d
-     /tmp/ccwdlPow.s:286    .text.HAL_FLASHEx_OBErase:0000000000000000 $t
-     /tmp/ccwdlPow.s:293    .text.HAL_FLASHEx_OBErase:0000000000000000 HAL_FLASHEx_OBErase
-     /tmp/ccwdlPow.s:1559   .text.FLASH_OB_GetRDP:0000000000000000 FLASH_OB_GetRDP
-     /tmp/ccwdlPow.s:1230   .text.FLASH_OB_RDP_LevelConfig:0000000000000000 FLASH_OB_RDP_LevelConfig
-     /tmp/ccwdlPow.s:382    .text.HAL_FLASHEx_OBErase:000000000000007c $d
-     /tmp/ccwdlPow.s:388    .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
-     /tmp/ccwdlPow.s:395    .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
-     /tmp/ccwdlPow.s:808    .text.FLASH_OB_EnableWRP:0000000000000000 FLASH_OB_EnableWRP
-     /tmp/ccwdlPow.s:1020   .text.FLASH_OB_DisableWRP:0000000000000000 FLASH_OB_DisableWRP
-     /tmp/ccwdlPow.s:1343   .text.FLASH_OB_UserConfig:0000000000000000 FLASH_OB_UserConfig
-     /tmp/ccwdlPow.s:1431   .text.FLASH_OB_ProgramData:0000000000000000 FLASH_OB_ProgramData
-     /tmp/ccwdlPow.s:567    .text.HAL_FLASHEx_OBProgram:00000000000000f4 $d
-     /tmp/ccwdlPow.s:572    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
-     /tmp/ccwdlPow.s:579    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
-     /tmp/ccwdlPow.s:1517   .text.FLASH_OB_GetWRP:0000000000000000 FLASH_OB_GetWRP
-     /tmp/ccwdlPow.s:1631   .text.FLASH_OB_GetUser:0000000000000000 FLASH_OB_GetUser
-     /tmp/ccwdlPow.s:632    .text.HAL_FLASHEx_OBGetUserData:0000000000000000 $t
-     /tmp/ccwdlPow.s:639    .text.HAL_FLASHEx_OBGetUserData:0000000000000000 HAL_FLASHEx_OBGetUserData
-     /tmp/ccwdlPow.s:740    .text.HAL_FLASHEx_OBGetUserData:0000000000000068 $d
-     /tmp/ccwdlPow.s:746    .text.FLASH_MassErase:0000000000000000 $t
-     /tmp/ccwdlPow.s:796    .text.FLASH_MassErase:000000000000002c $d
-     /tmp/ccwdlPow.s:802    .text.FLASH_OB_EnableWRP:0000000000000000 $t
-     /tmp/ccwdlPow.s:1007   .text.FLASH_OB_EnableWRP:0000000000000138 $d
-     /tmp/ccwdlPow.s:1014   .text.FLASH_OB_DisableWRP:0000000000000000 $t
-     /tmp/ccwdlPow.s:1217   .text.FLASH_OB_DisableWRP:0000000000000134 $d
-     /tmp/ccwdlPow.s:1224   .text.FLASH_OB_RDP_LevelConfig:0000000000000000 $t
-     /tmp/ccwdlPow.s:1330   .text.FLASH_OB_RDP_LevelConfig:0000000000000094 $d
-     /tmp/ccwdlPow.s:1337   .text.FLASH_OB_UserConfig:0000000000000000 $t
-     /tmp/ccwdlPow.s:1418   .text.FLASH_OB_UserConfig:0000000000000064 $d
-     /tmp/ccwdlPow.s:1425   .text.FLASH_OB_ProgramData:0000000000000000 $t
-     /tmp/ccwdlPow.s:1505   .text.FLASH_OB_ProgramData:0000000000000060 $d
-     /tmp/ccwdlPow.s:1511   .text.FLASH_OB_GetWRP:0000000000000000 $t
-     /tmp/ccwdlPow.s:1548   .text.FLASH_OB_GetWRP:0000000000000014 $d
-     /tmp/ccwdlPow.s:1553   .text.FLASH_OB_GetRDP:0000000000000000 $t
-     /tmp/ccwdlPow.s:1620   .text.FLASH_OB_GetRDP:0000000000000038 $d
-     /tmp/ccwdlPow.s:1625   .text.FLASH_OB_GetUser:0000000000000000 $t
-     /tmp/ccwdlPow.s:1691   .text.FLASH_OB_GetUser:0000000000000034 $d
-     /tmp/ccwdlPow.s:1696   .text.FLASH_PageErase:0000000000000000 $t
-     /tmp/ccwdlPow.s:1758   .text.FLASH_PageErase:0000000000000038 $d
+     /tmp/ccBQkIsA.s:18     .text.HAL_FLASHEx_Erase:0000000000000000 $t
+     /tmp/ccBQkIsA.s:25     .text.HAL_FLASHEx_Erase:0000000000000000 HAL_FLASHEx_Erase
+     /tmp/ccBQkIsA.s:752    .text.FLASH_MassErase:0000000000000000 FLASH_MassErase
+     /tmp/ccBQkIsA.s:1703   .text.FLASH_PageErase:0000000000000000 FLASH_PageErase
+     /tmp/ccBQkIsA.s:168    .text.HAL_FLASHEx_Erase:00000000000000cc $d
+     /tmp/ccBQkIsA.s:174    .text.HAL_FLASHEx_Erase_IT:0000000000000000 $t
+     /tmp/ccBQkIsA.s:181    .text.HAL_FLASHEx_Erase_IT:0000000000000000 HAL_FLASHEx_Erase_IT
+     /tmp/ccBQkIsA.s:280    .text.HAL_FLASHEx_Erase_IT:0000000000000078 $d
+     /tmp/ccBQkIsA.s:286    .text.HAL_FLASHEx_OBErase:0000000000000000 $t
+     /tmp/ccBQkIsA.s:293    .text.HAL_FLASHEx_OBErase:0000000000000000 HAL_FLASHEx_OBErase
+     /tmp/ccBQkIsA.s:1559   .text.FLASH_OB_GetRDP:0000000000000000 FLASH_OB_GetRDP
+     /tmp/ccBQkIsA.s:1230   .text.FLASH_OB_RDP_LevelConfig:0000000000000000 FLASH_OB_RDP_LevelConfig
+     /tmp/ccBQkIsA.s:382    .text.HAL_FLASHEx_OBErase:000000000000007c $d
+     /tmp/ccBQkIsA.s:388    .text.HAL_FLASHEx_OBProgram:0000000000000000 $t
+     /tmp/ccBQkIsA.s:395    .text.HAL_FLASHEx_OBProgram:0000000000000000 HAL_FLASHEx_OBProgram
+     /tmp/ccBQkIsA.s:808    .text.FLASH_OB_EnableWRP:0000000000000000 FLASH_OB_EnableWRP
+     /tmp/ccBQkIsA.s:1020   .text.FLASH_OB_DisableWRP:0000000000000000 FLASH_OB_DisableWRP
+     /tmp/ccBQkIsA.s:1343   .text.FLASH_OB_UserConfig:0000000000000000 FLASH_OB_UserConfig
+     /tmp/ccBQkIsA.s:1431   .text.FLASH_OB_ProgramData:0000000000000000 FLASH_OB_ProgramData
+     /tmp/ccBQkIsA.s:567    .text.HAL_FLASHEx_OBProgram:00000000000000f4 $d
+     /tmp/ccBQkIsA.s:572    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 $t
+     /tmp/ccBQkIsA.s:579    .text.HAL_FLASHEx_OBGetConfig:0000000000000000 HAL_FLASHEx_OBGetConfig
+     /tmp/ccBQkIsA.s:1517   .text.FLASH_OB_GetWRP:0000000000000000 FLASH_OB_GetWRP
+     /tmp/ccBQkIsA.s:1631   .text.FLASH_OB_GetUser:0000000000000000 FLASH_OB_GetUser
+     /tmp/ccBQkIsA.s:632    .text.HAL_FLASHEx_OBGetUserData:0000000000000000 $t
+     /tmp/ccBQkIsA.s:639    .text.HAL_FLASHEx_OBGetUserData:0000000000000000 HAL_FLASHEx_OBGetUserData
+     /tmp/ccBQkIsA.s:740    .text.HAL_FLASHEx_OBGetUserData:0000000000000068 $d
+     /tmp/ccBQkIsA.s:746    .text.FLASH_MassErase:0000000000000000 $t
+     /tmp/ccBQkIsA.s:796    .text.FLASH_MassErase:000000000000002c $d
+     /tmp/ccBQkIsA.s:802    .text.FLASH_OB_EnableWRP:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1007   .text.FLASH_OB_EnableWRP:0000000000000138 $d
+     /tmp/ccBQkIsA.s:1014   .text.FLASH_OB_DisableWRP:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1217   .text.FLASH_OB_DisableWRP:0000000000000134 $d
+     /tmp/ccBQkIsA.s:1224   .text.FLASH_OB_RDP_LevelConfig:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1330   .text.FLASH_OB_RDP_LevelConfig:0000000000000094 $d
+     /tmp/ccBQkIsA.s:1337   .text.FLASH_OB_UserConfig:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1418   .text.FLASH_OB_UserConfig:0000000000000064 $d
+     /tmp/ccBQkIsA.s:1425   .text.FLASH_OB_ProgramData:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1505   .text.FLASH_OB_ProgramData:0000000000000060 $d
+     /tmp/ccBQkIsA.s:1511   .text.FLASH_OB_GetWRP:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1548   .text.FLASH_OB_GetWRP:0000000000000014 $d
+     /tmp/ccBQkIsA.s:1553   .text.FLASH_OB_GetRDP:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1620   .text.FLASH_OB_GetRDP:0000000000000038 $d
+     /tmp/ccBQkIsA.s:1625   .text.FLASH_OB_GetUser:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1691   .text.FLASH_OB_GetUser:0000000000000034 $d
+     /tmp/ccBQkIsA.s:1696   .text.FLASH_PageErase:0000000000000000 $t
+     /tmp/ccBQkIsA.s:1758   .text.FLASH_PageErase:0000000000000038 $d
 
 UNDEFINED SYMBOLS
 FLASH_WaitForLastOperation

@@ -1,0 +1,56 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "load_gky_bootloader",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/build/Myf303ze.elf",
+            "args": [],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}",
+            "environment": [],
+            "externalConsole": true,
+            "MIMode": "gdb",
+            "targetArchitecture": "arm",
+            "logging": { "engineLogging": false },
+            "launchCompleteCommand": "None",
+            "pipeTransport": {
+            "pipeCwd": "",
+            "pipeProgram": "/bin/bash",
+            "pipeArgs": ["-c"],
+            "debuggerPath": "arm-none-eabi-gdb"
+            },
+            "customLaunchSetupCommands": [
+            {
+                "text": "target extended-remote localhost:3333"
+             },
+            {
+                "text": "set mem inaccessible-by-default off"
+            },
+            {
+                "text": "set print pretty"
+            },
+            {
+                "text": "cd ${workspaceFolder}"
+            },
+            {
+                "text": "file build/Myf303ze.elf"
+            },
+            {
+                "text": "load"
+            },
+            {
+                "text": "break main"
+            }
+            ],
+            "serverLaunchTimeout": 1
+        }
+    ]
+}
+
+
+ 

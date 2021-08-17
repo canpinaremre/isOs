@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccRTlqmi.s 			page 1
+ARM GAS  /tmp/ccSS5xgm.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
   29:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** /** @addtogroup STM32F3xx_HAL_Driver
   30:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   * @{
   31:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   */
-ARM GAS  /tmp/ccRTlqmi.s 			page 2
+ARM GAS  /tmp/ccSS5xgm.s 			page 2
 
 
   32:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** 
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
   37 0002 00AF     		add	r7, sp, #0
   38              	.LCFI1:
   39              		.cfi_def_cfa_register 7
-ARM GAS  /tmp/ccRTlqmi.s 			page 3
+ARM GAS  /tmp/ccSS5xgm.s 			page 3
 
 
   77:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   __HAL_RCC_PWR_FORCE_RESET();
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
   83              		@ frame_needed = 1, uses_anonymous_args = 0
   84              		@ link register save eliminated.
   85 0000 80B4     		push	{r7}
-ARM GAS  /tmp/ccRTlqmi.s 			page 4
+ARM GAS  /tmp/ccSS5xgm.s 			page 4
 
 
   86              	.LCFI4:
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  130              		@ link register save eliminated.
  131 0000 80B4     		push	{r7}
  132              	.LCFI8:
-ARM GAS  /tmp/ccRTlqmi.s 			page 5
+ARM GAS  /tmp/ccSS5xgm.s 			page 5
 
 
  133              		.cfi_def_cfa_offset 4
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  119:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****     ================================
  120:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****     [..]
  121:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****       (+) WakeUp pin is used to wakeup the system from Standby mode. This pin is
-ARM GAS  /tmp/ccRTlqmi.s 			page 6
+ARM GAS  /tmp/ccSS5xgm.s 			page 6
 
 
  122:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****           forced in input pull down configuration and is active on rising edges.
@@ -358,7 +358,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  176:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****           The Stop mode is entered using the HAL_PWR_EnterSTOPMode(PWR_MAINREGULATOR_ON, PWR_STOPEN
  177:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****              function with:
  178:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****           (++) Main regulator ON or
-ARM GAS  /tmp/ccRTlqmi.s 			page 7
+ARM GAS  /tmp/ccSS5xgm.s 			page 7
 
 
  179:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****           (++) Low Power regulator ON.
@@ -418,7 +418,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  233:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   * @{
  234:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   */
  235:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** 
-ARM GAS  /tmp/ccRTlqmi.s 			page 8
+ARM GAS  /tmp/ccSS5xgm.s 			page 8
 
 
  236:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** /**
@@ -478,7 +478,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  212 0020 00700040 		.word	1073770496
  213              		.cfi_endproc
  214              	.LFE133:
-ARM GAS  /tmp/ccRTlqmi.s 			page 9
+ARM GAS  /tmp/ccSS5xgm.s 			page 9
 
 
  216              		.section	.text.HAL_PWR_DisableWakeUpPin,"ax",%progbits
@@ -538,7 +538,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  256              	.LCFI22:
  257              		.cfi_def_cfa_register 13
  258              		@ sp needed
-ARM GAS  /tmp/ccRTlqmi.s 			page 10
+ARM GAS  /tmp/ccSS5xgm.s 			page 10
 
 
  259 001c 5DF8047B 		ldr	r7, [sp], #4
@@ -598,7 +598,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  295              		.cfi_def_cfa_register 7
  296 0006 7860     		str	r0, [r7, #4]
  297 0008 0B46     		mov	r3, r1
-ARM GAS  /tmp/ccRTlqmi.s 			page 11
+ARM GAS  /tmp/ccSS5xgm.s 			page 11
 
 
  298 000a FB70     		strb	r3, [r7, #3]
@@ -658,7 +658,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  329              	@ 302 "Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c" 1
  330 0026 20BF     		wfe
  331              	@ 0 "" 2
-ARM GAS  /tmp/ccRTlqmi.s 			page 12
+ARM GAS  /tmp/ccSS5xgm.s 			page 12
 
 
  332              		.thumb
@@ -718,7 +718,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  366              		.loc 1 326 0
  367              		.cfi_startproc
  368              		@ args = 0, pretend = 0, frame = 16
-ARM GAS  /tmp/ccRTlqmi.s 			page 13
+ARM GAS  /tmp/ccSS5xgm.s 			page 13
 
 
  369              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -778,7 +778,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  346:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   SCB->SCR |= SCB_SCR_SLEEPDEEP_Msk;
  404              		.loc 1 346 0
  405 002c 0D4B     		ldr	r3, .L25+4
-ARM GAS  /tmp/ccRTlqmi.s 			page 14
+ARM GAS  /tmp/ccSS5xgm.s 			page 14
 
 
  406 002e 1B69     		ldr	r3, [r3, #16]
@@ -838,7 +838,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  443 004e 23F00403 		bic	r3, r3, #4
  444 0052 1361     		str	r3, [r2, #16]
  364:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** }
-ARM GAS  /tmp/ccRTlqmi.s 			page 15
+ARM GAS  /tmp/ccSS5xgm.s 			page 15
 
 
  445              		.loc 1 364 0
@@ -898,7 +898,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  377:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   /* Select STANDBY mode */
  378:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c ****   PWR->CR |= PWR_CR_PDDS;
  489              		.loc 1 378 0
-ARM GAS  /tmp/ccRTlqmi.s 			page 16
+ARM GAS  /tmp/ccSS5xgm.s 			page 16
 
 
  490 0004 084B     		ldr	r3, .L28
@@ -958,7 +958,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  535              	HAL_PWR_EnableSleepOnExit:
  536              	.LFB138:
  390:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** 
-ARM GAS  /tmp/ccRTlqmi.s 			page 17
+ARM GAS  /tmp/ccSS5xgm.s 			page 17
 
 
  391:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** /**
@@ -1018,7 +1018,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  579              		.fpu fpv4-sp-d16
  581              	HAL_PWR_DisableSleepOnExit:
  582              	.LFB139:
-ARM GAS  /tmp/ccRTlqmi.s 			page 18
+ARM GAS  /tmp/ccSS5xgm.s 			page 18
 
 
  404:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** 
@@ -1078,7 +1078,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  625              		.fpu fpv4-sp-d16
  627              	HAL_PWR_EnableSEVOnPend:
  628              	.LFB140:
-ARM GAS  /tmp/ccRTlqmi.s 			page 19
+ARM GAS  /tmp/ccSS5xgm.s 			page 19
 
 
  417:Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_pwr.c **** 
@@ -1138,7 +1138,7 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  670              		.thumb_func
  671              		.fpu fpv4-sp-d16
  673              	HAL_PWR_DisableSEVOnPend:
-ARM GAS  /tmp/ccRTlqmi.s 			page 20
+ARM GAS  /tmp/ccSS5xgm.s 			page 20
 
 
  674              	.LFB141:
@@ -1198,49 +1198,49 @@ ARM GAS  /tmp/ccRTlqmi.s 			page 1
  716              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
  717              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
  718              		.file 7 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
-ARM GAS  /tmp/ccRTlqmi.s 			page 21
+ARM GAS  /tmp/ccSS5xgm.s 			page 21
 
 
-ARM GAS  /tmp/ccRTlqmi.s 			page 22
+ARM GAS  /tmp/ccSS5xgm.s 			page 22
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f3xx_hal_pwr.c
-     /tmp/ccRTlqmi.s:18     .text.HAL_PWR_DeInit:0000000000000000 $t
-     /tmp/ccRTlqmi.s:25     .text.HAL_PWR_DeInit:0000000000000000 HAL_PWR_DeInit
-     /tmp/ccRTlqmi.s:66     .text.HAL_PWR_DeInit:0000000000000028 $d
-     /tmp/ccRTlqmi.s:71     .text.HAL_PWR_EnableBkUpAccess:0000000000000000 $t
-     /tmp/ccRTlqmi.s:78     .text.HAL_PWR_EnableBkUpAccess:0000000000000000 HAL_PWR_EnableBkUpAccess
-     /tmp/ccRTlqmi.s:112    .text.HAL_PWR_EnableBkUpAccess:000000000000001c $d
-     /tmp/ccRTlqmi.s:117    .text.HAL_PWR_DisableBkUpAccess:0000000000000000 $t
-     /tmp/ccRTlqmi.s:124    .text.HAL_PWR_DisableBkUpAccess:0000000000000000 HAL_PWR_DisableBkUpAccess
-     /tmp/ccRTlqmi.s:158    .text.HAL_PWR_DisableBkUpAccess:000000000000001c $d
-     /tmp/ccRTlqmi.s:163    .text.HAL_PWR_EnableWakeUpPin:0000000000000000 $t
-     /tmp/ccRTlqmi.s:170    .text.HAL_PWR_EnableWakeUpPin:0000000000000000 HAL_PWR_EnableWakeUpPin
-     /tmp/ccRTlqmi.s:212    .text.HAL_PWR_EnableWakeUpPin:0000000000000020 $d
-     /tmp/ccRTlqmi.s:217    .text.HAL_PWR_DisableWakeUpPin:0000000000000000 $t
-     /tmp/ccRTlqmi.s:224    .text.HAL_PWR_DisableWakeUpPin:0000000000000000 HAL_PWR_DisableWakeUpPin
-     /tmp/ccRTlqmi.s:267    .text.HAL_PWR_DisableWakeUpPin:0000000000000024 $d
-     /tmp/ccRTlqmi.s:272    .text.HAL_PWR_EnterSLEEPMode:0000000000000000 $t
-     /tmp/ccRTlqmi.s:279    .text.HAL_PWR_EnterSLEEPMode:0000000000000000 HAL_PWR_EnterSLEEPMode
-     /tmp/ccRTlqmi.s:352    .text.HAL_PWR_EnterSLEEPMode:0000000000000034 $d
-     /tmp/ccRTlqmi.s:357    .text.HAL_PWR_EnterSTOPMode:0000000000000000 $t
-     /tmp/ccRTlqmi.s:364    .text.HAL_PWR_EnterSTOPMode:0000000000000000 HAL_PWR_EnterSTOPMode
-     /tmp/ccRTlqmi.s:462    .text.HAL_PWR_EnterSTOPMode:0000000000000060 $d
-     /tmp/ccRTlqmi.s:468    .text.HAL_PWR_EnterSTANDBYMode:0000000000000000 $t
-     /tmp/ccRTlqmi.s:475    .text.HAL_PWR_EnterSTANDBYMode:0000000000000000 HAL_PWR_EnterSTANDBYMode
-     /tmp/ccRTlqmi.s:522    .text.HAL_PWR_EnterSTANDBYMode:0000000000000028 $d
-     /tmp/ccRTlqmi.s:528    .text.HAL_PWR_EnableSleepOnExit:0000000000000000 $t
-     /tmp/ccRTlqmi.s:535    .text.HAL_PWR_EnableSleepOnExit:0000000000000000 HAL_PWR_EnableSleepOnExit
-     /tmp/ccRTlqmi.s:569    .text.HAL_PWR_EnableSleepOnExit:000000000000001c $d
-     /tmp/ccRTlqmi.s:574    .text.HAL_PWR_DisableSleepOnExit:0000000000000000 $t
-     /tmp/ccRTlqmi.s:581    .text.HAL_PWR_DisableSleepOnExit:0000000000000000 HAL_PWR_DisableSleepOnExit
-     /tmp/ccRTlqmi.s:615    .text.HAL_PWR_DisableSleepOnExit:000000000000001c $d
-     /tmp/ccRTlqmi.s:620    .text.HAL_PWR_EnableSEVOnPend:0000000000000000 $t
-     /tmp/ccRTlqmi.s:627    .text.HAL_PWR_EnableSEVOnPend:0000000000000000 HAL_PWR_EnableSEVOnPend
-     /tmp/ccRTlqmi.s:661    .text.HAL_PWR_EnableSEVOnPend:000000000000001c $d
-     /tmp/ccRTlqmi.s:666    .text.HAL_PWR_DisableSEVOnPend:0000000000000000 $t
-     /tmp/ccRTlqmi.s:673    .text.HAL_PWR_DisableSEVOnPend:0000000000000000 HAL_PWR_DisableSEVOnPend
-     /tmp/ccRTlqmi.s:707    .text.HAL_PWR_DisableSEVOnPend:000000000000001c $d
+     /tmp/ccSS5xgm.s:18     .text.HAL_PWR_DeInit:0000000000000000 $t
+     /tmp/ccSS5xgm.s:25     .text.HAL_PWR_DeInit:0000000000000000 HAL_PWR_DeInit
+     /tmp/ccSS5xgm.s:66     .text.HAL_PWR_DeInit:0000000000000028 $d
+     /tmp/ccSS5xgm.s:71     .text.HAL_PWR_EnableBkUpAccess:0000000000000000 $t
+     /tmp/ccSS5xgm.s:78     .text.HAL_PWR_EnableBkUpAccess:0000000000000000 HAL_PWR_EnableBkUpAccess
+     /tmp/ccSS5xgm.s:112    .text.HAL_PWR_EnableBkUpAccess:000000000000001c $d
+     /tmp/ccSS5xgm.s:117    .text.HAL_PWR_DisableBkUpAccess:0000000000000000 $t
+     /tmp/ccSS5xgm.s:124    .text.HAL_PWR_DisableBkUpAccess:0000000000000000 HAL_PWR_DisableBkUpAccess
+     /tmp/ccSS5xgm.s:158    .text.HAL_PWR_DisableBkUpAccess:000000000000001c $d
+     /tmp/ccSS5xgm.s:163    .text.HAL_PWR_EnableWakeUpPin:0000000000000000 $t
+     /tmp/ccSS5xgm.s:170    .text.HAL_PWR_EnableWakeUpPin:0000000000000000 HAL_PWR_EnableWakeUpPin
+     /tmp/ccSS5xgm.s:212    .text.HAL_PWR_EnableWakeUpPin:0000000000000020 $d
+     /tmp/ccSS5xgm.s:217    .text.HAL_PWR_DisableWakeUpPin:0000000000000000 $t
+     /tmp/ccSS5xgm.s:224    .text.HAL_PWR_DisableWakeUpPin:0000000000000000 HAL_PWR_DisableWakeUpPin
+     /tmp/ccSS5xgm.s:267    .text.HAL_PWR_DisableWakeUpPin:0000000000000024 $d
+     /tmp/ccSS5xgm.s:272    .text.HAL_PWR_EnterSLEEPMode:0000000000000000 $t
+     /tmp/ccSS5xgm.s:279    .text.HAL_PWR_EnterSLEEPMode:0000000000000000 HAL_PWR_EnterSLEEPMode
+     /tmp/ccSS5xgm.s:352    .text.HAL_PWR_EnterSLEEPMode:0000000000000034 $d
+     /tmp/ccSS5xgm.s:357    .text.HAL_PWR_EnterSTOPMode:0000000000000000 $t
+     /tmp/ccSS5xgm.s:364    .text.HAL_PWR_EnterSTOPMode:0000000000000000 HAL_PWR_EnterSTOPMode
+     /tmp/ccSS5xgm.s:462    .text.HAL_PWR_EnterSTOPMode:0000000000000060 $d
+     /tmp/ccSS5xgm.s:468    .text.HAL_PWR_EnterSTANDBYMode:0000000000000000 $t
+     /tmp/ccSS5xgm.s:475    .text.HAL_PWR_EnterSTANDBYMode:0000000000000000 HAL_PWR_EnterSTANDBYMode
+     /tmp/ccSS5xgm.s:522    .text.HAL_PWR_EnterSTANDBYMode:0000000000000028 $d
+     /tmp/ccSS5xgm.s:528    .text.HAL_PWR_EnableSleepOnExit:0000000000000000 $t
+     /tmp/ccSS5xgm.s:535    .text.HAL_PWR_EnableSleepOnExit:0000000000000000 HAL_PWR_EnableSleepOnExit
+     /tmp/ccSS5xgm.s:569    .text.HAL_PWR_EnableSleepOnExit:000000000000001c $d
+     /tmp/ccSS5xgm.s:574    .text.HAL_PWR_DisableSleepOnExit:0000000000000000 $t
+     /tmp/ccSS5xgm.s:581    .text.HAL_PWR_DisableSleepOnExit:0000000000000000 HAL_PWR_DisableSleepOnExit
+     /tmp/ccSS5xgm.s:615    .text.HAL_PWR_DisableSleepOnExit:000000000000001c $d
+     /tmp/ccSS5xgm.s:620    .text.HAL_PWR_EnableSEVOnPend:0000000000000000 $t
+     /tmp/ccSS5xgm.s:627    .text.HAL_PWR_EnableSEVOnPend:0000000000000000 HAL_PWR_EnableSEVOnPend
+     /tmp/ccSS5xgm.s:661    .text.HAL_PWR_EnableSEVOnPend:000000000000001c $d
+     /tmp/ccSS5xgm.s:666    .text.HAL_PWR_DisableSEVOnPend:0000000000000000 $t
+     /tmp/ccSS5xgm.s:673    .text.HAL_PWR_DisableSEVOnPend:0000000000000000 HAL_PWR_DisableSEVOnPend
+     /tmp/ccSS5xgm.s:707    .text.HAL_PWR_DisableSEVOnPend:000000000000001c $d
 
 NO UNDEFINED SYMBOLS

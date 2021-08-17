@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "task.h"
+#include <stdio.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -40,6 +41,8 @@
 /* USER CODE END PM */
 
 /* Private variables ---------------------------------------------------------*/
+UART_HandleTypeDef huart3;
+DMA_HandleTypeDef hdma_usart3_rx;
 
 /* USER CODE BEGIN PV */
 
@@ -48,6 +51,8 @@
 /* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
+static void MX_USART3_UART_Init(void);
+static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 
@@ -63,20 +68,30 @@ static void thread_1(void){
   //toggle blue LED every 200ms
   while (1)
   {
-    HAL_Delay(50);
+    
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_7);
+    taskDelay(50);
   }
   
 }
 
 static void thread_2(void)
 {
-
+  // char buffer[20];
   //toggle red LED every 200ms
   while (1)
   {
-    HAL_Delay(1000);
+    
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
+
+    char buff[20];
+    strcpy(buff,return_task_name());
+    uint16_t size = strlen(buff);
+    __ASM("cpsid i");
+	  HAL_UART_Transmit(&huart3, (uint8_t *)buff, size,1);
+    __ASM("cpsie i");
+
+    taskDelay(1000);
   }
   
 }
@@ -84,11 +99,12 @@ static void thread_2(void)
 static void thread_3(void)
 {
 
-  //toggle red LED every 200ms
+  //toggle green every 200ms
   while (1)
   {
-    HAL_Delay(1000);
+    
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
+    taskDelay(500);
   }
   
 }
@@ -126,18 +142,15 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_USART3_UART_Init();
+  MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
+  TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
 
+  TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,1);
 
-  uint8_t stack[MAX_TASKS*TASK_SIZE]; //Allocate memory in stack
-  uint8_t *stack_ptr = stack; //pointer to stack
-
-  TaskCreate(stack_ptr,TASK_SIZE,thread_1);
-  stack_ptr += TASK_SIZE;
-  TaskCreate(stack_ptr,TASK_SIZE,thread_2);
-  stack_ptr += TASK_SIZE;
-  TaskCreate(stack_ptr,TASK_SIZE,thread_3);
+  TaskCreate("task 3",DEFAULT_TASK_SIZE,thread_3,2);
 
   KernelStart();
   
@@ -148,11 +161,13 @@ int main(void)
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-    
+    /* USER CODE END WHILE */
+
     /* USER CODE BEGIN 3 */
   }
   /* USER CODE END 3 */
 }
+
 /**
   * @brief System Clock Configuration
   * @retval None
@@ -161,6 +176,7 @@ void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -186,6 +202,63 @@ void SystemClock_Config(void)
   {
     Error_Handler();
   }
+  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART3;
+  PeriphClkInit.Usart3ClockSelection = RCC_USART3CLKSOURCE_PCLK1;
+  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
+
+/**
+  * @brief USART3 Initialization Function
+  * @param None
+  * @retval None
+  */
+static void MX_USART3_UART_Init(void)
+{
+
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 9600;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  /* USER CODE BEGIN USART3_Init 2 */
+
+  /* USER CODE END USART3_Init 2 */
+
+}
+
+/**
+  * Enable DMA controller clock
+  */
+static void MX_DMA_Init(void)
+{
+
+  /* DMA controller clock enable */
+  __HAL_RCC_DMA1_CLK_ENABLE();
+
+  /* DMA interrupt init */
+  /* DMA1_Channel3_IRQn interrupt configuration */
+  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
+  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
+
 }
 
 /**
@@ -199,15 +272,16 @@ static void MX_GPIO_Init(void)
 
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOB_CLK_ENABLE();
+  __HAL_RCC_GPIOD_CLK_ENABLE();
 
   /*Configure GPIO pin Output Level */
-  //HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_0|LED_BLUE_Pin, GPIO_PIN_RESET);
 
   /*Configure GPIO pin Output Level */
-  HAL_GPIO_WritePin(LED_BLUE_GPIO_Port, LED_BLUE_Pin, GPIO_PIN_RESET);
+  HAL_GPIO_WritePin(GPIOB, GPIO_PIN_14, GPIO_PIN_SET);
 
-  /*Configure GPIO pins : PB14 LED_BLUE_Pin */
-  GPIO_InitStruct.Pin = GPIO_PIN_14|LED_BLUE_Pin | GPIO_PIN_0;
+  /*Configure GPIO pins : PB0 PB14 LED_BLUE_Pin */
+  GPIO_InitStruct.Pin = GPIO_PIN_0|GPIO_PIN_14|LED_BLUE_Pin;
   GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
   GPIO_InitStruct.Pull = GPIO_NOPULL;
   GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;

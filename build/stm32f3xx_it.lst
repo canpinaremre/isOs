@@ -1,4 +1,4 @@
-ARM GAS  /tmp/ccyZxggq.s 			page 1
+ARM GAS  /tmp/cc16gR44.s 			page 1
 
 
    1              		.cpu cortex-m4
@@ -58,7 +58,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
   29:Src/stm32f3xx_it.c **** /* Private typedef -----------------------------------------------------------*/
   30:Src/stm32f3xx_it.c **** /* USER CODE BEGIN TD */
   31:Src/stm32f3xx_it.c **** 
-ARM GAS  /tmp/ccyZxggq.s 			page 2
+ARM GAS  /tmp/cc16gR44.s 			page 2
 
 
   32:Src/stm32f3xx_it.c **** /* USER CODE END TD */
@@ -80,7 +80,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
   48:Src/stm32f3xx_it.c **** 
   49:Src/stm32f3xx_it.c **** /* Private function prototypes -----------------------------------------------*/
   50:Src/stm32f3xx_it.c **** /* USER CODE BEGIN PFP */
-  51:Src/stm32f3xx_it.c **** extern void systick_handle();
+  51:Src/stm32f3xx_it.c **** 
   52:Src/stm32f3xx_it.c **** /* USER CODE END PFP */
   53:Src/stm32f3xx_it.c **** 
   54:Src/stm32f3xx_it.c **** /* Private user code ---------------------------------------------------------*/
@@ -89,7 +89,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
   57:Src/stm32f3xx_it.c **** /* USER CODE END 0 */
   58:Src/stm32f3xx_it.c **** 
   59:Src/stm32f3xx_it.c **** /* External variables --------------------------------------------------------*/
-  60:Src/stm32f3xx_it.c **** 
+  60:Src/stm32f3xx_it.c **** extern DMA_HandleTypeDef hdma_usart3_rx;
   61:Src/stm32f3xx_it.c **** /* USER CODE BEGIN EV */
   62:Src/stm32f3xx_it.c **** 
   63:Src/stm32f3xx_it.c **** /* USER CODE END EV */
@@ -118,7 +118,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
   73:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 0 */
   74:Src/stm32f3xx_it.c **** 
   75:Src/stm32f3xx_it.c ****   /* USER CODE END NonMaskableInt_IRQn 0 */
-ARM GAS  /tmp/ccyZxggq.s 			page 3
+ARM GAS  /tmp/cc16gR44.s 			page 3
 
 
   76:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN NonMaskableInt_IRQn 1 */
@@ -178,7 +178,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
   83              	.LFB132:
   92:Src/stm32f3xx_it.c ****   {
   93:Src/stm32f3xx_it.c ****     /* USER CODE BEGIN W1_HardFault_IRQn 0 */
-ARM GAS  /tmp/ccyZxggq.s 			page 4
+ARM GAS  /tmp/cc16gR44.s 			page 4
 
 
   94:Src/stm32f3xx_it.c ****     /* USER CODE END W1_HardFault_IRQn 0 */
@@ -238,7 +238,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
  116              		@ link register save eliminated.
  117 0000 80B4     		push	{r7}
  118              	.LCFI6:
-ARM GAS  /tmp/ccyZxggq.s 			page 5
+ARM GAS  /tmp/cc16gR44.s 			page 5
 
 
  119              		.cfi_def_cfa_offset 4
@@ -298,7 +298,7 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
  156              	.LFE134:
  158              		.section	.text.DebugMon_Handler,"ax",%progbits
  159              		.align	1
-ARM GAS  /tmp/ccyZxggq.s 			page 6
+ARM GAS  /tmp/cc16gR44.s 			page 6
 
 
  160              		.global	DebugMon_Handler
@@ -317,26 +317,14 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
  143:Src/stm32f3xx_it.c **** /**
  144:Src/stm32f3xx_it.c ****   * @brief This function handles System service call via SWI instruction.
  145:Src/stm32f3xx_it.c ****   */
- 146:Src/stm32f3xx_it.c **** // void SVC_Handler(void)
- 147:Src/stm32f3xx_it.c **** // {
- 148:Src/stm32f3xx_it.c **** //   /* USER CODE BEGIN SVCall_IRQn 0 */
- 149:Src/stm32f3xx_it.c **** 
- 150:Src/stm32f3xx_it.c **** //   SVC_task();
- 151:Src/stm32f3xx_it.c **** 
- 152:Src/stm32f3xx_it.c **** 
- 153:Src/stm32f3xx_it.c **** 
- 154:Src/stm32f3xx_it.c **** //   /* USER CODE END SVCall_IRQn 0 */
- 155:Src/stm32f3xx_it.c **** //   /* USER CODE BEGIN SVCall_IRQn 1 */
- 156:Src/stm32f3xx_it.c **** 
- 157:Src/stm32f3xx_it.c **** //   /* USER CODE END SVCall_IRQn 1 */
- 158:Src/stm32f3xx_it.c **** // }
- 159:Src/stm32f3xx_it.c **** 
- 160:Src/stm32f3xx_it.c **** /**
- 161:Src/stm32f3xx_it.c ****   * @brief This function handles Debug monitor.
- 162:Src/stm32f3xx_it.c ****   */
- 163:Src/stm32f3xx_it.c **** void DebugMon_Handler(void)
- 164:Src/stm32f3xx_it.c **** {
- 168              		.loc 1 164 0
+ 146:Src/stm32f3xx_it.c **** 
+ 147:Src/stm32f3xx_it.c **** 
+ 148:Src/stm32f3xx_it.c **** /**
+ 149:Src/stm32f3xx_it.c ****   * @brief This function handles Debug monitor.
+ 150:Src/stm32f3xx_it.c ****   */
+ 151:Src/stm32f3xx_it.c **** void DebugMon_Handler(void)
+ 152:Src/stm32f3xx_it.c **** {
+ 168              		.loc 1 152 0
  169              		.cfi_startproc
  170              		@ args = 0, pretend = 0, frame = 0
  171              		@ frame_needed = 1, uses_anonymous_args = 0
@@ -348,19 +336,16 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
  177 0002 00AF     		add	r7, sp, #0
  178              	.LCFI11:
  179              		.cfi_def_cfa_register 7
- 165:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
- 166:Src/stm32f3xx_it.c **** 
- 167:Src/stm32f3xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 0 */
- 168:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
- 169:Src/stm32f3xx_it.c **** 
- 170:Src/stm32f3xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 1 */
- 171:Src/stm32f3xx_it.c **** }
- 180              		.loc 1 171 0
+ 153:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 0 */
+ 154:Src/stm32f3xx_it.c **** 
+ 155:Src/stm32f3xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 0 */
+ 156:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DebugMonitor_IRQn 1 */
+ 157:Src/stm32f3xx_it.c **** 
+ 158:Src/stm32f3xx_it.c ****   /* USER CODE END DebugMonitor_IRQn 1 */
+ 159:Src/stm32f3xx_it.c **** }
+ 180              		.loc 1 159 0
  181 0004 00BF     		nop
  182 0006 BD46     		mov	sp, r7
-ARM GAS  /tmp/ccyZxggq.s 			page 7
-
-
  183              	.LCFI12:
  184              		.cfi_def_cfa_register 13
  185              		@ sp needed
@@ -371,33 +356,106 @@ ARM GAS  /tmp/ccyZxggq.s 			page 1
  190 000c 7047     		bx	lr
  191              		.cfi_endproc
  192              	.LFE135:
- 194              		.text
- 195              	.Letext0:
- 196              		.file 2 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_typ
- 197              		.file 3 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
- 198              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
- 199              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
- 200              		.file 6 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
- 201              		.file 7 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
- 202              		.file 8 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
- 203              		.file 9 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stddef
- 204              		.file 10 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
-ARM GAS  /tmp/ccyZxggq.s 			page 8
+ 194              		.section	.text.DMA1_Channel3_IRQHandler,"ax",%progbits
+ 195              		.align	1
+ARM GAS  /tmp/cc16gR44.s 			page 7
+
+
+ 196              		.global	DMA1_Channel3_IRQHandler
+ 197              		.syntax unified
+ 198              		.thumb
+ 199              		.thumb_func
+ 200              		.fpu fpv4-sp-d16
+ 202              	DMA1_Channel3_IRQHandler:
+ 203              	.LFB136:
+ 160:Src/stm32f3xx_it.c **** 
+ 161:Src/stm32f3xx_it.c **** /**
+ 162:Src/stm32f3xx_it.c ****   * @brief This function handles Pendable request for system service.
+ 163:Src/stm32f3xx_it.c ****   */
+ 164:Src/stm32f3xx_it.c **** 
+ 165:Src/stm32f3xx_it.c **** 
+ 166:Src/stm32f3xx_it.c **** /******************************************************************************/
+ 167:Src/stm32f3xx_it.c **** /* STM32F3xx Peripheral Interrupt Handlers                                    */
+ 168:Src/stm32f3xx_it.c **** /* Add here the Interrupt Handlers for the used peripherals.                  */
+ 169:Src/stm32f3xx_it.c **** /* For the available peripheral interrupt handler names,                      */
+ 170:Src/stm32f3xx_it.c **** /* please refer to the startup file (startup_stm32f3xx.s).                    */
+ 171:Src/stm32f3xx_it.c **** /******************************************************************************/
+ 172:Src/stm32f3xx_it.c **** 
+ 173:Src/stm32f3xx_it.c **** /**
+ 174:Src/stm32f3xx_it.c ****   * @brief This function handles DMA1 channel3 global interrupt.
+ 175:Src/stm32f3xx_it.c ****   */
+ 176:Src/stm32f3xx_it.c **** void DMA1_Channel3_IRQHandler(void)
+ 177:Src/stm32f3xx_it.c **** {
+ 204              		.loc 1 177 0
+ 205              		.cfi_startproc
+ 206              		@ args = 0, pretend = 0, frame = 0
+ 207              		@ frame_needed = 1, uses_anonymous_args = 0
+ 208 0000 80B5     		push	{r7, lr}
+ 209              	.LCFI14:
+ 210              		.cfi_def_cfa_offset 8
+ 211              		.cfi_offset 7, -8
+ 212              		.cfi_offset 14, -4
+ 213 0002 00AF     		add	r7, sp, #0
+ 214              	.LCFI15:
+ 215              		.cfi_def_cfa_register 7
+ 178:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DMA1_Channel3_IRQn 0 */
+ 179:Src/stm32f3xx_it.c **** 
+ 180:Src/stm32f3xx_it.c ****   /* USER CODE END DMA1_Channel3_IRQn 0 */
+ 181:Src/stm32f3xx_it.c ****   HAL_DMA_IRQHandler(&hdma_usart3_rx);
+ 216              		.loc 1 181 0
+ 217 0004 0248     		ldr	r0, .L13
+ 218 0006 FFF7FEFF 		bl	HAL_DMA_IRQHandler
+ 182:Src/stm32f3xx_it.c ****   /* USER CODE BEGIN DMA1_Channel3_IRQn 1 */
+ 183:Src/stm32f3xx_it.c **** 
+ 184:Src/stm32f3xx_it.c ****   /* USER CODE END DMA1_Channel3_IRQn 1 */
+ 185:Src/stm32f3xx_it.c **** }
+ 219              		.loc 1 185 0
+ 220 000a 00BF     		nop
+ 221 000c 80BD     		pop	{r7, pc}
+ 222              	.L14:
+ 223 000e 00BF     		.align	2
+ 224              	.L13:
+ 225 0010 00000000 		.word	hdma_usart3_rx
+ 226              		.cfi_endproc
+ 227              	.LFE136:
+ARM GAS  /tmp/cc16gR44.s 			page 8
+
+
+ 229              		.text
+ 230              	.Letext0:
+ 231              		.file 2 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/machine/_default_typ
+ 232              		.file 3 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_stdint.h"
+ 233              		.file 4 "Drivers/CMSIS/Include/core_cm4.h"
+ 234              		.file 5 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/system_stm32f3xx.h"
+ 235              		.file 6 "Drivers/CMSIS/Device/ST/STM32F3xx/Include/stm32f303xe.h"
+ 236              		.file 7 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_def.h"
+ 237              		.file 8 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal_dma.h"
+ 238              		.file 9 "Drivers/STM32F3xx_HAL_Driver/Inc/stm32f3xx_hal.h"
+ 239              		.file 10 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/lock.h"
+ 240              		.file 11 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/_types.h"
+ 241              		.file 12 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/lib/gcc/arm-none-eabi/7.2.1/include/stdde
+ 242              		.file 13 "/home/ubuntu/gcc-arm-none-eabi-7-2017-q4-major/arm-none-eabi/include/sys/reent.h"
+ARM GAS  /tmp/cc16gR44.s 			page 9
 
 
 DEFINED SYMBOLS
                             *ABS*:0000000000000000 stm32f3xx_it.c
-     /tmp/ccyZxggq.s:18     .text.NMI_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
-     /tmp/ccyZxggq.s:47     .text.HardFault_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:54     .text.HardFault_Handler:0000000000000000 HardFault_Handler
-     /tmp/ccyZxggq.s:75     .text.MemManage_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:82     .text.MemManage_Handler:0000000000000000 MemManage_Handler
-     /tmp/ccyZxggq.s:103    .text.BusFault_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:110    .text.BusFault_Handler:0000000000000000 BusFault_Handler
-     /tmp/ccyZxggq.s:131    .text.UsageFault_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:138    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
-     /tmp/ccyZxggq.s:159    .text.DebugMon_Handler:0000000000000000 $t
-     /tmp/ccyZxggq.s:166    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/cc16gR44.s:18     .text.NMI_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:25     .text.NMI_Handler:0000000000000000 NMI_Handler
+     /tmp/cc16gR44.s:47     .text.HardFault_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:54     .text.HardFault_Handler:0000000000000000 HardFault_Handler
+     /tmp/cc16gR44.s:75     .text.MemManage_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:82     .text.MemManage_Handler:0000000000000000 MemManage_Handler
+     /tmp/cc16gR44.s:103    .text.BusFault_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:110    .text.BusFault_Handler:0000000000000000 BusFault_Handler
+     /tmp/cc16gR44.s:131    .text.UsageFault_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:138    .text.UsageFault_Handler:0000000000000000 UsageFault_Handler
+     /tmp/cc16gR44.s:159    .text.DebugMon_Handler:0000000000000000 $t
+     /tmp/cc16gR44.s:166    .text.DebugMon_Handler:0000000000000000 DebugMon_Handler
+     /tmp/cc16gR44.s:195    .text.DMA1_Channel3_IRQHandler:0000000000000000 $t
+     /tmp/cc16gR44.s:202    .text.DMA1_Channel3_IRQHandler:0000000000000000 DMA1_Channel3_IRQHandler
+     /tmp/cc16gR44.s:225    .text.DMA1_Channel3_IRQHandler:0000000000000010 $d
 
-NO UNDEFINED SYMBOLS
+UNDEFINED SYMBOLS
+HAL_DMA_IRQHandler
+hdma_usart3_rx
