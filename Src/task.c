@@ -1,8 +1,5 @@
 #include "task.h"
 
-
-
-static uint32_t lastTick = 0;
 static struct task tasks[MAX_TASKS];
 
 static uint32_t taskCount = 0;
@@ -57,11 +54,14 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     softwareStackFrame.R11 = 11;
 	
     stack_ptr += stackSize;
+
+    //make space for hardware stack frame
     uint32_t *stackPointer = (uint32_t *)stack_ptr;
-    stackPointer -= sizeof(struct HardwareStackFrame) / sizeof(uint32_t); //make space for hardware stack frame
+    stackPointer -= sizeof(struct HardwareStackFrame) / sizeof(uint32_t); 
     memcpy(stackPointer, &hardwareStackFrame, sizeof(struct HardwareStackFrame));
     
-    stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); //make space for software stack frame
+    //make space for software stack frame
+    stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); 
     memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
     
     tasks[taskCount].stackPointer = (uint32_t)stackPointer;
@@ -82,10 +82,16 @@ const char* return_task_name()
 void taskDelay(uint32_t delayTime)
 {
     __asm("cpsid i"); //disable irq
+
+    // Set task state as blocked
     tasks[nextTaskIndex].taskState = TaskBlocked;
+
+    // Set delayUntil time so we can check if the task should run
     tasks[nextTaskIndex].delayUntil = HAL_GetTick() + delayTime;
+
     __ASM("cpsie i"); //reenable irq
     
+    // This task is not blocked. Need to switch task
     switchTask();
     
 }
@@ -95,7 +101,9 @@ void switchTask(void)
 	__asm("cpsid i"); //disable irq
 
 
-	
+	// If current task is not idle task and
+    // task is not blocked 
+    // we need to return this task. So set state as Ready
     if(tasks[nextTaskIndex].taskState == TaskRunning)
     {
         tasks[nextTaskIndex].taskState = TaskReady;
@@ -106,13 +114,22 @@ void switchTask(void)
     currentTask = nextTask;
 
     bool switchIdleTask =true;
+
     uint32_t index = nextTaskIndex;
 
+    // Search through all tasks
     for(uint32_t i = index;;){
         i++;
         i %= taskCount;
+
         if(i == index)
+            //end of tasks
+            //If we can not find nextTask,
+            //switchIdleTask is true and switch to it.
             break;
+
+        //If task is blocked check if we pass delayUntil time.
+        //If so check priority and set as nextTask.
         if(tasks[i].taskState == TaskBlocked)
         {
             if(tasks[i].delayUntil <= HAL_GetTick())
@@ -125,11 +142,10 @@ void switchTask(void)
                     nextTaskIndex = i;
                 }
             }
-            else
-            {
-                //check next one
-            }
+    
         }
+        //If task is not blocked it should be suspended or ready
+        //schedule only if ready (not suspended)
         else if(tasks[i].taskState != TaskSuspend)
         {
             switchIdleTask =false;
@@ -140,9 +156,14 @@ void switchTask(void)
             }
         }
     }
+    // All tasks are blocked or suspended so switch to idle task
     if(switchIdleTask){
         nextTask = &tasks[idleTaskIndex];
         nextTaskIndex = idleTaskIndex;
+
+        // If current task is the only task ready,
+        // do not switch to idle
+        // continue with current task
         if(currentTask->taskState == TaskReady)
         {
             nextTask = currentTask;
@@ -150,13 +171,21 @@ void switchTask(void)
             tasks[nextTaskIndex].taskState = TaskRunning;
         }
     }
+    // Switch to next task
     else{
         tasks[nextTaskIndex].taskState = TaskRunning;
         nextTask = &tasks[nextTaskIndex];
     }
+
+    // If we are in the same task and
+    // do not switch.
+    // If this is the first taskSwitch and currentTask is NULL
+    // continue, SVC_Handler will take care of the first contex switch
     if((nextTask != currentTask) && (currentTask)){
+        //Set PendSV interrupt for contex switching.
         SCB->ICSR |= (1<<28);
     }
+
     __ASM("cpsie i"); //reenable irq
     
 }
@@ -214,36 +243,27 @@ void KernelStart(void)
     idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
     tasks[idleTaskIndex].taskState = TaskSuspend; //do not get schedule like other tasks, NEVER resume
 
+    // Set PendSV priority lower than SysTick
+    // Because we need to switch task
+    // after Systick return we should enter to contex switching
     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
-    // nextTask = &tasks[nextTaskIndex];
+
+    //swith to first task with highest priority
     switchTask();
+
+    //set SVC interrupt for first context switch
     __asm("SVC #0");
 
+    // This function should never return
+    // We should never be here
     while(1);
-}
-
-void saveAndSwitch()
-{
-    lastTick = HAL_GetTick();
-    
-    switchTask();
-    SCB->ICSR |= (1<<28);
-}
-
-void runScheduler()
-{
-    if(!(HAL_GetTick() - lastTick >= 1)){
-        
-        return;
-    }
-    saveAndSwitch();
 }
 
 void SysTick_Handler(void)
 {
     HAL_IncTick();
 
-    //runScheduler();
+    //Switch task in every tick
     switchTask();
     
 }

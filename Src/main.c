@@ -72,7 +72,7 @@ static void thread_1(void){
   while (1)
   {
     sem_wait(&sem);
-    HAL_Delay(1000);
+    //HAL_Delay(1000);
     myInt++;
     sem_post(&sem);
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_7);
