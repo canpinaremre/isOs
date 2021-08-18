@@ -9,8 +9,8 @@ static uint32_t taskCount = 0;
 static uint32_t nextTaskIndex = 0;
 static uint32_t idleTaskIndex = 0;
 
-struct task *currentTask;
-struct task *nextTask;
+struct task *currentTask = NULL;
+struct task *nextTask = NULL;
 
 uint8_t mainStack[STACK_SIZE]; //Allocate memory in stack
 uint8_t *stack_ptr = mainStack; //pointer to stack
@@ -101,24 +101,29 @@ void switchTask(void)
         tasks[nextTaskIndex].taskState = TaskReady;
     }
         
+    int basePrio = -1;
 
     currentTask = nextTask;
 
     bool switchIdleTask =true;
+    uint32_t index = nextTaskIndex;
 
-    for(uint32_t i = nextTaskIndex;;){
+    for(uint32_t i = index;;){
         i++;
         i %= taskCount;
-        if(i==nextTaskIndex)
+        if(i==index)
             break;
         if(tasks[i].taskState == TaskBlocked)
         {
             if(tasks[i].delayUntil <= HAL_GetTick())
             {
                 switchIdleTask =false;
-                nextTaskIndex = i;
-                break;
-                //and continue with this task
+                
+                if(tasks[i].priority > basePrio)
+                {
+                    basePrio = tasks[i].priority;
+                    nextTaskIndex = i;
+                }
             }
             else
             {
@@ -128,8 +133,11 @@ void switchTask(void)
         else if(tasks[i].taskState != TaskSuspend)
         {
             switchIdleTask =false;
-            nextTaskIndex = i;
-            break;
+            if(tasks[i].priority > basePrio)
+            {
+                basePrio = tasks[i].priority;
+                nextTaskIndex = i;
+            }
         }
     }
     if(switchIdleTask){
@@ -138,14 +146,15 @@ void switchTask(void)
         if(currentTask->taskState == TaskReady)
         {
             nextTask = currentTask;
-            nextTaskIndex = idleTaskIndex;
+            nextTaskIndex = currentTask->taskId;
+            tasks[nextTaskIndex].taskState = TaskRunning;
         }
     }
     else{
         tasks[nextTaskIndex].taskState = TaskRunning;
         nextTask = &tasks[nextTaskIndex];
     }
-    if(nextTask != currentTask){
+    if((nextTask != currentTask) && (currentTask)){
         SCB->ICSR |= (1<<28);
     }
     __ASM("cpsie i"); //reenable irq
@@ -203,10 +212,11 @@ void PendSV_Handler(void)
 void KernelStart(void)
 {
     idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
-    tasks[idleTaskIndex].taskState = TaskSuspend; //do not get schedule like other tasks
+    tasks[idleTaskIndex].taskState = TaskSuspend; //do not get schedule like other tasks, NEVER resume
 
     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
-    nextTask = &tasks[nextTaskIndex];
+    // nextTask = &tasks[nextTaskIndex];
+    switchTask();
     __asm("SVC #0");
 
     while(1);

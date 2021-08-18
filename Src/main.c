@@ -91,7 +91,7 @@ static void thread_2(void)
 	  HAL_UART_Transmit(&huart3, (uint8_t *)buff, size,1);
     __ASM("cpsie i");
 
-    taskDelay(1000);
+    taskDelay(500);
   }
   
 }
