@@ -111,7 +111,7 @@ void switchTask(void)
     for(uint32_t i = index;;){
         i++;
         i %= taskCount;
-        if(i==index)
+        if(i == index)
             break;
         if(tasks[i].taskState == TaskBlocked)
         {

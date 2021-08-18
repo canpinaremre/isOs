@@ -23,6 +23,7 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "task.h"
+#include "semaphore.h"
 #include <stdio.h>
 /* USER CODE END Includes */
 
@@ -60,6 +61,8 @@ static void MX_DMA_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+Semaphore sem;
+int myInt = 0;
 
 
 //fist thread
@@ -68,7 +71,10 @@ static void thread_1(void){
   //toggle blue LED every 200ms
   while (1)
   {
-    
+    sem_wait(&sem);
+    HAL_Delay(1000);
+    myInt++;
+    sem_post(&sem);
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_7);
     taskDelay(50);
   }
@@ -102,7 +108,9 @@ static void thread_3(void)
   //toggle green every 200ms
   while (1)
   {
-    
+    sem_wait(&sem);
+    myInt++;
+    sem_post(&sem);
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
     taskDelay(500);
   }
@@ -145,6 +153,7 @@ int main(void)
   MX_USART3_UART_Init();
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
+  sem_init(&sem,1);
 
   TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
 
