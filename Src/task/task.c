@@ -9,8 +9,12 @@ static uint32_t idleTaskIndex = 0;
 struct task *currentTask = NULL;
 struct task *nextTask = NULL;
 
-uint8_t mainStack[STACK_SIZE]; //Allocate memory in stack
+#ifdef USE_STACK_TASK
+uint8_t mainStack[STACK_TASK_SIZE]; //Allocate memory in stack
 uint8_t *stack_ptr = mainStack; //pointer to stack
+#endif
+
+
 
 
 static void TaskReturn()
@@ -22,8 +26,8 @@ static void idleTask()
     while (1);  
 }
 
-
-taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
+#ifdef USE_STACK_TASK
+taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
     tasks[taskCount].stackSize = stackSize;
     tasks[taskCount].priority = priority;
@@ -70,6 +74,58 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     taskCount++; 
     return tasks[taskCount -1].taskId;
 }
+#endif
+// Create task using heap
+taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
+{
+    tasks[taskCount].stackSize = stackSize;
+    tasks[taskCount].priority = priority;
+    strcpy(tasks[taskCount].taskName,name);
+    tasks[taskCount].taskId = (taskid_t)taskCount;
+    tasks[taskCount].taskState = TaskReady;
+    tasks[taskCount].delayUntil = 0;
+
+    struct HardwareStackFrame hardwareStackFrame;
+    struct SoftwareStackFrame softwareStackFrame;
+    
+    hardwareStackFrame.R0 = 0;
+    hardwareStackFrame.R1 = 1;
+    hardwareStackFrame.R2 = 2;
+    hardwareStackFrame.R3 = 3;
+    hardwareStackFrame.R12 = 12;
+    hardwareStackFrame.LR = (uint32_t)TaskReturn;
+    hardwareStackFrame.PC = (uint32_t)entrypoint;
+    hardwareStackFrame.xPSR = 0x01000000;
+    
+    softwareStackFrame.R4 = 4;
+    softwareStackFrame.R5 = 5;
+    softwareStackFrame.R6 = 6;
+    softwareStackFrame.R7 = 7;
+    softwareStackFrame.R8 = 8;
+    softwareStackFrame.R9 = 9;
+    softwareStackFrame.R10 = 10;
+    softwareStackFrame.R11 = 11;
+	
+    void * heap_ptr = malloc(stackSize);
+    heap_ptr += stackSize;
+
+
+    //make space for hardware stack frame
+    uint32_t *stackPointer = (uint32_t *)heap_ptr;
+    stackPointer -= sizeof(struct HardwareStackFrame) / sizeof(uint32_t); 
+    memcpy(stackPointer, &hardwareStackFrame, sizeof(struct HardwareStackFrame));
+    
+    //make space for software stack frame
+    stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); 
+    memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
+    
+    tasks[taskCount].stackPointer = (uint32_t)stackPointer;
+    
+    
+    taskCount++; 
+    return tasks[taskCount -1].taskId;
+}
+
 
 const char* return_task_name()
 {

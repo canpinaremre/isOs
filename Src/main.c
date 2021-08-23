@@ -22,7 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "task.h"
+#include "task/task.h"
 #include "semaphore.h"
 #include <stdio.h>
 /* USER CODE END Includes */
@@ -159,7 +159,7 @@ int main(void)
 
   TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,1);
 
-  TaskCreate("task 3",DEFAULT_TASK_SIZE,thread_3,2);
+  TaskCreateStatic("task 3",DEFAULT_TASK_SIZE,thread_3,2);
 
   KernelStart();
   

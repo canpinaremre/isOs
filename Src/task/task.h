@@ -1,13 +1,22 @@
-#include "main.h"
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
 #include <string.h>
 #include "stm32f3xx_it.h"
 #include "stm32f3xx_hal.h"
+#define USE_STACK_TASK
 
+#ifndef MAX_TASKS
 #define MAX_TASKS 15
+#endif
+
 #define DEFAULT_TASK_SIZE 512
-#define STACK_SIZE 16384 //16 kB
+
+#ifdef USE_STACK_TASK
+# ifndef STACK_TASK_SIZE
+# define STACK_TASK_SIZE 16384 //16 kB
+# endif
+#endif
 
 #define MAIN_RETURN 0xFFFFFFF9  //Tells the handler to return using the MSP
 #define THREAD_RETURN 0xFFFFFFFD //Tells the handler to return using the PSP
@@ -56,7 +65,11 @@ struct task
     char taskName[20];
 };
 
+#ifdef USE_STACK_TASK
+taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
+#endif
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
+
 void KernelStart(void);
 const char* return_task_name();
 void taskDelay(uint32_t delayTime);

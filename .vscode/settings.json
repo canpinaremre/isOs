@@ -2,6 +2,7 @@
     "files.associations": {
         "main.h": "c",
         "task.h": "c",
-        "semaphore.h": "c"
+        "semaphore.h": "c",
+        "stdio.h": "c"
     }
 }
