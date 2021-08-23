@@ -62,6 +62,7 @@ struct task
     uint8_t priority;
     taskState_t taskState;
     uint32_t delayUntil;
+    void * heapPtr;
     char taskName[20];
 };
 
@@ -69,7 +70,8 @@ struct task
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
 #endif
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
-
+taskid_t getTaskId();
+void taskDelete(taskid_t tid);
 void KernelStart(void);
 const char* return_task_name();
 void taskDelay(uint32_t delayTime);

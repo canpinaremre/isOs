@@ -29,7 +29,9 @@ static void idleTask()
 #ifdef USE_STACK_TASK
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
+    __asm("cpsid i"); //disable irq
     tasks[taskCount].stackSize = stackSize;
+    tasks[taskCount].heapPtr = NULL;
     tasks[taskCount].priority = priority;
     strcpy(tasks[taskCount].taskName,name);
     tasks[taskCount].taskId = (taskid_t)taskCount;
@@ -72,12 +74,14 @@ taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoin
     
     
     taskCount++; 
+    __ASM("cpsie i"); //reenable irq
     return tasks[taskCount -1].taskId;
 }
 #endif
 // Create task using heap
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
+    __asm("cpsid i"); //disable irq
     tasks[taskCount].stackSize = stackSize;
     tasks[taskCount].priority = priority;
     strcpy(tasks[taskCount].taskName,name);
@@ -107,6 +111,7 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     softwareStackFrame.R11 = 11;
 	
     void * heap_ptr = malloc(stackSize);
+    tasks[taskCount].heapPtr = heap_ptr;
     heap_ptr += stackSize;
 
 
@@ -123,7 +128,38 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     
     
     taskCount++; 
+     __ASM("cpsie i"); //reenable irq
     return tasks[taskCount -1].taskId;
+}
+
+//delete dynamicly allocated task
+void taskDelete(taskid_t tid)
+{
+    if(tasks[tid].taskState == TaskSuspend)
+    {
+        return;
+    }
+    __asm("cpsid i"); //disable irq
+
+    //susped task so should not run
+    tasks[tid].taskState = TaskSuspend;//TODO: TaskDeleted
+
+ 
+
+    //free allocated memory
+    free(tasks[tid].heapPtr);
+
+    if(tid == nextTaskIndex)
+    {
+        //switch to next task
+        switchTask();
+        //Call SVC handler beacuse we do not need to switch context
+        //just load nextTask contex
+        __asm("SVC #0");
+    }
+
+
+    __ASM("cpsie i"); //reenable irq
 }
 
 
@@ -131,6 +167,13 @@ const char* return_task_name()
 {
     __asm("cpsid i"); //disable irq
     return tasks[nextTaskIndex].taskName;
+    __ASM("cpsie i"); //reenable irq
+}
+
+taskid_t getTaskId()
+{
+    __asm("cpsid i"); //disable irq
+    return nextTaskIndex;
     __ASM("cpsie i"); //reenable irq
 }
 
