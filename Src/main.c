@@ -63,12 +63,12 @@ static void MX_DMA_Init(void);
 /* USER CODE BEGIN 0 */
 Semaphore sem;
 int myInt = 0;
-taskid_t deletetask;
+taskid_t taskid1,taskid2;
 
 //fist thread
 static void thread_1(void){
 
-  deletetask = getTaskId();
+  taskid1 = getTaskId();
   //toggle blue LED every 200ms
   while (1)
   {
@@ -86,21 +86,13 @@ static void thread_2(void)
 {
   // char buffer[20];
   //toggle red LED every 200ms
-  uint32_t counter = HAL_GetTick();
+  taskid2 = getTaskId();
   while (1)
   {
     
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
 
     //test: delete another task and delete task currently running
-    if(HAL_GetTick() - counter > 2000)
-    {
-      taskDelete(deletetask);
-    }
-    if(HAL_GetTick() - counter > 5000)
-    {
-      taskDelete(getTaskId());
-    }
 
     // char buff[20];
     // strcpy(buff,return_task_name());
@@ -122,14 +114,23 @@ static void thread_3(void)
   while (1)
   {
 
+    if(HAL_GetTick() - counter > 3000 && run_once)
+    {
+      taskDelete(taskid1);
+      taskDelete(taskid2);
+
+      counter = HAL_GetTick();
+      run_once = false;
+    }
+
     // test: create task after deleting them
-    if(HAL_GetTick() - counter > 8000 && run_once)
+    if(HAL_GetTick() - counter > 3000 && !run_once)
     {
       TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
-
       TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,1);
 
-      run_once = false;
+      counter = HAL_GetTick();
+      run_once = true;
     }
 
     sem_wait(&sem);
@@ -178,6 +179,8 @@ int main(void)
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
   sem_init(&sem,1);
+
+  KernelInit();
 
   TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
 

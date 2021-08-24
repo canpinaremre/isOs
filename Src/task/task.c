@@ -30,13 +30,31 @@ static void idleTask()
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
     __asm("cpsid i"); //disable irq
-    tasks[taskCount].stackSize = stackSize;
-    tasks[taskCount].heapPtr = NULL;
-    tasks[taskCount].priority = priority;
-    strcpy(tasks[taskCount].taskName,name);
-    tasks[taskCount].taskId = (taskid_t)taskCount;
-    tasks[taskCount].taskState = TaskReady;
-    tasks[taskCount].delayUntil = 0;
+
+    uint32_t t_id = taskCount;
+    bool foundDeleted = false;
+    for(int i= 0; i < taskCount; i++)
+    {
+        if(tasks[i].taskState == TaskDeleted)
+        {
+            foundDeleted = true;
+            t_id = i;
+            break;
+        }
+    }
+
+    if(taskCount >= MAX_TASKS)
+    {
+        return MAX_TASKS;
+    }
+    
+    tasks[t_id].stackSize = stackSize;
+    tasks[t_id].heapPtr = NULL;
+    tasks[t_id].priority = priority;
+    strcpy(tasks[t_id].taskName,name);
+    tasks[t_id].taskId = (taskid_t)t_id;
+    tasks[t_id].taskState = TaskReady;
+    tasks[t_id].delayUntil = 0;
 
     struct HardwareStackFrame hardwareStackFrame;
     struct SoftwareStackFrame softwareStackFrame;
@@ -70,24 +88,44 @@ taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoin
     stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); 
     memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
     
-    tasks[taskCount].stackPointer = (uint32_t)stackPointer;
+    tasks[t_id].stackPointer = (uint32_t)stackPointer;
     
     
-    taskCount++; 
+    if(!foundDeleted){
+        taskCount++;
+    }
+
     __ASM("cpsie i"); //reenable irq
-    return tasks[taskCount -1].taskId;
+    return tasks[t_id].taskId;
 }
 #endif
 // Create task using heap
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
     __asm("cpsid i"); //disable irq
-    tasks[taskCount].stackSize = stackSize;
-    tasks[taskCount].priority = priority;
-    strcpy(tasks[taskCount].taskName,name);
-    tasks[taskCount].taskId = (taskid_t)taskCount;
-    tasks[taskCount].taskState = TaskReady;
-    tasks[taskCount].delayUntil = 0;
+    uint32_t t_id = taskCount;
+    bool foundDeleted = false;
+    for(int i= 0; i < taskCount; i++)
+    {
+        if(tasks[i].taskState == TaskDeleted)
+        {
+            foundDeleted = true;
+            t_id = i;
+            break;
+        }
+    }
+
+    if(taskCount >= MAX_TASKS)
+    {
+        return MAX_TASKS;
+    }
+
+    tasks[t_id].stackSize = stackSize;
+    tasks[t_id].priority = priority;
+    strcpy(tasks[t_id].taskName,name);
+    tasks[t_id].taskId = (taskid_t)t_id;
+    tasks[t_id].taskState = TaskReady;
+    tasks[t_id].delayUntil = 0;
 
     struct HardwareStackFrame hardwareStackFrame;
     struct SoftwareStackFrame softwareStackFrame;
@@ -111,7 +149,7 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     softwareStackFrame.R11 = 11;
 	
     void * heap_ptr = malloc(stackSize);
-    tasks[taskCount].heapPtr = heap_ptr;
+    tasks[t_id].heapPtr = heap_ptr;
     heap_ptr += stackSize;
 
 
@@ -124,31 +162,34 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     stackPointer -= sizeof(struct SoftwareStackFrame) / sizeof(uint32_t); 
     memcpy(stackPointer, &softwareStackFrame, sizeof(struct SoftwareStackFrame));
     
-    tasks[taskCount].stackPointer = (uint32_t)stackPointer;
+    tasks[t_id].stackPointer = (uint32_t)stackPointer;
     
-    
-    taskCount++; 
+    if(!foundDeleted){
+        taskCount++;
+    }
+     
      __ASM("cpsie i"); //reenable irq
-    return tasks[taskCount -1].taskId;
+    return tasks[t_id].taskId;
 }
 
 //delete dynamicly allocated task
 void taskDelete(taskid_t tid)
 {
-    if(tasks[tid].taskState == TaskSuspend)
+    if(tasks[tid].taskState == TaskDeleted || TaskEmpty)
     {
         return;
     }
     __asm("cpsid i"); //disable irq
 
     //susped task so should not run
-    tasks[tid].taskState = TaskSuspend;//TODO: TaskDeleted
+    tasks[tid].taskState = TaskDeleted;
 
  
 
     //free allocated memory
     free(tasks[tid].heapPtr);
 
+    // If we are deleting running task
     if(tid == nextTaskIndex)
     {
         //switch to next task
@@ -194,7 +235,15 @@ void taskDelay(uint32_t delayTime)
     switchTask();
     
 }
+#ifdef PRIORITY_SCHEDULER
+void switchTask(void)
+{
 
+}
+
+#endif
+
+#ifdef ROUND_ROBIN_SCHEDULER
 void switchTask(void)
 {
 	__asm("cpsid i"); //disable irq
@@ -243,9 +292,9 @@ void switchTask(void)
             }
     
         }
-        //If task is not blocked it should be suspended or ready
+        //If task is not blocked
         //schedule only if ready (not suspended)
-        else if(tasks[i].taskState != TaskSuspend)
+        else if(tasks[i].taskState == TaskReady)
         {
             switchIdleTask =false;
             if(tasks[i].priority > basePrio)
@@ -288,7 +337,7 @@ void switchTask(void)
     __ASM("cpsie i"); //reenable irq
     
 }
-
+#endif
 
 void TaskYield(void)
 {
@@ -356,6 +405,14 @@ void KernelStart(void)
     // This function should never return
     // We should never be here
     while(1);
+}
+
+void KernelInit(void)
+{
+    for(int i = 0; i < MAX_TASKS; i++)
+    {
+        tasks[i].taskState = TaskEmpty;
+    }
 }
 
 void SysTick_Handler(void)

@@ -5,9 +5,20 @@
 #include "stm32f3xx_it.h"
 #include "stm32f3xx_hal.h"
 #define USE_STACK_TASK
+//#define PRIORITY_SCHEDULER
 
 #ifndef MAX_TASKS
 #define MAX_TASKS 15
+#endif
+
+#ifndef ROUND_ROBIN_SCHEDULER
+# ifndef PRIORITY_SCHEDULER
+#define ROUND_ROBIN_SCHEDULER
+# endif
+#endif
+
+#ifdef ROUND_ROBIN_SCHEDULER
+#undef PRIORITY_SCHEDULER
 #endif
 
 #define DEFAULT_TASK_SIZE 512
@@ -46,10 +57,12 @@ struct SoftwareStackFrame
 };
 
 typedef enum{
+    TaskEmpty,
     TaskBlocked,
     TaskSuspend,
     TaskReady,
-    TaskRunning
+    TaskRunning,
+    TaskDeleted
 }taskState_t;
 
 typedef uint8_t taskid_t;
@@ -73,6 +86,7 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
 taskid_t getTaskId();
 void taskDelete(taskid_t tid);
 void KernelStart(void);
+void KernelInit(void);
 const char* return_task_name();
 void taskDelay(uint32_t delayTime);
 void switchTask(void);
