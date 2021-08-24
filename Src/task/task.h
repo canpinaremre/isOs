@@ -77,6 +77,9 @@ struct task
     uint32_t delayUntil;
     void * heapPtr;
     char taskName[20];
+    #ifdef USE_STACK_TASK
+    bool isStatic;
+    #endif
 };
 
 #ifdef USE_STACK_TASK

@@ -5,7 +5,7 @@ static struct task tasks[MAX_TASKS];
 static uint32_t taskCount = 0;
 static uint32_t nextTaskIndex = 0;
 static uint32_t idleTaskIndex = 0;
-
+static bool kernelStarted = false;
 struct task *currentTask = NULL;
 struct task *nextTask = NULL;
 
@@ -47,7 +47,8 @@ taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoin
     {
         return MAX_TASKS;
     }
-    
+
+    tasks[t_id].isStatic = true;
     tasks[t_id].stackSize = stackSize;
     tasks[t_id].heapPtr = NULL;
     tasks[t_id].priority = priority;
@@ -120,6 +121,9 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
         return MAX_TASKS;
     }
 
+    #ifdef USE_STACK_TASK
+    tasks[t_id].isStatic = false;
+    #endif
     tasks[t_id].stackSize = stackSize;
     tasks[t_id].priority = priority;
     strcpy(tasks[t_id].taskName,name);
@@ -175,6 +179,14 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
 //delete dynamicly allocated task
 void taskDelete(taskid_t tid)
 {
+    #ifdef USE_STACK_TASK
+    if(tasks[tid].isStatic == true)
+    {
+        //return errno
+        return;
+    }
+    #endif
+
     if(tasks[tid].taskState == TaskDeleted || TaskEmpty)
     {
         return;
@@ -400,6 +412,7 @@ void KernelStart(void)
     switchTask();
 
     //set SVC interrupt for first context switch
+    kernelStarted = true;
     __asm("SVC #0");
 
     // This function should never return
@@ -420,7 +433,10 @@ void SysTick_Handler(void)
     HAL_IncTick();
 
     //Switch task in every tick
-    switchTask();
+    if(kernelStarted)
+    {
+        switchTask();
+    }
     
 }
 

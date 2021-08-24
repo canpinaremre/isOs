@@ -118,7 +118,7 @@ static void thread_3(void)
     {
       taskDelete(taskid1);
       taskDelete(taskid2);
-
+      taskDelete(getTaskId());//test: It is a static thread should not delete
       counter = HAL_GetTick();
       run_once = false;
     }
