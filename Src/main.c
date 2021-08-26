@@ -68,7 +68,9 @@ taskid_t taskid1,taskid2;
 //fist thread
 static void thread_1(void){
 
+  enter_critical_section();
   taskid1 = getTaskId();
+  exit_critical_section();
   //toggle blue LED every 200ms
   while (1)
   {
@@ -86,7 +88,9 @@ static void thread_2(void)
 {
   // char buffer[20];
   //toggle red LED every 200ms
+  enter_critical_section();
   taskid2 = getTaskId();
+  exit_critical_section();
   while (1)
   {
     
@@ -133,9 +137,9 @@ static void thread_3(void)
       run_once = true;
     }
 
-    sem_wait(&sem);
-    myInt++;
-    sem_post(&sem);
+    // sem_wait(&sem);
+    // myInt++;
+    // sem_post(&sem);
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
     taskDelay(500);
   }
@@ -182,11 +186,11 @@ int main(void)
 
   KernelInit();
 
-  TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
+  TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,1);
 
-  TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,1);
+  TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,40);
 
-  TaskCreateStatic("task 3",DEFAULT_TASK_SIZE,thread_3,2);
+  TaskCreateStatic("task 3",DEFAULT_TASK_SIZE,thread_3,41);
 
   KernelStart();
   

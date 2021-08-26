@@ -4,6 +4,7 @@
 #include <string.h>
 #include "stm32f3xx_it.h"
 #include "stm32f3xx_hal.h"
+#include "prioq.h"
 #define USE_STACK_TASK
 //#define PRIORITY_SCHEDULER
 
@@ -65,7 +66,7 @@ typedef enum{
     TaskDeleted
 }taskState_t;
 
-typedef uint8_t taskid_t;
+typedef uint32_t taskid_t;
 
 struct task
 {
@@ -93,3 +94,7 @@ void KernelInit(void);
 const char* return_task_name();
 void taskDelay(uint32_t delayTime);
 void switchTask(void);
+void insert_queue(uint32_t pid,uint8_t prio);
+void checkBlockedTasks(void);
+void enter_critical_section(void);
+void exit_critical_section(void);

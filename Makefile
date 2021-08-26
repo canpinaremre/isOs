@@ -56,6 +56,7 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.c \
 Src/system_stm32f3xx.c \
 Src/task/task.c \
+Src/task/prioq.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
 

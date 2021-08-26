@@ -3,6 +3,7 @@
         "main.h": "c",
         "task.h": "c",
         "semaphore.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "type_traits": "c"
     }
 }

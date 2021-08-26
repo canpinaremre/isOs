@@ -1,6 +1,10 @@
 #include "task.h"
 
 static struct task tasks[MAX_TASKS];
+static struct prioq priority_queue[MAX_TASKS];
+static struct blockState block_queue[MAX_TASKS];
+static uint32_t queued_tasks_count = 0;
+static uint32_t queued_block_count = 0;
 
 static uint32_t taskCount = 0;
 static uint32_t nextTaskIndex = 0;
@@ -29,11 +33,11 @@ static void idleTask()
 #ifdef USE_STACK_TASK
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
-    __asm("cpsid i"); //disable irq
+    enter_critical_section();
 
     uint32_t t_id = taskCount;
     bool foundDeleted = false;
-    for(int i= 0; i < taskCount; i++)
+    for(int i= 0; i <= taskCount; i++)
     {
         if(tasks[i].taskState == TaskDeleted)
         {
@@ -96,17 +100,19 @@ taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoin
         taskCount++;
     }
 
-    __ASM("cpsie i"); //reenable irq
+    insert_queue(tasks[t_id].taskId,tasks[t_id].priority);
+
+    exit_critical_section();
     return tasks[t_id].taskId;
 }
 #endif
 // Create task using heap
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
 {
-    __asm("cpsid i"); //disable irq
+    enter_critical_section();
     uint32_t t_id = taskCount;
     bool foundDeleted = false;
-    for(int i= 0; i < taskCount; i++)
+    for(int i= 0; i <= taskCount; i++)
     {
         if(tasks[i].taskState == TaskDeleted)
         {
@@ -171,8 +177,10 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
     if(!foundDeleted){
         taskCount++;
     }
-     
-     __ASM("cpsie i"); //reenable irq
+
+    insert_queue(tasks[t_id].taskId,tasks[t_id].priority);
+
+    exit_critical_section();
     return tasks[t_id].taskId;
 }
 
@@ -191,9 +199,10 @@ void taskDelete(taskid_t tid)
     {
         return;
     }
-    __asm("cpsid i"); //disable irq
+    
+    enter_critical_section();
 
-    //susped task so should not run
+    //set task state as deleted
     tasks[tid].taskState = TaskDeleted;
 
  
@@ -211,54 +220,164 @@ void taskDelete(taskid_t tid)
         __asm("SVC #0");
     }
 
+    exit_critical_section();
+}
 
+void enter_critical_section(void)
+{
+    __ASM("cpsid i"); //disable irq
+}
+
+void exit_critical_section(void)
+{
     __ASM("cpsie i"); //reenable irq
 }
 
-
 const char* return_task_name()
 {
-    __asm("cpsid i"); //disable irq
     return tasks[nextTaskIndex].taskName;
-    __ASM("cpsie i"); //reenable irq
 }
 
 taskid_t getTaskId()
 {
-    __asm("cpsid i"); //disable irq
     return nextTaskIndex;
-    __ASM("cpsie i"); //reenable irq
 }
 
 
 void taskDelay(uint32_t delayTime)
-{
-    __asm("cpsid i"); //disable irq
-
+{   
+    enter_critical_section();
+    
     // Set task state as blocked
     tasks[nextTaskIndex].taskState = TaskBlocked;
 
     // Set delayUntil time so we can check if the task should run
     tasks[nextTaskIndex].delayUntil = HAL_GetTick() + delayTime;
 
-    __ASM("cpsie i"); //reenable irq
+    struct blockState item;
+    item.wakeUpTime = HAL_GetTick() + delayTime;
+    item.pid = nextTaskIndex;
+
+    insertMinHeap(block_queue,item,queued_block_count);
+    queued_block_count++;
+
+
+    exit_critical_section();
     
     // This task is not blocked. Need to switch task
     switchTask();
     
 }
+
+void checkBlockedTasks(void)
+{   
+    //if block queue is empty, return
+    if(queued_block_count == 0)
+    {
+        return;
+    }
+
+    uint32_t now = HAL_GetTick();
+
+    // check block time is passed or not
+    while(now >= peek_min(block_queue))
+    {
+        uint32_t pid = extract_min(block_queue,queued_block_count);
+        queued_block_count--;
+
+        struct prioq item;
+        item.prio = tasks[pid].priority;
+        item.pid = pid;
+        // task can be deleted or suspended.
+        // extract them too but do not queue
+        if(tasks[pid].taskState == TaskBlocked)
+        {
+            tasks[pid].taskState = TaskReady;
+            insertHeap(priority_queue,item,queued_tasks_count);
+            queued_tasks_count++;
+        }
+
+        // Check count before start loop again
+        if(queued_block_count == 0)
+        {
+            break;
+        }
+    }
+
+}
+
+#define PRIORITY_SCHEDULER
 #ifdef PRIORITY_SCHEDULER
 void switchTask(void)
 {
+    enter_critical_section();
 
+    // Currently running task is ready now
+    if(tasks[nextTaskIndex].taskState == TaskRunning)
+    {
+        // we will add this to the queue after setting nextTaskIndex
+        tasks[nextTaskIndex].taskState = TaskReady;
+    }
+    currentTask = nextTask;
+
+    // check if we should wake up any blocked task
+    checkBlockedTasks();
+
+    // Check if we have task in queue
+    if(queued_tasks_count > 0)
+    {
+        //extract task from queue and run
+        nextTaskIndex = extract_maximum(priority_queue,queued_tasks_count);
+        queued_tasks_count--;
+    }
+      
+    if(tasks[nextTaskIndex].taskState != TaskReady)
+    {
+        nextTaskIndex = idleTaskIndex;
+    }
+  
+    // If we are in same task (can be idle)
+    if(nextTaskIndex == currentTask->taskId)
+    {
+        //do not switch 
+        // do not add to queue
+        tasks[nextTaskIndex].taskState = TaskRunning;
+        nextTask = &tasks[nextTaskIndex];
+    }
+    else
+    {  
+        // add current task to queue if ready
+        if((currentTask->taskState == TaskReady) && (currentTask))
+        {   
+            struct prioq item;
+            item.prio = currentTask->priority;
+            item.pid = currentTask->taskId;
+
+            insertHeap(priority_queue,item,queued_tasks_count);
+            queued_tasks_count++;
+        }
+
+        nextTask = &tasks[nextTaskIndex];
+        //set interrupt to switch task
+        //if this is first task switch currentTask is NULL
+        //continue without interrupt SVC will handle the
+        //first contex switch
+        if(currentTask){
+            SCB->ICSR |= (1<<28);
+        }
+    }
+
+
+    exit_critical_section();
 }
 
 #endif
 
+#undef ROUND_ROBIN_SCHEDULER
 #ifdef ROUND_ROBIN_SCHEDULER
 void switchTask(void)
 {
-	__asm("cpsid i"); //disable irq
+	enter_critical_section();
 
 
 	// If current task is not idle task and
@@ -346,7 +465,7 @@ void switchTask(void)
         SCB->ICSR |= (1<<28);
     }
 
-    __ASM("cpsie i"); //reenable irq
+    exit_critical_section();
     
 }
 #endif
@@ -397,11 +516,18 @@ void PendSV_Handler(void)
     __asm("nop");
 }
 
+void insert_queue(uint32_t pid,uint8_t prio)
+{
+    struct prioq item;
+    item.prio = prio;
+    item.pid = pid;
+    insertHeap(priority_queue,item,queued_tasks_count);
+    queued_tasks_count++;
+}
 
 void KernelStart(void)
 {
     idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
-    tasks[idleTaskIndex].taskState = TaskSuspend; //do not get schedule like other tasks, NEVER resume
 
     // Set PendSV priority lower than SysTick
     // Because we need to switch task
