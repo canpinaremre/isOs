@@ -96,8 +96,6 @@ static void thread_2(void)
     
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
 
-    //test: delete another task and delete task currently running
-
     // char buff[20];
     // strcpy(buff,return_task_name());
     // uint16_t size = strlen(buff);
