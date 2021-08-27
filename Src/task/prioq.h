@@ -16,8 +16,8 @@ void increase_value (struct prioq arr[], int i, struct prioq val);
 
 struct blockState
 {
-    uint32_t pid;
-    uint32_t wakeUpTime;
+    uint32_t pid;           // task id
+    uint32_t wakeUpTime;    // task unblock time
 };
 
 void insertMinHeap(struct blockState arr[], struct blockState task,int n);

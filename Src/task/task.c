@@ -258,20 +258,20 @@ void taskDelay(uint32_t delayTime)
     item.wakeUpTime = HAL_GetTick() + delayTime;
     item.pid = nextTaskIndex;
 
+    // Insert to the block queue
     insertMinHeap(block_queue,item,queued_block_count);
     queued_block_count++;
 
-
     exit_critical_section();
     
-    // This task is not blocked. Need to switch task
+    // As this task is blocked now on, need to switch task
     switchTask();
     
 }
 
 void checkBlockedTasks(void)
 {   
-    //if block queue is empty, return
+    // If block queue is empty, return
     if(queued_block_count == 0)
     {
         return;
@@ -312,41 +312,75 @@ void switchTask(void)
 {
     enter_critical_section();
 
-    // Currently running task is ready now
+    // Check if current task is running. We can switch task from task delay
+    // or task delete.
     if(tasks[nextTaskIndex].taskState == TaskRunning)
     {
-        // we will add this to the queue after setting nextTaskIndex
+        // Set currently running task as ready
         tasks[nextTaskIndex].taskState = TaskReady;
     }
+
+    // Save currently running task's pointer
     currentTask = nextTask;
 
-    // check if we should wake up any blocked task
+    // Check blocked task
+    // if they should wake up, add them to the priority queue
     checkBlockedTasks();
 
-    // Check if we have task in queue
-    if(queued_tasks_count > 0)
+    // Check if we have any task in the priority queue
+    // We can use IF here but in rare cases queued task can be deleted 
+    // or suspeded. So we should switch to next ready task
+    while(queued_tasks_count > 0)
     {
-        //extract task from queue and run
+        // Extract pid from queue and set as nextTaskIndex
         nextTaskIndex = extract_maximum(priority_queue,queued_tasks_count);
         queued_tasks_count--;
+
+        // Task can be deleted or suspended after it is blocked
+        // If the task is not ready set nextTask as idle
+        // in case queued_tasks_count can be 0 now
+        if(tasks[nextTaskIndex].taskState != TaskReady)
+        {
+            nextTaskIndex = idleTaskIndex;
+        }
+        else
+        {
+            // If task is ready break the loop
+            break;
+        }
+
     }
-      
-    if(tasks[nextTaskIndex].taskState != TaskReady)
-    {
-        nextTaskIndex = idleTaskIndex;
+
+    // It is possible that only currently running task is ready
+    // and there are not any ready task
+    // in this case we do not want to switch to idle task
+    // Check if the next task is idle
+    if(nextTaskIndex == idleTaskIndex)
+    {   
+        // If then, check current task state
+        if(currentTask->taskState == TaskReady)
+        {
+            // Do not switch to idle from current task
+            nextTaskIndex = currentTask->taskId;
+        }
     }
-  
+    
+    // In this point nextTaskIndex already determined
+    // We will check if we should switch task or continue with the same task
+
     // If we are in same task (can be idle)
     if(nextTaskIndex == currentTask->taskId)
     {
-        //do not switch 
-        // do not add to queue
+        // Do not switch and
+        // do not add to the queue
+        // Just as state as running again
         tasks[nextTaskIndex].taskState = TaskRunning;
         nextTask = &tasks[nextTaskIndex];
     }
+    // We are switching to diffrent task now
     else
     {  
-        // add current task to queue if ready
+        // Reqeueue current task if it is ready and not NULL
         if((currentTask->taskState == TaskReady) && (currentTask))
         {   
             struct prioq item;
@@ -357,11 +391,14 @@ void switchTask(void)
             queued_tasks_count++;
         }
 
+        // Set nextTask pointer and set state as running
         nextTask = &tasks[nextTaskIndex];
-        //set interrupt to switch task
-        //if this is first task switch currentTask is NULL
-        //continue without interrupt SVC will handle the
-        //first contex switch
+        tasks[nextTaskIndex].taskState = TaskRunning;
+
+        // Set interrupt to switch task
+        // If this is first task switch currentTask is NULL
+        // continue without interrupt, SVC will handle the
+        // first contex switch
         if(currentTask){
             SCB->ICSR |= (1<<28);
         }
@@ -534,10 +571,10 @@ void KernelStart(void)
     // after Systick return we should enter to contex switching
     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
 
-    //swith to first task with highest priority
+    // Swith to first task with highest priority
     switchTask();
 
-    //set SVC interrupt for first context switch
+    // Set SVC interrupt for first context switch
     kernelStarted = true;
     __asm("SVC #0");
 
@@ -558,7 +595,7 @@ void SysTick_Handler(void)
 {
     HAL_IncTick();
 
-    //Switch task in every tick
+    // Switch task in every tick
     if(kernelStarted)
     {
         switchTask();
