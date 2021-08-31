@@ -5,8 +5,13 @@
 #include "stm32f3xx_it.h"
 #include "stm32f3xx_hal.h"
 #include "prioq.h"
+
+// config defines:
 #define USE_STACK_TASK
-//#define PRIORITY_SCHEDULER
+//#define WQUEUE
+#define PRIORITY_SCHEDULER
+// end of config defines
+
 
 #ifndef MAX_TASKS
 #define MAX_TASKS 15
@@ -94,7 +99,10 @@ void KernelInit(void);
 const char* return_task_name();
 void taskDelay(uint32_t delayTime);
 void switchTask(void);
-void insert_queue(uint32_t pid,uint8_t prio);
-void checkBlockedTasks(void);
 void enter_critical_section(void);
 void exit_critical_section(void);
+
+#ifdef PRIORITY_SCHEDULER
+void insert_queue(uint32_t pid,uint8_t prio);
+void checkBlockedTasks(void);
+#endif

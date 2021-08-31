@@ -1,10 +1,13 @@
 #include "task.h"
 
 static struct task tasks[MAX_TASKS];
+
+#ifdef PRIORITY_SCHEDULER
 static struct prioq priority_queue[MAX_TASKS];
 static struct blockState block_queue[MAX_TASKS];
 static uint32_t queued_tasks_count = 0;
 static uint32_t queued_block_count = 0;
+#endif
 
 static uint32_t taskCount = 0;
 static uint32_t nextTaskIndex = 0;
@@ -29,6 +32,15 @@ static void idleTask()
 {
     while (1);  
 }
+
+#ifdef WQUEUE
+static void wq_scheduler()
+{
+
+
+}
+
+#endif
 
 #ifdef USE_STACK_TASK
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority)
@@ -100,7 +112,9 @@ taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoin
         taskCount++;
     }
 
+    #ifdef PRIORITY_SCHEDULER
     insert_queue(tasks[t_id].taskId,tasks[t_id].priority);
+    #endif
 
     exit_critical_section();
     return tasks[t_id].taskId;
@@ -178,7 +192,9 @@ taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), 
         taskCount++;
     }
 
+    #ifdef PRIORITY_SCHEDULER
     insert_queue(tasks[t_id].taskId,tasks[t_id].priority);
+    #endif
 
     exit_critical_section();
     return tasks[t_id].taskId;
@@ -243,7 +259,7 @@ taskid_t getTaskId()
     return nextTaskIndex;
 }
 
-
+#ifdef PRIORITY_SCHEDULER
 void taskDelay(uint32_t delayTime)
 {   
     enter_critical_section();
@@ -306,8 +322,15 @@ void checkBlockedTasks(void)
 
 }
 
-#define PRIORITY_SCHEDULER
-#ifdef PRIORITY_SCHEDULER
+void insert_queue(uint32_t pid,uint8_t prio)
+{
+    struct prioq item;
+    item.prio = prio;
+    item.pid = pid;
+    insertHeap(priority_queue,item,queued_tasks_count);
+    queued_tasks_count++;
+}
+
 void switchTask(void)
 {
     enter_critical_section();
@@ -410,102 +433,52 @@ void switchTask(void)
 
 #endif
 
-#undef ROUND_ROBIN_SCHEDULER
 #ifdef ROUND_ROBIN_SCHEDULER
 void switchTask(void)
 {
 	enter_critical_section();
 
+    currentTask = nextTask;
 
-	// If current task is not idle task and
-    // task is not blocked 
-    // we need to return this task. So set state as Ready
+    // Set currently running task as ready
     if(tasks[nextTaskIndex].taskState == TaskRunning)
     {
         tasks[nextTaskIndex].taskState = TaskReady;
     }
-        
-    int basePrio = -1;
 
-    currentTask = nextTask;
-
-    bool switchIdleTask =true;
-
-    uint32_t index = nextTaskIndex;
-
-    // Search through all tasks
-    for(uint32_t i = index;;){
-        i++;
-        i %= taskCount;
-
-        if(i == index)
-            //end of tasks
-            //If we can not find nextTask,
-            //switchIdleTask is true and switch to it.
+    // Search for the next ready task. 
+    // In round-robin we do not want to lose time in idle
+    while(1)
+    {
+        nextTaskIndex++;
+        nextTaskIndex %= taskCount;
+        if(tasks[nextTaskIndex].taskState == TaskReady && nextTaskIndex != idleTaskIndex)
+        {
             break;
+        }
+    }
 
-        //If task is blocked check if we pass delayUntil time.
-        //If so check priority and set as nextTask.
-        if(tasks[i].taskState == TaskBlocked)
-        {
-            if(tasks[i].delayUntil <= HAL_GetTick())
-            {
-                switchIdleTask =false;
-                
-                if(tasks[i].priority > basePrio)
-                {
-                    basePrio = tasks[i].priority;
-                    nextTaskIndex = i;
-                }
-            }
+    // Set selected task as running
+    tasks[nextTaskIndex].taskState = TaskRunning;
+    // Set pointer for task switching 
+    nextTask = &tasks[nextTaskIndex];
+
+    // Switch if this is not first task switch
+    // and if we are not in the same task
+    if(currentTask && currentTask != nextTask){
+       SCB->ICSR |= (1<<28);
+    }
     
-        }
-        //If task is not blocked
-        //schedule only if ready (not suspended)
-        else if(tasks[i].taskState == TaskReady)
-        {
-            switchIdleTask =false;
-            if(tasks[i].priority > basePrio)
-            {
-                basePrio = tasks[i].priority;
-                nextTaskIndex = i;
-            }
-        }
-    }
-    // All tasks are blocked or suspended so switch to idle task
-    if(switchIdleTask){
-        nextTask = &tasks[idleTaskIndex];
-        nextTaskIndex = idleTaskIndex;
-
-        // If current task is the only task ready,
-        // do not switch to idle
-        // continue with current task
-        if(currentTask->taskState == TaskReady)
-        {
-            nextTask = currentTask;
-            nextTaskIndex = currentTask->taskId;
-            tasks[nextTaskIndex].taskState = TaskRunning;
-        }
-    }
-    // Switch to next task
-    else{
-        tasks[nextTaskIndex].taskState = TaskRunning;
-        nextTask = &tasks[nextTaskIndex];
-    }
-
-    // If we are in the same task and
-    // do not switch.
-    // If this is the first taskSwitch and currentTask is NULL
-    // continue, SVC_Handler will take care of the first contex switch
-    if((nextTask != currentTask) && (currentTask)){
-        //Set PendSV interrupt for contex switching.
-        SCB->ICSR |= (1<<28);
-    }
-
     exit_critical_section();
     
 }
-#endif
+
+void taskDelay(uint32_t delayTime)
+{
+    HAL_Delay(delayTime);
+}
+
+#endif 
 
 void TaskYield(void)
 {
@@ -553,14 +526,7 @@ void PendSV_Handler(void)
     __asm("nop");
 }
 
-void insert_queue(uint32_t pid,uint8_t prio)
-{
-    struct prioq item;
-    item.prio = prio;
-    item.pid = pid;
-    insertHeap(priority_queue,item,queued_tasks_count);
-    queued_tasks_count++;
-}
+
 
 void KernelStart(void)
 {
