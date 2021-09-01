@@ -350,6 +350,10 @@ void switchTask(void)
     // if they should wake up, add them to the priority queue
     checkBlockedTasks();
 
+    if(queued_tasks_count == 0)
+    {
+        nextTaskIndex = idleTaskIndex;
+    }
     // Check if we have any task in the priority queue
     // We can use IF here but in rare cases queued task can be deleted 
     // or suspeded. So we should switch to next ready task
@@ -535,7 +539,7 @@ void KernelStart(void)
     // Set PendSV priority lower than SysTick
     // Because we need to switch task
     // after Systick return we should enter to contex switching
-    HAL_NVIC_SetPriority(PendSV_IRQn, 15, 2);
+    HAL_NVIC_SetPriority(PendSV_IRQn, 15, 15);
 
     // Swith to first task with highest priority
     switchTask();

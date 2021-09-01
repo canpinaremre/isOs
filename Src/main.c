@@ -25,6 +25,7 @@
 #include "task/task.h"
 #include "semaphore.h"
 #include <stdio.h>
+#include "isoShell/isoShell.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -144,7 +145,16 @@ static void thread_3(void)
   
 }
 
+static void isoShell(void)
+{
+  isoShell_init(&huart3);
+  while(true)
+  {
+    isoShell_main();
 
+    taskDelay(15);
+  }
+}
 
 
 /* USER CODE END 0 */
@@ -183,6 +193,7 @@ int main(void)
   sem_init(&sem,1);
 
   KernelInit();
+  TaskCreate("isoShell",DEFAULT_TASK_SIZE,isoShell,100);
 
   TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,1);
 
