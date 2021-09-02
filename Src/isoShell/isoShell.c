@@ -1,4 +1,5 @@
 #include "isoShell.h"
+#include "apps/app_test/app_test.h"
 
 static uint8_t rxBuffer;
 static uint8_t dmabuff[10];
@@ -81,6 +82,14 @@ void handleCommand(char *cmd)
     else if (!strcmp("help",cmd))
     {
         printHelp();
+    }
+    else if (!strcmp("test",cmd))
+    {
+        int ret = app_test_main(10);
+        dmabuff[0] = ret;
+        // char res[] = "Result :";
+        // strncat(res)
+        // shellPrint("Result :");
     }
     else
     {

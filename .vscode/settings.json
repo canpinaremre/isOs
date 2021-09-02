@@ -4,6 +4,8 @@
         "task.h": "c",
         "semaphore.h": "c",
         "stdio.h": "c",
-        "type_traits": "c"
+        "type_traits": "c",
+        "app_test.h": "c",
+        "stm32f3xx_hal.h": "c"
     }
 }
