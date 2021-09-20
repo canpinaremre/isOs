@@ -64,3 +64,35 @@ uint32_t dequeue(struct queue *q)
     q->tail->next = NULL;
     return ret;
 }
+
+void enqueue_after(struct node *node, uint32_t new_data)
+{
+    struct node* new_node = new struct node;
+    new_node->data = new_data;
+
+    new_node->prev = node;
+    new_node->next = node->next;
+    node->next->prev = new_node;
+    node->next = new_node;
+
+}
+
+uint32_t dequeue_node(struct node *node)
+{
+    uint32_t ret = -1;
+
+    if(!node)
+    {
+        return ret;
+    }
+
+    ret = node->data;
+
+    node->prev->next = node->next;
+    node->next->prev = node->prev;
+    free(node);
+
+
+
+    return ret;
+}
