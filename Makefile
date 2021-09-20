@@ -57,6 +57,7 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.c \
 Src/system_stm32f3xx.c \
 Src/task/task.c \
 Src/task/prioq.c \
+Src/task/queue.c \
 Src/isoShell/isoShell.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
@@ -120,8 +121,7 @@ C_INCLUDES =  \
 -IDrivers/STM32F3xx_HAL_Driver/Inc \
 -IDrivers/STM32F3xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F3xx/Include \
--IDrivers/CMSIS/Include \
--ISrc/apps/app_test
+-IDrivers/CMSIS/Include 
 
 
 # compile gcc flags
