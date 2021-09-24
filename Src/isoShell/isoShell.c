@@ -85,11 +85,10 @@ void handleCommand(char *cmd)
     }
     else if (!strcmp("test",cmd))
     {
-        //int ret = app_test_main(10);
-        //dmabuff[0] = ret;
-        // char res[] = "Result :";
-        // strncat(res)
-        // shellPrint("Result :");
+        int ret = app_test_main(10);
+        char res[] = "Result :";
+        sprintf(res, "%d", ret);
+        shellPrint(res);
     }
     else
     {

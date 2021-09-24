@@ -3,7 +3,7 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
-
+#include "app_test.h"
 
 
 #define MAX_CMD_LENGHT 50

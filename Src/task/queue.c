@@ -67,7 +67,7 @@ uint32_t dequeue(struct queue *q)
 
 void enqueue_after(struct node *node, uint32_t new_data)
 {
-    struct node* new_node = new struct node;
+    struct node* new_node = (struct node *)malloc(sizeof(struct node));
     new_node->data = new_data;
 
     new_node->prev = node;

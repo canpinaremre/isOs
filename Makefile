@@ -59,6 +59,7 @@ Src/task/task.c \
 Src/task/prioq.c \
 Src/task/queue.c \
 Src/isoShell/isoShell.c \
+Src/apps/app_test/app_test_main.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
 
