@@ -2,7 +2,7 @@
 
 int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
 {
-
+    int ret;
     if(!strcmp("help",argv[0]))
     {
         shellPrint("**************");
@@ -14,7 +14,9 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
     }
     else if(!strcmp("app_test",argv[0]))
     {
-        shellPrint("app test in action TODO:");
+        shellPrint("app test in action");
+        ret = app_test_main();
+        return ret;
     }
     else if(!strcmp("hello",argv[0]))
     {
