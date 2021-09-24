@@ -1,3 +1,6 @@
+#define MAX_CMD_LENGHT 50
+#define MAX_CMD_ARG 5
+
 #pragma once
 
 #include <stdint.h>
@@ -5,10 +8,10 @@
 #include "main.h"
 #include <stdio.h>
 #include <string.h>
-#include "app_test.h"
+#include "app.h"
 
 
-#define MAX_CMD_LENGHT 50
+
 
 void isoShell_main();
 void isoShell_init(UART_HandleTypeDef *uartHandle);

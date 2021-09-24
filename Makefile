@@ -39,7 +39,8 @@ ISOS = \
 Src/isos/task.c \
 Src/isos/prioq.c \
 Src/isos/queue.c \
-Src/isos/isoShell.c
+Src/isos/isoShell.c \
+Src/isos/app_shell.c
 
 APPS = \
 Src/apps/app_test/app_test_main.c

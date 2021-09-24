@@ -83,18 +83,45 @@ void handleCommand(char *cmd)
     {
         printHelp();
     }
-    else if (!strcmp("test",cmd))
-    {
-        int ret = app_test_main(99);
-        char res[] = "Result :";
-        sprintf(res, "%d", ret);
-        shellPrint(res);
-    }
     else
     {
-        shellPrint("Unknown Command. Try \"help\" ");
-    }
+        char * token = strtok(cmd, " ");
+        int argc = 0;
+        char argv[MAX_CMD_ARG][MAX_CMD_LENGHT];
+        memset(argv, 0, sizeof(argv));
+        if(!strcmp("app",token))
+        {
+           while (token != NULL) 
+           {
+                token = strtok(NULL, " ");
+                if(argc > MAX_CMD_ARG)
+                {
+                   shellPrint("Error: Too Many Arguments.");
+                   return;
+                }
+                if(token)
+                {
+                    strncat(argv[argc], token, strlen(token));
+                }
+               argc++;  
+            }
+            argc--;
+            if(!argc)
+            {
+                shellPrint("Missing arguments. Try \"app help\" ");
+            }
+            
+            //Handle with app_shell from here
+            int ret = handle_app_command(argc,argv);
+            if(ret == 0) return;
+            else shellPrint("App returned with error");
 
+        }
+        else
+        {
+            shellPrint("Unknown Command. Try \"help\" ");
+        }
+    }
 }
 
 void shellPrint(const char *val)
@@ -108,7 +135,9 @@ void printHelp(void)
 {   shellPrint(" ");
     shellPrint("********************************");
     shellPrint("isoShell Usage:");
-    shellPrint("help:       This page");
-    shellPrint("Hello:      Prints \"Hi!\"");    
+    shellPrint("help:               This page");
+    shellPrint("Hello:              Prints \"Hi!\"");
+    shellPrint("app $app_name:      Start app $app_name");
+    shellPrint("app help:           See apps");            
     shellPrint("********************************");
 }
