@@ -22,10 +22,7 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-#include "task/task.h"
-#include "semaphore.h"
-#include <stdio.h>
-#include "isoShell/isoShell.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -62,88 +59,18 @@ static void MX_DMA_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-Semaphore sem;
-int myInt = 0;
-taskid_t taskid1,taskid2;
 
-//fist thread
 static void thread_1(void){
 
-  enter_critical_section();
-  taskid1 = getTaskId();
-  exit_critical_section();
   //toggle blue LED every 200ms
   while (1)
   {
-    sem_wait(&sem);
-    //HAL_Delay(1000);
-    myInt++;
-    sem_post(&sem);
     HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_7);
     taskDelay(50);
   }
   
 }
 
-static void thread_2(void)
-{
-  // char buffer[20];
-  //toggle red LED every 200ms
-  enter_critical_section();
-  taskid2 = getTaskId();
-  exit_critical_section();
-  while (1)
-  {
-    
-    HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
-
-    // char buff[20];
-    // strcpy(buff,return_task_name());
-    // uint16_t size = strlen(buff);
-    // __ASM("cpsid i");
-	  // HAL_UART_Transmit(&huart3, (uint8_t *)buff, size,1);
-    // __ASM("cpsie i");
-
-    taskDelay(500);
-  }
-  
-}
-
-static void thread_3(void)
-{
-  uint32_t counter = HAL_GetTick();
-  bool run_once = true;
-  //toggle green every 200ms
-  while (1)
-  {
-
-    if(HAL_GetTick() - counter > 3000 && run_once)
-    {
-      taskDelete(taskid1);
-      taskDelete(taskid2);
-      taskDelete(getTaskId());//test: It is a static thread should not delete
-      counter = HAL_GetTick();
-      run_once = false;
-    }
-
-    // test: create task after deleting them
-    if(HAL_GetTick() - counter > 3000 && !run_once)
-    {
-      TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,0);
-      TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,1);
-
-      counter = HAL_GetTick();
-      run_once = true;
-    }
-
-    // sem_wait(&sem);
-    // myInt++;
-    // sem_post(&sem);
-    HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
-    taskDelay(500);
-  }
-  
-}
 
 static void isoShell(void)
 {
@@ -190,16 +117,12 @@ int main(void)
   MX_USART3_UART_Init();
   MX_DMA_Init();
   /* USER CODE BEGIN 2 */
-  sem_init(&sem,1);
+
 
   KernelInit();
-  TaskCreate("isoShell",DEFAULT_TASK_SIZE,isoShell,100);
+  TaskCreateStatic("isoShell",DEFAULT_TASK_SIZE,isoShell,99);
 
-  TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,1);
-
-  TaskCreate("red led",DEFAULT_TASK_SIZE,thread_2,40);
-
-  TaskCreateStatic("task 3",DEFAULT_TASK_SIZE,thread_3,41);
+  TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,100);
 
   KernelStart();
   

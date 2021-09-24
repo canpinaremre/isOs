@@ -34,6 +34,16 @@ BUILD_DIR = build
 ######################################
 # source
 ######################################
+
+ISOS = \
+Src/isos/task.c \
+Src/isos/prioq.c \
+Src/isos/queue.c \
+Src/isos/isoShell.c
+
+APPS = \
+Src/apps/app_test/app_test_main.c
+
 # C sources
 C_SOURCES =  \
 Src/main.c \
@@ -55,13 +65,10 @@ Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_i2c_ex.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_exti.c \
 Src/system_stm32f3xx.c \
-Src/task/task.c \
-Src/task/prioq.c \
-Src/task/queue.c \
-Src/isoShell/isoShell.c \
-Src/apps/app_test/app_test_main.c \
 Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart.c \
-Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c
+Drivers/STM32F3xx_HAL_Driver/Src/stm32f3xx_hal_uart_ex.c \
+$(ISOS) \
+$(APPS) 
 
 # ASM sources
 ASM_SOURCES =  \
@@ -122,7 +129,9 @@ C_INCLUDES =  \
 -IDrivers/STM32F3xx_HAL_Driver/Inc \
 -IDrivers/STM32F3xx_HAL_Driver/Inc/Legacy \
 -IDrivers/CMSIS/Device/ST/STM32F3xx/Include \
--IDrivers/CMSIS/Include 
+-IDrivers/CMSIS/Include \
+-IInc/isos \
+-IInc/apps
 
 
 # compile gcc flags

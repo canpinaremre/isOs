@@ -85,7 +85,7 @@ void handleCommand(char *cmd)
     }
     else if (!strcmp("test",cmd))
     {
-        int ret = app_test_main(10);
+        int ret = app_test_main(99);
         char res[] = "Result :";
         sprintf(res, "%d", ret);
         shellPrint(res);

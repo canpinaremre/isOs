@@ -32,7 +32,10 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "task.h"
+//#include "semaphore.h"
+#include <stdio.h>
+#include "isoShell.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
