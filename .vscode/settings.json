@@ -8,6 +8,7 @@
         "app_test.h": "c",
         "stm32f3xx_hal.h": "c",
         "isoshell.h": "c",
-        "app.h": "c"
+        "app.h": "c",
+        "cpp_example.h": "c"
     }
 }

@@ -1,7 +1,6 @@
 
 #include "app_test.h"
-#include "task.h"
-#include "isoShell.h"
+
 
 static bool task_running = false;
 static taskid_t taskid;

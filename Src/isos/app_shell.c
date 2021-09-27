@@ -11,6 +11,7 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
         shellPrint("  ");
         shellPrint(" app_test:            test application ");
         shellPrint(" hello:               Hello from app ");
+        shellPrint(" led_example:         Blinky (Arg: delay time) ");
         //TODO: print list of apps
         shellPrint("**************");
         return 0;
@@ -18,6 +19,11 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
     else if(!strcmp("app_test",argv[0]))
     {
         ret = app_test_main(argc,argv);
+        return ret;
+    }
+    else if(!strcmp("led_example",argv[0]))
+    {
+        ret = led_example_main(argc,argv);
         return ret;
     }
     else if(!strcmp("hello",argv[0]))

@@ -43,7 +43,8 @@ Src/isos/isoShell.c \
 Src/isos/app_shell.c
 
 APPS = \
-Src/apps/app_test/app_test_main.c
+Src/apps/app_test/app_test_main.c \
+Src/apps/led_example/led_example_main.c
 
 # C sources
 C_SOURCES =  \
