@@ -1,52 +1,53 @@
 #include "isoShell.h"
 
 
-static uint8_t rxBuffer;
-static uint8_t dmabuff[10];
 uint8_t enter[] = "\r\nisoShell-> ";
+char errTooLong[] = "\r\nisoShell-> Command Too Long!";
 static uint8_t cmdBuffer[MAX_CMD_LENGHT];
 static uint8_t command[MAX_CMD_LENGHT];
 static uint8_t cmdPtr = 0;
 static UART_HandleTypeDef *uart_handle;
 
-void isoShell_main()
+void isoShell_main(uint8_t rxBuffer[4])
 {
 
-    rxBuffer = dmabuff[0];
-    if(rxBuffer != 0)
+    // TODO: up-down arrow using stack to recover all commands
+    if(rxBuffer[0] != 0)
     {
-        if(rxBuffer == '\r')
+        if(rxBuffer[0] == '\r')
         {
             handleInput(cmdBuffer);
         }
-        else if(rxBuffer == 127)//delete
+        else if((rxBuffer[0] == 127)&&(cmdPtr))//delete
         {
-            // Invalid input for now
+            // TODO: Try with no newline
+            enter_critical_section();
+            HAL_UART_Transmit(uart_handle,enter,sizeof(enter),15);
+            cmdPtr--;
+            HAL_UART_Transmit(uart_handle,&cmdBuffer[0],cmdPtr,10);
+            exit_critical_section();
         }
-        else if(rxBuffer < 32 || rxBuffer > 126)
+        else if(rxBuffer[0] < 32 || rxBuffer[0] > 126)
         {
             // Invalid
-            rxBuffer = 0;
-            dmabuff[0] = 0;
+            rxBuffer[0] = 0;
         }
         else
         {   
-            cmdBuffer[cmdPtr] = rxBuffer;
+            cmdBuffer[cmdPtr] = rxBuffer[0];
             cmdPtr++;
+            
+            enter_critical_section();
+            HAL_UART_Transmit(uart_handle,&rxBuffer[0],1,5);
+            exit_critical_section();
+
             if(cmdPtr == MAX_CMD_LENGHT)
             {
-                //TODO: too long error
+                shellPrint(errTooLong);
                 cmdPtr = 0;
             }
-            enter_critical_section();
-            HAL_UART_Transmit(uart_handle,&rxBuffer,1,5);
-            exit_critical_section();
         }
 
-        enter_critical_section();
-        dmabuff[0] = 0;
-        HAL_UART_Receive_DMA(uart_handle,dmabuff,10);
-        exit_critical_section();
     }
     
 
@@ -56,7 +57,7 @@ void isoShell_init(UART_HandleTypeDef *uartHandle)
 {
     uart_handle = uartHandle;
     shellPrint("Welcome to isoShell!");
-    HAL_UART_Receive_DMA(uart_handle,dmabuff,1);
+    //HAL_UART_Receive_DMA(uart_handle,dmabuff,1);
 }
 
 void handleInput(uint8_t *cmd)
@@ -128,7 +129,7 @@ void handleCommand(char *cmd)
     }
 }
 
-void shellPrint(const char *val)
+void shellPrint(char *val)
 {
     enter_critical_section();
     HAL_UART_Transmit(uart_handle,enter,sizeof(enter),sizeof(enter));

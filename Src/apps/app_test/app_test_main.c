@@ -4,35 +4,78 @@
 #include "isoShell.h"
 
 static bool task_running = false;
+static taskid_t taskid;
 
 static void app_test_thread(void)
 {
-    // int counter = 0;
+    shellPrint("app_test Task Started!");
+    int counter = 0;
+    char sendBuffer[60];
     while(1)
     {
-        // counter++;
-        // char str[20];
-        // sprintf(str, "Counter = %d", counter);
-        // shellPrint("app_test_thread running!");
-        // shellPrint(str);
-        taskDelay(500);
+        counter++;
+
+        sprintf(sendBuffer, "app_test_thread running! \n\r Counter: %d",counter);
+	    shellPrint(sendBuffer);
+
+
+        taskDelay(1500);
     }
 
 }
 
 
-int app_test_main()
+int app_test_main(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
 {
-
-    if(task_running)
+    if(argc > 1)
     {
-        shellPrint("Task Already Running!");
-        return -1;
+        if(!strcmp("start",argv[1]))
+        {
+            if(task_running)
+            {
+                shellPrint("Task Already Running!");
+                return -1;
+            }
+            else
+            {   
+                task_running = true;
+                taskid = TaskCreate("app_test",1024,app_test_thread,99);
+                return 0;
+            }
+        }
+        else if(!strcmp("stop",argv[1]))
+        {
+            if(!task_running)
+            {
+                shellPrint("Task Not Running!");
+                return -1;
+            }
+            else
+            {
+                taskDelete(taskid);
+                shellPrint("Task Stopped!");
+                task_running = false;
+                return 0;
+            }
+        }
+        else if(!strcmp("help",argv[1]))
+        {
+            
+            shellPrint("Commands: help, start, stop");
+
+            return 0;
+            
+        }
+        else
+        {
+            shellPrint("Command not found! try \"help\"");
+            return -1;
+        }
     }
     else
-    {   
-        task_running = true;
-        TaskCreate("app_test",512,app_test_thread,99);
+    {
+        shellPrint("Test Application Missing Arguments!");
+        return -1;
     }
     
     return 0;

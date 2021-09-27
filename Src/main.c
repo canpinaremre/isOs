@@ -41,7 +41,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 UART_HandleTypeDef huart3;
-DMA_HandleTypeDef hdma_usart3_rx;
 
 /* USER CODE BEGIN PV */
 
@@ -51,7 +50,6 @@ DMA_HandleTypeDef hdma_usart3_rx;
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_USART3_UART_Init(void);
-static void MX_DMA_Init(void);
 /* USER CODE BEGIN PFP */
 
 
@@ -71,17 +69,7 @@ static void thread_1(void){
   
 }
 
-
-static void isoShell(void)
-{
-  isoShell_init(&huart3);
-  while(true)
-  {
-    isoShell_main();
-
-    taskDelay(15);
-  }
-}
+uint8_t shell_rxBuffer[4] = {0};
 
 
 /* USER CODE END 0 */
@@ -115,12 +103,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_USART3_UART_Init();
-  MX_DMA_Init();
   /* USER CODE BEGIN 2 */
 
 
   KernelInit();
-  TaskCreateStatic("isoShell",DEFAULT_TASK_SIZE,isoShell,5);
+
+  isoShell_init(&huart3);
+  HAL_UART_Receive_IT(&huart3, shell_rxBuffer, 1);
 
   TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,100);
 
@@ -218,22 +207,6 @@ static void MX_USART3_UART_Init(void)
 }
 
 /**
-  * Enable DMA controller clock
-  */
-static void MX_DMA_Init(void)
-{
-
-  /* DMA controller clock enable */
-  __HAL_RCC_DMA1_CLK_ENABLE();
-
-  /* DMA interrupt init */
-  /* DMA1_Channel3_IRQn interrupt configuration */
-  HAL_NVIC_SetPriority(DMA1_Channel3_IRQn, 0, 0);
-  HAL_NVIC_EnableIRQ(DMA1_Channel3_IRQn);
-
-}
-
-/**
   * @brief GPIO Initialization Function
   * @param None
   * @retval None
@@ -262,6 +235,12 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_UART_RxCpltCallback(UART_HandleTypeDef *huart)
+{
+  isoShell_main(shell_rxBuffer);
+  HAL_UART_Receive_IT(&huart3, shell_rxBuffer, 1);
+}
 
 /* USER CODE END 4 */
 

@@ -36,6 +36,7 @@ extern "C" {
 //#include "semaphore.h"
 #include <stdio.h>
 #include "isoShell.h"
+#include "apps/app_test.h"
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
