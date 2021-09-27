@@ -120,7 +120,7 @@ int main(void)
 
 
   KernelInit();
-  TaskCreateStatic("isoShell",DEFAULT_TASK_SIZE,isoShell,99);
+  TaskCreateStatic("isoShell",DEFAULT_TASK_SIZE,isoShell,5);
 
   TaskCreate("blue led",DEFAULT_TASK_SIZE,thread_1,100);
 

@@ -38,13 +38,15 @@ void isoShell_main()
                 //TODO: too long error
                 cmdPtr = 0;
             }
-
+            enter_critical_section();
             HAL_UART_Transmit(uart_handle,&rxBuffer,1,5);
+            exit_critical_section();
         }
 
-
+        enter_critical_section();
         dmabuff[0] = 0;
         HAL_UART_Receive_DMA(uart_handle,dmabuff,10);
+        exit_critical_section();
     }
     
 
@@ -73,7 +75,9 @@ void handleCommand(char *cmd)
 {
     if(cmdPtr == 0)
     {
+        enter_critical_section();
         HAL_UART_Transmit(uart_handle,enter,sizeof(enter),15);
+        exit_critical_section();
     }
     else if (!strcmp("Hello",cmd))
     {
@@ -126,13 +130,15 @@ void handleCommand(char *cmd)
 
 void shellPrint(const char *val)
 {
+    enter_critical_section();
     HAL_UART_Transmit(uart_handle,enter,sizeof(enter),sizeof(enter));
     HAL_UART_Transmit(uart_handle,(uint8_t *)val,strlen(val),strlen(val));
     HAL_UART_Transmit(uart_handle,enter,sizeof(enter),sizeof(enter));
+    exit_critical_section();
 }
 
 void printHelp(void)
-{   shellPrint(" ");
+{   
     shellPrint("********************************");
     shellPrint("isoShell Usage:");
     shellPrint("help:               This page");

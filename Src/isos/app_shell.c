@@ -7,8 +7,11 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
     {
         shellPrint("**************");
         shellPrint(" APP HELP ");
-        shellPrint(" app_test:            app test ");
+        shellPrint(" Usage->    app $app_name");
+        shellPrint("  ");
+        shellPrint(" app_test:            test application ");
         shellPrint(" hello:               Hello from app ");
+        //TODO: print list of apps
         shellPrint("**************");
         return 0;
     }
