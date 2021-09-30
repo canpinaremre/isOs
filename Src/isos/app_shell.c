@@ -29,7 +29,7 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
     }
     else if(!strcmp("cpp_example",argv[0]))
     {
-        ret = cpp_example_main(2,3);
+        ret = cpp_example_main(argc,argv);
         return ret;
     }
     else if(!strcmp("hello",argv[0]))

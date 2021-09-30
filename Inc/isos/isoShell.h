@@ -17,5 +17,5 @@ void isoShell_main(uint8_t rxBuffer[4]);
 void isoShell_init(UART_HandleTypeDef *uartHandle);
 void handleInput(uint8_t *cmd);
 void handleCommand(char *cmd);
-void shellPrint(char *val);
+//void shellPrint(char *val); //defined as extern in hpp
 void printHelp(void);

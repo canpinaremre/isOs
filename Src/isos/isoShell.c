@@ -133,7 +133,7 @@ void handleCommand(char *cmd)
     }
 }
 
-void shellPrint(char *val)
+void shellPrint(const char *val)
 {
     enter_critical_section();
     HAL_UART_Transmit(uart_handle,enter,sizeof(enter),sizeof(enter));
