@@ -7,13 +7,14 @@
 #include "task.h"
 #include <stdint.h>
 
-// Apps:
+//Apps Inc:
 #include "led_example.h"
 #include "app_test.h"
+#include "cpp_example.hpp"
 
 
 
-
+// App Command Handler:
 int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT]);
 
 

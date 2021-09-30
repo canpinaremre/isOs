@@ -83,7 +83,7 @@ int led_example_main(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
                 if((led_delay < 1) || (led_delay > __INT_MAX__))
                 {
                     led_delay = 100;
-                    shellPrint("Error: Need uint as an argument! Delay = 100");
+                    shellPrint("Error: Need unsigned int as an argument! Delay = 100");
                     return -1;
                 }
                 else

@@ -9,6 +9,7 @@
         "stm32f3xx_hal.h": "c",
         "isoshell.h": "c",
         "app.h": "c",
-        "cpp_example.h": "c"
+        "cpp_example.h": "c",
+        "led_example.h": "c"
     }
 }

@@ -119,8 +119,12 @@ void handleCommand(char *cmd)
             //Handle with app_shell from here
             int ret = handle_app_command(argc,argv);
             if(ret == 0) return;
-            else shellPrint("App returned with error");
-
+            else
+            {
+                char sendBuffer[60];
+                sprintf(sendBuffer, "App returned with error: %d",ret);
+	            shellPrint(sendBuffer);
+            }
         }
         else
         {
