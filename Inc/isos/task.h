@@ -8,6 +8,7 @@
 #include "stm32f3xx_hal.h"
 #include "prioq.h"
 
+#include "isoShell.h"
 // config defines:
 #define USE_STACK_TASK
 //#define WQUEUE
@@ -16,7 +17,7 @@
 
 
 #ifndef MAX_TASKS
-#define MAX_TASKS 15
+#define MAX_TASKS 25
 #endif
 
 #ifndef ROUND_ROBIN_SCHEDULER
@@ -87,12 +88,13 @@ struct task
     char taskName[20];
     #ifdef USE_STACK_TASK
     bool isStatic;
-    #endif
+    #endif //USE_STACK_TASK
 };
 
 #ifdef USE_STACK_TASK
 taskid_t TaskCreateStatic(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
-#endif
+#endif //USE_STACK_TASK
+
 taskid_t TaskCreate(const char* name, uint32_t stackSize, void (*entrypoint)(), uint8_t priority);
 taskid_t getTaskId();
 void taskDelete(taskid_t tid);
@@ -107,4 +109,8 @@ void exit_critical_section(void);
 #ifdef PRIORITY_SCHEDULER
 void insert_queue(uint32_t pid,uint8_t prio);
 void checkBlockedTasks(void);
-#endif
+#endif //PRIORITY_SCHEDULER
+
+// Shell functions:
+void top_tasks(void);
+int kill_task(taskid_t pid);

@@ -206,7 +206,8 @@ void taskDelete(taskid_t tid)
     #ifdef USE_STACK_TASK
     if(tasks[tid].isStatic == true)
     {
-        //return errno
+        //TODO: return errno
+        tasks[tid].taskState = TaskSuspend;
         return;
     }
     #endif
@@ -435,7 +436,7 @@ void switchTask(void)
     exit_critical_section();
 }
 
-#endif
+#endif // PRIORITY_SCHEDULER
 
 #ifdef ROUND_ROBIN_SCHEDULER
 void switchTask(void)
@@ -482,7 +483,7 @@ void taskDelay(uint32_t delayTime)
     HAL_Delay(delayTime);
 }
 
-#endif 
+#endif //ROUND_ROBIN_SCHEDULER
 
 void TaskYield(void)
 {
@@ -573,3 +574,72 @@ void SysTick_Handler(void)
     
 }
 
+void top_tasks(void)
+{
+#ifdef ROUND_ROBIN_SCHEDULER
+//TODO: Here.
+#endif //ROUND_ROBIN_SCHEDULER
+
+#ifdef PRIORITY_SCHEDULER
+    taskid_t pid_array[MAX_TASKS];
+    int j= 0;
+    enter_critical_section();
+    for(int i = 0; i < queued_tasks_count; i++)
+    {
+        pid_array[j] = priority_queue[i].pid;
+        j++;
+    }
+    for(int i = 0; i < queued_block_count; i++)
+    {
+        pid_array[j] = block_queue[i].pid;
+        j++;
+    }
+    exit_critical_section();
+
+
+    char sendBuffer[60];
+    shellPrint("pid  priority      stackSize      task_name");
+    for(int i = 0; i < j; i++)
+    {
+        memset(sendBuffer, 0, sizeof(sendBuffer));
+        sprintf(sendBuffer, "%ld     %d            %ld           ",pid_array[i],tasks[pid_array[i]].priority, tasks[pid_array[i]].stackSize);
+        strncat(sendBuffer, tasks[pid_array[i]].taskName, strlen(tasks[pid_array[i]].taskName));
+        shellPrint(sendBuffer);
+    }
+    sprintf(sendBuffer,"Total running threads : %d",j);
+    shellPrint(sendBuffer);
+
+
+#endif //PRIORITY_SCHEDULER
+}
+
+int kill_task(taskid_t pid)
+{
+    if (pid == idleTaskIndex)
+    {
+        shellPrint("Error: idleTask can not be killed!");
+        return -1;
+    }
+#ifdef USE_STACK_TASK
+    if(tasks[pid].isStatic)
+    {
+        shellPrint("Error:Task is static. Can not kill. It is suspended");
+        tasks[pid].taskState = TaskSuspend;
+        return -1;
+    }
+    if( (tasks[pid].taskState == TaskDeleted)||
+    (tasks[pid].taskState == TaskEmpty))
+    {
+        char sendBuffer[60];
+        sprintf(sendBuffer, "Error:Task with pid: %ld do not exist!",pid);
+	    shellPrint(sendBuffer);
+        return -1;
+    }
+    taskDelete(pid);
+#else //USE_STACK_TASK
+    taskDelete(pid);
+
+#endif //USE_STACK_TASK
+
+    return 0;
+}
