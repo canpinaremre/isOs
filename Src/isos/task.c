@@ -230,12 +230,7 @@ void taskDelete(taskid_t tid)
     // If we are deleting running task
     if(tid == nextTaskIndex)
     {
-        // Bug fix:Switch to idleTask for 1 cycle
-        // If we call switchTask() exit_critical_section can broke beacuse they will be nested
-        nextTaskIndex = idleTaskIndex;
-        nextTask = &tasks[nextTaskIndex];
-        tasks[idleTaskIndex].taskState = TaskRunning;
-
+        switchTask();
         //Call SVC handler beacuse we do not need to switch context
         //just load nextTask contex
         __asm("SVC #0");
@@ -283,10 +278,12 @@ void taskDelay(uint32_t delayTime)
     insertMinHeap(block_queue,item,queued_block_count);
     queued_block_count++;
 
-    exit_critical_section();
-    
     // As this task is blocked now on, need to switch task
     switchTask();
+
+    exit_critical_section();
+    
+    
     
 }
 
@@ -338,7 +335,7 @@ void insert_queue(uint32_t pid,uint8_t prio)
 
 void switchTask(void)
 {
-    enter_critical_section();
+   
 
     // Check if current task is running. We can switch task from task delay
     // or task delete.
@@ -437,7 +434,7 @@ void switchTask(void)
     }
 
 
-    exit_critical_section();
+    
 }
 
 #endif // PRIORITY_SCHEDULER
@@ -445,7 +442,7 @@ void switchTask(void)
 #ifdef ROUND_ROBIN_SCHEDULER
 void switchTask(void)
 {
-	enter_critical_section();
+
 
     currentTask = nextTask;
 
@@ -461,7 +458,7 @@ void switchTask(void)
     {
         nextTaskIndex++;
         nextTaskIndex %= taskCount;
-        if(tasks[nextTaskIndex].taskState == TaskReady && nextTaskIndex != idleTaskIndex)
+        if(tasks[nextTaskIndex].taskState == TaskReady )
         {
             break;
         }
@@ -478,7 +475,7 @@ void switchTask(void)
        SCB->ICSR |= (1<<28);
     }
     
-    exit_critical_section();
+
     
 }
 
@@ -491,7 +488,9 @@ void taskDelay(uint32_t delayTime)
 
 void TaskYield(void)
 {
+    enter_critical_section();
 	switchTask();
+    exit_critical_section();
 }
 
 __attribute__((naked)) 
@@ -547,7 +546,9 @@ void KernelStart(void)
     HAL_NVIC_SetPriority(PendSV_IRQn, 15, 15);
 
     // Swith to first task with highest priority
+    enter_critical_section();
     switchTask();
+    exit_critical_section();
 
     // Set SVC interrupt for first context switch
     kernelStarted = true;
@@ -573,7 +574,9 @@ void SysTick_Handler(void)
     // Switch task in every tick
     if(kernelStarted)
     {
+        enter_critical_section();
         switchTask();
+        exit_critical_section();
     }
     
 }
