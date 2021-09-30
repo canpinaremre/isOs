@@ -210,7 +210,7 @@ void taskDelete(taskid_t tid)
         tasks[tid].taskState = TaskSuspend;
         return;
     }
-    #endif
+    #endif // USE_STACK_TASK
 
     if(tasks[tid].taskState == TaskDeleted || TaskEmpty)
     {
@@ -230,8 +230,12 @@ void taskDelete(taskid_t tid)
     // If we are deleting running task
     if(tid == nextTaskIndex)
     {
-        //switch to next task
-        switchTask();
+        // Bug fix:Switch to idleTask for 1 cycle
+        // If we call switchTask() exit_critical_section can broke beacuse they will be nested
+        nextTaskIndex = idleTaskIndex;
+        nextTask = &tasks[nextTaskIndex];
+        tasks[idleTaskIndex].taskState = TaskRunning;
+
         //Call SVC handler beacuse we do not need to switch context
         //just load nextTask contex
         __asm("SVC #0");
@@ -577,7 +581,23 @@ void SysTick_Handler(void)
 void top_tasks(void)
 {
 #ifdef ROUND_ROBIN_SCHEDULER
-//TODO: Here.
+    char sendBuffer[60];
+    uint32_t counter = 0;
+    shellPrint("pid      stackSize      task_name");
+    for(int i = 0; i < taskCount; i++)
+    {
+        if((tasks[i].taskState == TaskReady) || (tasks[i].taskState == TaskRunning))
+        {
+            memset(sendBuffer, 0, sizeof(sendBuffer));
+            sprintf(sendBuffer, "%d             %ld           ",i, tasks[i].stackSize);
+            strncat(sendBuffer, tasks[i].taskName, strlen(tasks[i].taskName));
+            shellPrint(sendBuffer);
+            counter++;
+        }
+    }
+    sprintf(sendBuffer,"Total running threads : %ld",counter);
+    shellPrint(sendBuffer);
+
 #endif //ROUND_ROBIN_SCHEDULER
 
 #ifdef PRIORITY_SCHEDULER
@@ -627,6 +647,7 @@ int kill_task(taskid_t pid)
         tasks[pid].taskState = TaskSuspend;
         return -1;
     }
+#endif //USE_STACK_TASK
     if( (tasks[pid].taskState == TaskDeleted)||
     (tasks[pid].taskState == TaskEmpty))
     {
@@ -636,10 +657,6 @@ int kill_task(taskid_t pid)
         return -1;
     }
     taskDelete(pid);
-#else //USE_STACK_TASK
-    taskDelete(pid);
-
-#endif //USE_STACK_TASK
 
     return 0;
 }

@@ -12,7 +12,7 @@
 // config defines:
 #define USE_STACK_TASK
 //#define WQUEUE
-#define PRIORITY_SCHEDULER
+//#define PRIORITY_SCHEDULER
 // end of config defines
 
 
