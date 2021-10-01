@@ -38,6 +38,7 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
     }
     else
     {
+        shellPrint("Undefined arguments. Try \"app help\" ");
         return -1;
     }
 

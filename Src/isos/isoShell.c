@@ -138,6 +138,7 @@ void handleCommand(char *cmd)
         if(!argc)
         {
             shellPrint("Missing arguments. Try \"app help\" ");
+            return;
         }
         
         //Handle with app_shell from here
@@ -145,7 +146,7 @@ void handleCommand(char *cmd)
         if(ret == 0) return;
         else
         {
-            char sendBuffer[60];
+            char sendBuffer[40];
             sprintf(sendBuffer, "App returned with error: %d",ret);
 	        shellPrint(sendBuffer);
         }
@@ -184,8 +185,7 @@ void handleCommand(char *cmd)
             shellPrint("Missing arguments. Try \"help\" ");
             return;
         }
-        char * tmp;
-        uint32_t pid = strtoul(argv[0], &tmp, 10);
+        uint32_t pid = atoi(argv[0]);
         if((pid < 0 ) || (pid > MAX_TASKS))
         {
             shellPrint("Error: pid out of range!");
@@ -194,14 +194,14 @@ void handleCommand(char *cmd)
         int ret = kill_task(pid);
         if(ret == 0)
         {
-            char sendBuffer[60];
+            char sendBuffer[40];
             sprintf(sendBuffer, "Task killed. pid: %ld",pid);
 	        shellPrint(sendBuffer);
             return;    
         }
         else
         {
-            char sendBuffer[60];
+            char sendBuffer[40];
             sprintf(sendBuffer, "App returned with error: %d",ret);
 	        shellPrint(sendBuffer);
             return;

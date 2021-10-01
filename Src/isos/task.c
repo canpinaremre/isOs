@@ -538,7 +538,7 @@ void PendSV_Handler(void)
 
 void KernelStart(void)
 {
-    idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
+    
 
     // Set PendSV priority lower than SysTick
     // Because we need to switch task
@@ -565,6 +565,8 @@ void KernelInit(void)
     {
         tasks[i].taskState = TaskEmpty;
     }
+
+    idleTaskIndex = TaskCreate("IDLE_TASK",64,idleTask,0);
 }
 
 void SysTick_Handler(void)
@@ -620,7 +622,7 @@ void top_tasks(void)
     exit_critical_section();
 
 
-    char sendBuffer[60];
+    char sendBuffer[70];
     shellPrint("pid  priority      stackSize      task_name");
     for(int i = 0; i < j; i++)
     {
