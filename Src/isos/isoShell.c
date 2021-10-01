@@ -51,8 +51,12 @@ void isoShell_main(uint8_t rxBuffer[4])
             {
                 cmdBuffer[i] = last_command[i];
             }
-
+            
             enter_critical_section();
+            uint8_t emptyline[] = "\r                                                            ";
+            HAL_UART_Transmit(uart_handle,emptyline,sizeof(emptyline),15);
+            HAL_UART_Transmit(uart_handle,(uint8_t *)"\risoShell-> ",sizeof("\risoShell-> "),15);
+            
             HAL_UART_Transmit(uart_handle,&last_command[0],last_cmdPtr,2+last_cmdPtr);
             exit_critical_section();
             cmdPtr = last_cmdPtr;
