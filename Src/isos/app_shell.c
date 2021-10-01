@@ -11,8 +11,8 @@ int handle_app_command(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
         shellPrint("  ");
         shellPrint(" app_test:            test application ");
         shellPrint(" hello:               Hello from app ");
-        shellPrint(" led_example:         Blinky (Arg: delay time) ");
-        shellPrint(" cpp_example:         cpp app example (returns 2+3 atm)");
+        shellPrint(" led_example:         Blinky (Arg: delay time of red LED) ");
+        shellPrint(" cpp_example:         Blinky with cpp (Arg: delay time of green LED)");
         //TODO: print list of apps
         shellPrint("**************");
         return 0;

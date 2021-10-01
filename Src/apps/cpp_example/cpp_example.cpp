@@ -14,7 +14,7 @@ static void cpp_example_run(void)
     while(1)
     {
        
-        HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_14);
+        // Toggle Green LED
         HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
 
 
@@ -41,11 +41,12 @@ int cpp_example_main(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
             {
                 if(argc > 2)
                 {
-                    char * tmp;
-                    led_delay = strtoul(argv[2], &tmp, 10);
+                    
+                    led_delay = atoi(argv[2]);
                     if(led_delay < 1 || led_delay > __INT_MAX__)
                     {
                         led_delay = 100;
+                        shellPrint("Undefined argument. Task started with LED delay = 100 ms");
                     }
                 }   
                 task_running = true;
@@ -80,12 +81,10 @@ int cpp_example_main(int argc,char argv[MAX_CMD_ARG][MAX_CMD_LENGHT])
         {
             if(argc > 2)
             {
-                char * tmp;
-                led_delay = strtoul(argv[2], &tmp, 10);
+                led_delay = atoi(argv[2]);
                 if((led_delay < 1) || (led_delay > __INT_MAX__))
                 {
-                    led_delay = 100;
-                    shellPrint("Error: Need unsigned int as an argument! Delay = 100");
+                    shellPrint("Error: Need unsigned int as an argument!");
                     return -1;
                 }
                 else

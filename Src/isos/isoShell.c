@@ -33,6 +33,8 @@ void isoShell_main(uint8_t rxBuffer[4])
         else if((rxBuffer[0] == 127)&&(cmdPtr))//delete
         {
             //TODO: No newline but need better approach
+            uint8_t emptyline[] = "\r                                                            ";
+            HAL_UART_Transmit(uart_handle,emptyline,sizeof(emptyline),15);
             HAL_UART_Transmit(uart_handle,(uint8_t *)"\risoShell-> ",sizeof("\risoShell-> "),15);
             cmdPtr--;
             HAL_UART_Transmit(uart_handle,&cmdBuffer[0],cmdPtr,10);
